@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Blog</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        import siteConfig from './config.js';
+    </script>
+    <style>
+        body {
+            color: var(--text-color);
+            background-color: var(--main-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- 메뉴 영역 -->
+        <nav id="menu"></nav>
+    </header>
+
+    <main>
+        <!-- 블로그 포스트 영역 -->
+        <div id="blog-posts"></div>
+    </main>
+
+    <script type="module">
+        // config.js에서 가져온 설정을 사용
+        document.documentElement.style.setProperty('--main-color', siteConfig.mainColor);
+        document.documentElement.style.setProperty('--text-color', siteConfig.textColor);
+
+        // URL에서 username과 repositoryName 추출
+        function extractFromUrl() {
+            const url = new URL(window.location.href);
+            const pathParts = url.pathname.split('/').filter(part => part.length > 0);
+
+            // 보통 URL 형식: https://username.github.io/repositoryName/
+            if (pathParts.length >= 2) {
+                return {
+                    username: pathParts[0],
+                    repositoryName: pathParts[1]
+                };
+            }
+
+            return { username: '', repositoryName: '' };
+        }
+
+        // config에서 값이 없을 경우 URL에서 추출
+        const urlConfig = extractFromUrl();
+        siteConfig.username = siteConfig.username || urlConfig.username;
+        siteConfig.repositoryName = siteConfig.repositoryName || urlConfig.repositoryName;
+
+        // GitHub API를 사용하여 폴더 내의 파일 목록 가져오기
+        async function loadFolderContents(folderPath) {
+            const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/${folderPath}`);
+            const data = await response.json();
+            return data;
+        }
+
+        // 메뉴 생성
+        loadFolderContents('menu').then(files => {
+            files.forEach(file => {
+                // 메뉴 링크 생성
+                const link = document.createElement('a');
+                link.href = file.download_url;
+                link.innerText = file.name;
+                document.getElementById('menu').appendChild(link);
+            });
+        });
+
+        // 블로그 포스트 생성
+        loadFolderContents('blog').then(files => {
+            files.forEach(file => {
+                // 블로그 게시글 링크 생성
+                const postLink = document.createElement('a');
+                postLink.href = `./blogPost.html?post=${file.name}`;
+                postLink.innerText = file.name;
+                document.getElementById('blog-posts').appendChild(postLink);
+            });
+        });
+    </script>
+</body>
+</html>
