@@ -2,6 +2,7 @@
 깃헙 정적 페이지 블로그 오픈소스
 
 * github에서 fork로 blog를 만들 수 있는 정적 페이지 제공 프로젝트
+* https://github.blog/category/engineering/ 스타일을 표본으로 제작
 
 1. github pages를 활성화 해서 `https://사용자이름.github.io/저장소이름/`라는 URL 생성
 2. 바닐라 JS의 fetch로 해당 URL의 `https://사용자이름.github.io/저장소이름/blog/블로그글.md`에서 데이터를 가져와 JSON 형식으로 변환
