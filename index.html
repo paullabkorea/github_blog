@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Blog</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script type="module">
-        import siteConfig from './config.js';
-    </script>
     <style>
         body {
-            color: var(--text-color);
-            background-color: var(--main-color);
+            color: black;
+            background-color: white;
         }
     </style>
 </head>
@@ -19,14 +16,21 @@
     <header>
         <!-- 메뉴 영역 -->
         <nav id="menu"></nav>
+        <!-- //메뉴 영역 -->
     </header>
 
     <main>
         <!-- 블로그 포스트 영역 -->
         <div id="blog-posts"></div>
+        <!-- //블로그 포스트 영역 -->
+
+        <!-- contents 영역 -->
+        <div id="contents"></div>
+        <!-- //contents 영역 -->
     </main>
 
-    <script type="module">
+    <script src="config.js"></script>
+    <script>
         // config.js에서 가져온 설정을 사용
         document.documentElement.style.setProperty('--main-color', siteConfig.mainColor);
         document.documentElement.style.setProperty('--text-color', siteConfig.textColor);
@@ -64,8 +68,19 @@
             files.forEach(file => {
                 // 메뉴 링크 생성
                 const link = document.createElement('a');
+                link.classList.add(`${file.name}`);
                 link.href = file.download_url;
                 link.innerText = file.name;
+                link.onclick = () => {
+                    // 메뉴 링크 클릭 시 이벤트 중지 후 file 내용을 읽어와 contents 영역에 렌더링
+                    event.preventDefault();
+                    fetch(file.download_url)
+                        .then(response => response.text())
+                        .then(text => {
+                            document.getElementById('contents').innerHTML = marked.parse(text);
+                        });
+                    
+                };
                 document.getElementById('menu').appendChild(link);
             });
         });
