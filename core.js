@@ -33,28 +33,22 @@ function extractFromUrl() {
 }
 
 // GitHub API를 사용하여 폴더 내의 파일 목록 가져오기
+// 2개의 형식을 보고 코드 작성
 // https://api.github.com/repos/paullabkorea/github_blog/contents/menu
-// [
-//     {
-//       "name": "[20240118]_[title_test]_[python]_[].md",
-//       "path": "menu/[20240118]_[title_test]_[python]_[].md",
-//       "sha": "fbd3ef0795ebeb2ece0cafbfe0fd8c6e2f48fe49",
-//       "size": 23,
-//       "url": "https://api.github.com/repos/paullabkorea/github_blog/contents/menu/a.md?ref=main",
-//       "html_url": "https://github.com/paullabkorea/github_blog/blob/main/menu/a.md",
-//       "git_url": "https://api.github.com/repos/paullabkorea/github_blog/git/blobs/fbd3ef0795ebeb2ece0cafbfe0fd8c6e2f48fe49",
-//       "download_url": "https://raw.githubusercontent.com/paullabkorea/github_blog/main/menu/a.md",
-//       "type": "file",
-//       "_links": {
-//         "self": "https://api.github.com/repos/paullabkorea/github_blog/contents/menu/a.md?ref=main",
-//         "git": "https://api.github.com/repos/paullabkorea/github_blog/git/blobs/fbd3ef0795ebeb2ece0cafbfe0fd8c6e2f48fe49",
-//         "html": "https://github.com/paullabkorea/github_blog/blob/main/menu/a.md"
-//       }
-//     }
-// ]
+// https://api.github.com/repos/paullabkorea/github_blog/contents/blog
 async function loadFolderContents(folderPath) {
     const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/${folderPath}`);
     const data = await response.json();
+    if (folderPath == 'blog') {
+        // blog 폴더의 경우 날짜 역순으로 정렬
+        data.sort(function(a, b) {
+            return b.name.localeCompare(a.name);
+        });
+    } else {
+        data.sort(function(a, b) {
+            return a.name.localeCompare(b.name);
+        });
+    }
     return data;
 }
 
@@ -90,7 +84,32 @@ loadFolderContents('menu').then(files => {
                 fetch(file.download_url)
                     .then(response => response.text())
                     .then(text => {
-                        document.getElementById('contents').innerHTML = marked.parse(text);
+                        const html = marked.parse(text);
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+
+                        tempDiv.querySelectorAll('h1').forEach(h1 => h1.classList.add('text-2xl', 'font-bold'));
+                        tempDiv.querySelectorAll('h2').forEach(h2 => h2.classList.add('text-xl', 'font-semibold'));
+                        tempDiv.querySelectorAll('h3').forEach(h3 => h3.classList.add('text-lg', 'font-semibold'));
+                        tempDiv.querySelectorAll('h4').forEach(h4 => h4.classList.add('text-base', 'font-semibold'));
+                        tempDiv.querySelectorAll('h5').forEach(h5 => h5.classList.add('text-sm', 'font-semibold'));
+                        tempDiv.querySelectorAll('h6').forEach(h6 => h6.classList.add('text-xs', 'font-semibold'));
+                        tempDiv.querySelectorAll('p').forEach(p => p.classList.add('mb-4'));
+                        tempDiv.querySelectorAll('img').forEach(img => img.classList.add('my-4'));
+                        tempDiv.querySelectorAll('a').forEach(a => a.classList.add('text-blue-700', 'underline'));
+                        tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('list-disc', 'list-inside', 'mb-4'));
+                        tempDiv.querySelectorAll('ol').forEach(ol => ol.classList.add('list-decimal', 'list-inside', 'mb-4'));
+                        tempDiv.querySelectorAll('li').forEach(li => li.classList.add('mb-2'));
+                        tempDiv.querySelectorAll('blockquote').forEach(blockquote => blockquote.classList.add('border-l-4', 'border-gray-400', 'pl-4', 'mb-4'));
+                        tempDiv.querySelectorAll('pre').forEach(pre => pre.classList.add('bg-gray-100', 'p-4', 'rounded', 'mb-4'));
+                        tempDiv.querySelectorAll('code').forEach(code => code.classList.add('font-mono'));
+                        tempDiv.querySelectorAll('table').forEach(table => table.classList.add('table-auto', 'border-collapse', 'border'));
+                        tempDiv.querySelectorAll('thead').forEach(thead => thead.classList.add('bg-gray-100'));
+                        tempDiv.querySelectorAll('th').forEach(th => th.classList.add('border', 'px-4', 'py-2'));
+                        tempDiv.querySelectorAll('tbody').forEach(tbody => tbody.classList.add('text-center'));
+                        tempDiv.querySelectorAll('td').forEach(td => td.classList.add('border', 'px-4', 'py-2'));
+
+                        document.getElementById('contents').innerHTML = tempDiv.innerHTML;
                     });
             }
             
@@ -149,10 +168,10 @@ function createCardElement(fileInfo) {
     title.textContent = fileInfo.title;
     cardBody.appendChild(title);
 
-    const category = document.createElement('p');
-    category.classList.add('text-gray-700', 'text-base');
-    category.textContent = '#' + fileInfo.category;
-    cardBody.appendChild(category);
+    const category = document.createElement('span');
+    category.classList.add('inline-block', 'bg-blue-200', 'text-blue-800', 'text-xs', 'font-semibold', 'ml-2', 'px-2.5', 'py-0.5', 'rounded');
+    category.textContent = fileInfo.category;
+    title.appendChild(category);
 
     const description = document.createElement('p');
     description.classList.add('text-gray-700', 'text-base');
@@ -192,7 +211,32 @@ function readPostList(){
                     fetch(file.download_url)
                         .then(response => response.text())
                         .then(text => {
-                            document.getElementById('contents').innerHTML = marked.parse(text);
+                            const html = marked.parse(text);
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = html;
+
+                            tempDiv.querySelectorAll('h1').forEach(h1 => h1.classList.add('text-2xl', 'font-bold'));
+                            tempDiv.querySelectorAll('h2').forEach(h2 => h2.classList.add('text-xl', 'font-semibold'));
+                            tempDiv.querySelectorAll('h3').forEach(h3 => h3.classList.add('text-lg', 'font-semibold'));
+                            tempDiv.querySelectorAll('h4').forEach(h4 => h4.classList.add('text-base', 'font-semibold'));
+                            tempDiv.querySelectorAll('h5').forEach(h5 => h5.classList.add('text-sm', 'font-semibold'));
+                            tempDiv.querySelectorAll('h6').forEach(h6 => h6.classList.add('text-xs', 'font-semibold'));
+                            tempDiv.querySelectorAll('p').forEach(p => p.classList.add('mb-4'));
+                            tempDiv.querySelectorAll('img').forEach(img => img.classList.add('my-4'));
+                            tempDiv.querySelectorAll('a').forEach(a => a.classList.add('text-blue-700', 'underline'));
+                            tempDiv.querySelectorAll('ul').forEach(ul => ul.classList.add('list-disc', 'list-inside', 'mb-4'));
+                            tempDiv.querySelectorAll('ol').forEach(ol => ol.classList.add('list-decimal', 'list-inside', 'mb-4'));
+                            tempDiv.querySelectorAll('li').forEach(li => li.classList.add('mb-2'));
+                            tempDiv.querySelectorAll('blockquote').forEach(blockquote => blockquote.classList.add('border-l-4', 'border-gray-400', 'pl-4', 'mb-4'));
+                            tempDiv.querySelectorAll('pre').forEach(pre => pre.classList.add('bg-gray-100', 'p-4', 'rounded', 'mb-4'));
+                            tempDiv.querySelectorAll('code').forEach(code => code.classList.add('font-mono'));
+                            tempDiv.querySelectorAll('table').forEach(table => table.classList.add('table-auto', 'border-collapse', 'border'));
+                            tempDiv.querySelectorAll('thead').forEach(thead => thead.classList.add('bg-gray-100'));
+                            tempDiv.querySelectorAll('th').forEach(th => th.classList.add('border', 'px-4', 'py-2'));
+                            tempDiv.querySelectorAll('tbody').forEach(tbody => tbody.classList.add('text-center'));
+                            tempDiv.querySelectorAll('td').forEach(td => td.classList.add('border', 'px-4', 'py-2'));
+
+                            document.getElementById('contents').innerHTML = tempDiv.innerHTML;
                         });
                 };
 
