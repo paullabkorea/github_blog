@@ -34,8 +34,8 @@ function styleMarkdown(text) {
     tempDiv.querySelectorAll('ol').forEach(ol => ol.classList.add('list-decimal', 'list-inside', 'mb-4', 'pl-4', 'text-gray-700', 'text-base', 'font-light', 'tracking-wide', 'text-justify'));
     tempDiv.querySelectorAll('li').forEach(li => li.classList.add('mb-2', 'leading-relaxed', 'text-gray-700', 'text-base', 'font-light', 'tracking-wide', 'text-justify'));
     tempDiv.querySelectorAll('blockquote').forEach(blockquote => blockquote.classList.add('border-l-4', 'border-gray-400', 'pl-4', 'mb-4'));
-    tempDiv.querySelectorAll('pre').forEach(pre => pre.classList.add('bg-gray-100', 'p-4', 'rounded', 'mb-4'));
-    tempDiv.querySelectorAll('code').forEach(code => code.classList.add('font-mono'));
+    tempDiv.querySelectorAll('pre').forEach(pre => pre.classList.add('bg-gray-100', 'p-4', 'rounded', 'mb-4', 'text-sm', 'font-mono', 'overflow-auto', 'whitespace-pre-wrap', 'break-words', 'text-justify', 'shadow-md', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200'));
+    tempDiv.querySelectorAll('code').forEach(code => code.classList.add('font-mono', 'text-sm', 'bg-gray-100', 'p-1'));
     tempDiv.querySelectorAll('table').forEach(table => table.classList.add('table-auto', 'border-collapse', 'border'));
     tempDiv.querySelectorAll('thead').forEach(thead => thead.classList.add('bg-gray-100'));
     tempDiv.querySelectorAll('th').forEach(th => th.classList.add('border', 'px-4', 'py-2'));
