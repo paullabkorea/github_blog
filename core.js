@@ -58,57 +58,6 @@ async function loadFolderContents(folderPath) {
     return data;
 }
 
-// 파일 이름에서 정보 추출하는 함수
-function extractFileInfo(filename) {
-    // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일 정보 추출
-    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].md$/;
-    const matches = filename.match(regex);
-    console.log(`extractFileInfo: ${matches}`);
-
-    if (matches) {
-        return {
-            date: matches[1],
-            title: matches[2],
-            category: matches[3],
-            thumbnail: matches[4] // 추출된 썸네일 정보는 사용자가 실제 경로를 설정해야 함
-        };
-    }
-    return null;
-}
-
-// 파일 정보를 기반으로 카드 HTML 생성
-function createCardElement(fileInfo) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-
-    if (fileInfo.thumbnail) {
-        const img = document.createElement('img');
-        img.src = fileInfo.thumbnail; // 이미지 경로 설정 필요
-        img.alt = fileInfo.title;
-        img.classList.add('card-image');
-        card.appendChild(img);
-    }
-
-    const title = document.createElement('h2');
-    title.classList.add('card-title');
-    title.textContent = fileInfo.title;
-    card.appendChild(title);
-
-    const category = document.createElement('p');
-    category.classList.add('card-category');
-    category.textContent = fileInfo.category;
-    card.appendChild(category);
-
-    const date = document.createElement('p');
-    date.classList.add('card-date');
-    date.textContent = fileInfo.date; // 날짜 형식 변환 필요
-    card.appendChild(date);
-
-    // 추후 내용 및 기타 필요한 요소 추가 가능
-
-    return card;
-}
-
 // 메뉴 생성
 loadFolderContents('menu').then(files => {
     files.forEach(file => {
@@ -132,7 +81,7 @@ loadFolderContents('menu').then(files => {
             if (file.name === 'blog.md') {
                 // 만약 블로그라면 contents 영역을 없애고 블로그 포스트 목록을 보여줌
                 document.getElementById('contents').style.display = 'none';
-                document.getElementById('blog-posts').style.display = 'block';
+                document.getElementById('blog-posts').style.display = 'grid';
                 readPostList();
             } else {
                 // 그렇지 않으면 blog-posts를 비우고 contents 영역에 파일 내용을 렌더링
@@ -150,6 +99,78 @@ loadFolderContents('menu').then(files => {
     });
 });
 
+// 파일 이름에서 정보 추출하는 함수
+function extractFileInfo(filename) {
+    // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일 정보 추출
+    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].md$/;
+    const matches = filename.match(regex);
+    // console.log(`extractFileInfo: ${matches}`);
+
+    if (matches) {
+        return {
+            date: matches[1],
+            title: matches[2],
+            category: matches[3],
+            thumbnail: matches[4] ? 'img/' + matches[4] : 'img/default.png',
+            description: matches[5]
+        };
+    }
+    return null;
+}
+
+function formatDate(dateString) {
+    // YYYYMMDD 형식의 문자열을 받아 YYYY/MM/DD 형식으로 변환
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(4, 6);
+    const day = dateString.substring(6, 8);
+
+    return `${year}/${month}/${day}`;
+}
+
+// 파일 정보를 기반으로 카드 HTML 생성
+function createCardElement(fileInfo) {
+    const card = document.createElement('div');
+    card.classList.add('max-w-sm', 'rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
+    card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+
+    if (fileInfo.thumbnail) {
+        const img = document.createElement('img');
+        img.src = fileInfo.thumbnail;
+        img.alt = fileInfo.title;
+        img.classList.add('w-full', 'h-48', 'object-cover', 'object-center');
+        card.appendChild(img);
+    }
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('px-6', 'py-4');
+
+    const title = document.createElement('h2');
+    title.classList.add('font-bold', 'text-xl', 'mb-2');
+    title.textContent = fileInfo.title;
+    cardBody.appendChild(title);
+
+    const category = document.createElement('p');
+    category.classList.add('text-gray-700', 'text-base');
+    category.textContent = '#' + fileInfo.category;
+    cardBody.appendChild(category);
+
+    const description = document.createElement('p');
+    description.classList.add('text-gray-700', 'text-base');
+    description.textContent = fileInfo.description;
+    cardBody.appendChild(description);
+
+    const date = document.createElement('p');
+    date.classList.add('text-gray-600', 'text-xs');
+    date.textContent = formatDate(fileInfo.date);
+    cardBody.appendChild(date);
+
+    card.appendChild(cardBody);
+
+    // 추후 내용 및 기타 필요한 요소 추가 가능
+
+    return card;
+}
+
 function readPostList(){
     // 포스트 목록 읽어오는 함수
     loadFolderContents('blog').then(files => {
@@ -158,33 +179,26 @@ function readPostList(){
         files.forEach(file => {
             const fileInfo = extractFileInfo(file.name);
             if (fileInfo) {
-                console.log(fileInfo)
+                // console.log(fileInfo)
                 const cardElement = createCardElement(fileInfo);
+                
+                cardElement.onclick = (event) => {
+                    // 블로그 게시글 링크 클릭 시 이벤트 중지 후 file 내용을 읽어와 contents 영역에 렌더링
+                    event.preventDefault();
+                    // contents 영역을 보이게 처리
+                    document.getElementById('contents').style.display = 'block';
+                    // blog-posts 영역을 보이지 않게 처리
+                    document.getElementById('blog-posts').style.display = 'none';
+                    fetch(file.download_url)
+                        .then(response => response.text())
+                        .then(text => {
+                            document.getElementById('contents').innerHTML = marked.parse(text);
+                        });
+                };
+
                 document.getElementById('blog-posts').appendChild(cardElement);
             }
-
-            // // 블로그 게시글 링크 생성
-            // const postLink = document.createElement('a');
-
-            // // tailwind를 사용한 스타일링
-            // postLink.classList.add('ml-4', 'text-gray-700', 'hover:text-gray-900', 'font-bold', 'text-xl', 'py-2', 'px-4', 'rounded');
-
-            // postLink.href = `#`;
-            // postLink.innerText = file.name;
-            // postLink.onclick = (event) => {
-            //     // 블로그 게시글 링크 클릭 시 이벤트 중지 후 file 내용을 읽어와 contents 영역에 렌더링
-            //     event.preventDefault();
-            //     // contents 영역을 보이게 처리
-            //     document.getElementById('contents').style.display = 'block';
-            //     // blog-posts 영역을 보이지 않게 처리
-            //     document.getElementById('blog-posts').style.display = 'none';
-            //     fetch(file.download_url)
-            //         .then(response => response.text())
-            //         .then(text => {
-            //             document.getElementById('contents').innerHTML = marked.parse(text);
-            //         });
-            // };
-            // document.getElementById('blog-posts').appendChild(postLink);
+            
         });
     });
     // contents 영역을 보이지 않게 처리
