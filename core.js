@@ -63,6 +63,7 @@ function extractFileInfo(filename) {
     // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일 정보 추출
     const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].md$/;
     const matches = filename.match(regex);
+    console.log(`extractFileInfo: ${matches}`);
 
     if (matches) {
         return {
@@ -157,6 +158,7 @@ function readPostList(){
         files.forEach(file => {
             const fileInfo = extractFileInfo(file.name);
             if (fileInfo) {
+                console.log(fileInfo)
                 const cardElement = createCardElement(fileInfo);
                 document.getElementById('blog-posts').appendChild(cardElement);
             }
