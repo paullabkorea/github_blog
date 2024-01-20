@@ -16,16 +16,7 @@ function extractFromUrl() {
 }
 
 // 현재 url 가져와서 parsing
-// hash: ""
-// host: "127.0.0.1:5500"
-// hostname: "127.0.0.1"
-// href: "http://127.0.0.1:5500/index.html"
-// origin: "http://127.0.0.1:5500"
-// password:""
-// pathname: "/index.html"
-// port: "5500"
-// protocol: "http:"
-// search: ""
+// url 스키마는 readme.md 참고
 const url = new URL(window.location.href);
 const pathParts = url.pathname.split('/').filter(part => part.length > 0);
 
