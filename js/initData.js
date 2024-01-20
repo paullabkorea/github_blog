@@ -3,6 +3,7 @@
 // https://api.github.com/repos/paullabkorea/github_blog/contents/menu
 // https://api.github.com/repos/paullabkorea/github_blog/contents/blog
 let blogList = []
+let blogMenu = []
 async function initData(folderPath) {
     // blogList의 데이터가 이미 있을 경우
     if (blogList.length > 0) {

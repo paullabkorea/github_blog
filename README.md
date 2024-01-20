@@ -41,7 +41,7 @@ graph LR
 | JS     | config.js | | siteConfig | 사이트 설정 정보 |
 | JS     | URLparsing.js | extractFromUrl() | | URL 파싱 |
 | JS     | render.js | renderBlogPosts(), renderMenu() | | 데이터를 DOM에 렌더링 |
-| JS     | initData.js | initDataBlogList(), initDataBlogMenu() | | 초기 데이터 로딩 |
+| JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩 |
 
 * 과업
     * 각 블로그 글에 뒤로 가기 버튼 만들기
