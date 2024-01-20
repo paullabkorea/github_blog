@@ -50,17 +50,16 @@ gantt
     title 깃헙 정적 블로그
     dateFormat  YYYY-MM-DD
     section 계획
-    프로젝트 범위 정의        :done,    des1, 2024-01-01, 2d
+    프로젝트 범위 정의        :done,    des1, 2024-01-15, 2d
     요구사항 수집             :active,  des2, after des1, 5d
     section 설계
-    와이어프레임 작성         :         des3, after des2, 3d
-    데이터베이스 스키마 설계  :         des4, after des3, 3d
+    와이어프레임 작성         :         des3, after des2, 7d
+    데이터베이스 스키마 설계  :         des4, after des2, 7d
     section 개발
-    개발 환경 설정           :         dev1, after des4, 2d
-    기능 개발                :         dev2, after dev1, 10d
+    기능 개발                :         dev2, after des2, 10d
     section 테스트
     테스트 케이스 작성       :         tes1, after dev2, 2d
-    테스트 수행              :         tes2, after tes1, 3d
+    테스트                  :         tes2, after dev1, 2d
     section 배포
     배포 준비               :         dep1, after tes2, 2d
     출시                    :         dep2, after dep1, 1d
