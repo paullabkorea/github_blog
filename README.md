@@ -44,6 +44,28 @@ graph LR
 | JS     | render.js | renderBlogPosts(), renderMenu() | | 데이터를 DOM에 렌더링 |
 | JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩 |
 
+* WBS
+```mermaid
+gantt
+    title 깃헙 정적 블로그
+    dateFormat  YYYY-MM-DD
+    section 계획
+    프로젝트 범위 정의        :done,    des1, 2024-01-01, 2d
+    요구사항 수집             :active,  des2, after des1, 5d
+    section 설계
+    와이어프레임 작성         :         des3, after des2, 3d
+    데이터베이스 스키마 설계  :         des4, after des3, 3d
+    section 개발
+    개발 환경 설정           :         dev1, after des4, 2d
+    기능 개발                :         dev2, after dev1, 10d
+    section 테스트
+    테스트 케이스 작성       :         tes1, after dev2, 2d
+    테스트 수행              :         tes2, after tes1, 3d
+    section 배포
+    배포 준비               :         dep1, after tes2, 2d
+    출시                    :         dep2, after dep1, 1d
+```
+
 * 과업
     * 각 블로그 글에 뒤로 가기 버튼 만들기
     * 'blog.md'파일을 어떻게 할지 의사결정 필요
