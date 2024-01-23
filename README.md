@@ -108,7 +108,9 @@ gantt
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="readme_img/Main_and_blog.jpg" width="70%"></td>
+            <td width="70%">
+                <img src="readme_img/Blog.jpg">
+            </td>
             <td>
                 <ul>
                     <li>설명 하나</li>
@@ -123,8 +125,10 @@ gantt
             <th>포스트 화면</th>
             <th>설명</th>
         </tr>
-        <tr>
-            <td><img src="readme_img/Blog_posts.jpg" width="70%"></td>
+        <tr width="70%">
+            <td width="70%">
+                <img src="readme_img/Blog_posts.jpg">
+            </td>
             <td>
                 <ul>
                     <li>설명 하나</li>
@@ -140,7 +144,9 @@ gantt
             <th>설명</th>
         </tr>
         <tr>
-            <td><img src="readme_img/About.jpg" width="70%"></td>
+            <td width="70%">
+                <img src="readme_img/About.jpg">
+            </td>
             <td>
                 <ul>
                     <li>설명 하나</li>
