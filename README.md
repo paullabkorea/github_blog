@@ -40,9 +40,9 @@ graph LR
     | style  | globalStyle.js | | | 전역 스타일 설정 |
     | style  | blogContentsStyle.js | | | 블로그 컨텐츠 스타일 설정 |
     | JS     | config.js | | siteConfig | 사이트 설정 정보 |
-    | JS     | URLparsing.js | extractFromUrl() | | URL 파싱 |
+    | JS     | URLparsing.js | extractFromUrl() | url(url obj), pathParts(쿼리스트링), isLocal | URL 파싱, 스키마 확인 |
     | JS     | render.js | renderBlogPosts(), renderMenu() | | 데이터를 DOM에 렌더링 |
-    | JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩 |
+    | JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩, 스키마 확인 |
 
 * WBS
 ```mermaid
@@ -96,13 +96,91 @@ gantt
         | type          | 파일 타입                                   | "file" |
         | _links        | 관련 링크 (자기 자신, Git, HTML 링크 포함)   | 내부 링크 객체 |
 
-
+* 화면 정의서
+    <table>
+        <tr>
+            <th>메인화면</th>
+            <th>설명</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/Main_and_blog.jpg" width="70%"></td>
+            <td>
+                <ul>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>포스트 화면</th>
+            <th>설명</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/Blog_posts.jpg" width="70%"></td>
+            <td>
+                <ul>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>그 외 메뉴 화면</th>
+            <th>설명</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/About.jpg" width="70%"></td>
+            <td>
+                <ul>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                    <li>설명 하나</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
 
 * 과업
+    * 동작하게 아키텍처 다듬기
+    * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
+        * createCardElement에 있는 스타일도 모두 global로 이동
     * 각 블로그 글에 뒤로 가기 버튼 만들기
+    * 검색 기능
     * 'blog.md'파일을 어떻게 할지 의사결정 필요
     * 메인 페이지 스타일링
     * API 호출 최소화
+        * ?Postlist=1: 목록을 호출할 필요 없음
+        * ?없을 때에는 목록을 호출할 필요 있음
+    * 페이지에 2개의 contents 영역이 block, none으로 표시되고 있는 것을 처리
+    * grid 스타일링
+    * user 정보 입력
+        * default는 config
+        * 다른 분들과 함께 집필할 때에는 호출하게
+    * 와이어프레임
+    * 기획 문서 기획 서적 참고하여 수정
+    * url 변경
 
 * 참고
     * https://github.blog/category/engineering/ 스타일을 참고
+    <table>
+        <tr>
+            <th>레퍼런스 이미지 메인</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/레퍼런스.png" width="100%"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>레퍼런스 이미지 블로그</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/레퍼런스2.png" width="100%"></td>
+        </tr>
+    </table>

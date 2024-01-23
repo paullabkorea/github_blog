@@ -1,26 +1,48 @@
-// GitHub API를 사용하여 폴더 내의 파일 목록 가져오기
-// 2개의 형식을 보고 코드 작성
+// GitHub API를 사용하여 폴더 내의 파일 목록 가져오기 (스키마 및 url 참고)
 // https://api.github.com/repos/paullabkorea/github_blog/contents/menu
 // https://api.github.com/repos/paullabkorea/github_blog/contents/blog
 let blogList = []
 let blogMenu = []
-async function initData(folderPath) {
-    // blogList의 데이터가 이미 있을 경우
+
+async function initDataBlogList() {
     if (blogList.length > 0) {
+        // blogList 데이터가 이미 있을 경우
         return blogList;
     }
-    const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/${folderPath}`);
-    blogList = await response.json();
 
-    if (folderPath == 'blog') {
-        // blog 폴더의 경우 날짜 역순으로 정렬
-        data.sort(function (a, b) {
-            return b.name.localeCompare(a.name);
-        });
-    } else {
-        data.sort(function (a, b) {
-            return a.name.localeCompare(b.name);
-        });
+    if (isLocal) {
+        // isLocal이 true일 경우 로컬 테스트 환경
+        const response = await fetch(origin + '/blog');
+        blogList = await response.json();
     }
+    else {
+        // github 배포 상태
+        const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/blog`);
+        blogList = await response.json();
+    }
+
+    blogList.sort(function (a, b) {
+        return b.name.localeCompare(a.name);
+    });
     return blogList;
+}
+
+async function initDataBlogMenu() {
+    if (blogMenu.length > 0) {
+        // blogMenu 데이터가 이미 있을 경우
+        return blogMenu;
+    }
+
+    if (isLocal) {
+        // isLocal이 true일 경우 로컬 테스트 환경
+        const response = await fetch(url.href + '/menu');
+        blogMenu = await response.json();
+    }
+    else {
+        // github 배포 상태
+        const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/menu`);
+        blogMenu = await response.json();
+    }
+
+    return blogMenu;
 }
