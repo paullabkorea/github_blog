@@ -44,6 +44,11 @@ graph LR
     | JS     | render.js | renderBlogPosts(), renderMenu() | | 데이터를 DOM에 렌더링 |
     | JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩, 스키마 확인 |
 
+* 코드 컨벤션과 변수 컨벤션(정리 필요)
+    * blog
+    * post
+    * post_list
+
 * WBS
 ```mermaid
 gantt
