@@ -44,10 +44,14 @@ graph LR
     | JS     | render.js | renderBlogPosts(), renderMenu() | | 데이터를 DOM에 렌더링 |
     | JS     | initData.js | initDataBlogList(), initDataBlogMenu() | blogList, blogMenu | 초기 데이터 로딩, 스키마 확인 |
 
-* 코드 컨벤션과 변수 컨벤션(정리 필요)
-    * blog
-    * post
-    * post_list
+* 코드 컨벤션과 변수 컨벤션
+    * 변수명(함수명): 역할
+        * blogList(initDataBlogList): (fetch) repo에서 blog폴더에 있는 파일 명을 정규표현식으로 파싱, 데이터가 이미 있다면 다시 통신하지 않음.
+        * blogMenu(initDataBlogMenu): (fetch) repo에서 menu폴더에 있는 파일 명을 파싱, 데이터가 이미 있다면 다시 통신하지 않음.
+        * posts: (fetch) post의 정보를 가져와 데이터 저장, 재접속시 , 데이터가 이미 있다면 다시 통신하지 않음.
+        * url: 현재 url
+            * pathParts: split된 url
+        * isLocal: 로컬과 배포여부
 
 * WBS
 ```mermaid
@@ -113,9 +117,10 @@ gantt
             </td>
             <td>
                 <ul>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
+                    <li>목록 필요</li>
+                    <li>URL 파싱 및 URL 변경 필요</li>
+                    <li>목록을 6개씩 잘라내어 넘어가게 하거나 무한스크롤 구현</li>
+                    <li>가장 최신의 게시물을 맨 위에 게시</li>
                 </ul>
             </td>
         </tr>
@@ -131,9 +136,9 @@ gantt
             </td>
             <td>
                 <ul>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
+                    <li>목록을 불러오는 것이 불필요 하지만 검색 버튼을 눌렀을 경우 목록을 불러올 필요가 있음</li>
+                    <li>URL 파싱 및 URL 변경 필요</li>
+                    <li>posts 변수에 담아 다른 페이지 이동 후 재접속 할 때 다시 통신하지 않게 처리</li>
                 </ul>
             </td>
         </tr>
@@ -149,9 +154,8 @@ gantt
             </td>
             <td>
                 <ul>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
-                    <li>설명 하나</li>
+                    <li>목록을 불러오는 것이 불필요 하지만 검색 버튼을 눌렀을 경우 목록을 불러올 필요가 있음</li>
+                    <li>URL 파싱 및 URL 변경 필요</li>
                 </ul>
             </td>
         </tr>
