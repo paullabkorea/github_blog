@@ -1,6 +1,10 @@
 // 마크다운으로 읽어온 내용을 HTML로 변환하여 tailwind를 사용한 스타일링
 function styleMarkdown(kinds, text, title_info = null) {
 
+    // console.log(kinds)
+    // console.log(text)
+    // console.log(title_info)
+
     const tempDiv = document.createElement('div');
     const html = marked.parse(text);
     tempDiv.innerHTML = html;
@@ -31,8 +35,8 @@ function styleMarkdown(kinds, text, title_info = null) {
 
         // title
         const title = document.createElement('h1');
-        title.classList.add('text-4xl', 'font-bold', 'mb-6', 'mt-8', 'border-b', 'border-gray-400', 'pb-2');
-        console.log(title_info)
+        title.classList.add('text-4xl', 'font-bold', 'mb-6', 'mt-4', 'border-b', 'border-gray-400', 'pb-2');
+        // console.log(title_info)
         title.textContent = title_info.title;
         title_section.appendChild(title);
 
@@ -40,7 +44,7 @@ function styleMarkdown(kinds, text, title_info = null) {
         const image = document.createElement('img');
         image.src = title_info.thumbnail;
         image.alt = title_info.title;
-        image.classList.add('w-full', 'h-48', 'object-cover', 'object-center', 'my-4', 'rounded', 'shadow-md', 'mx-auto', 'block', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200');
+        image.classList.add('w-full', 'h-48', 'object-cover', 'object-center', 'my-4', 'rounded', 'shadow-md', 'mx-auto', 'block', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200', 'mb-2');
         title_section.appendChild(image);
 
         // date과 category를 담는 div
@@ -62,7 +66,7 @@ function styleMarkdown(kinds, text, title_info = null) {
 
 
         // section styling
-        title_section.classList.add('w-full', 'mb-8', 'shadow-md', 'text-white', 'bg-[#22272e]', 'rounded-lg', 'p-8');
+        title_section.classList.add('w-full', 'mb-8', 'shadow-md', 'text-white', 'bg-[#22272e]', 'rounded-lg', 'p-4', 'pl-8', 'pr-8', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200');
 
         tempDiv.insertBefore(title_section, tempDiv.firstChild);
     } else if (kinds === 'menu') {

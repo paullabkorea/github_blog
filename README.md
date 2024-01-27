@@ -162,9 +162,8 @@ gantt
     </table>
 
 * 과업
-    * GitHub에서 동작하는지 Check
     * URL 변경 및 URL 입력하여 접속했을 시 그 블로그 글로 바로 가게 수정
-    * 검색하는 기능 추가 
+    * 검색하는 기능 추가
     * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
         * createCardElement 등 render에서 일어나는 styling 모두 수정
     * 각 블로그 글에 뒤로 가기 버튼 만들기

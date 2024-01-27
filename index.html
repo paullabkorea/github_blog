@@ -6,10 +6,24 @@
     <title>GitHub Blog</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+    <style>
+    @keyframes slideDown {
+        from { 
+            transition: all 1s;
+            height: 0px;
+            opacity: 0;
+            }
+        to { 
+            opacity: 1;
+            height: 60px;
+        }
+    }
+    </style>
+
     <!-- tailwind css -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body class="bg-gray-100 font-sans w-full">
     <header class="bg-white shadow">
         <nav class="container mx-auto p-6 flex justify-between items-center">
             <!-- 블로그 제목 영역 -->
@@ -17,12 +31,27 @@
             <!-- // 블로그 제목 영역 -->
 
             <!-- 메뉴 영역 -->
-            <div id="menu" class="flex items-center"></div>
+            <div class="md:hidden">
+                <button class="pt-3" id="menuButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                    </svg>
+                </button>
+            </div>
+
+            <div id="menu" class="hidden md:flex items-center">
+                <!-- 메뉴 아이템들 -->
+            </div>
             <!-- // 메뉴 영역 -->
         </nav>
+        <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
+        <div id="mobileMenu" class="md:hidden"></div>
+        <!-- // 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
     </header>
 
-    <main class="container mx-auto p-6 mt-6">
+
+    <main class="container mx-auto p-4 md:p-[3rem] md:pl-[12rem] md:pr-[12rem]">
+
         <!-- 블로그 포스트 리스트 영역 -->
         <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         <!-- // 블로그 포스트 리스트 영역-->
@@ -35,6 +64,55 @@
     <!-- style -->
     <script src="style/globalStyle.js"></script>
     <script src="style/blogContentsStyle.js"></script>
+
+    <!-- menu toggle -->
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const menu = document.getElementById('menu');
+
+        menuButton.addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenu.innerHTML === '') {
+                // menu의 내용을 mobileMenu에 복사
+                mobileMenu.innerHTML = menu.innerHTML;
+                // 각 메뉴 항목에 애니메이션 스타일 적용
+                const menuItems = mobileMenu.querySelectorAll('a');
+                menuItems.forEach((item, index) => {
+                    item.classList.add('block', 'text-gray-700', 'hover:text-gray-900', 'font-bold', 'text-xl', 'py-2', 'px-4', 'rounded');
+                    item.style.animation = `slideDown forwards ${index * 0.2}s`;
+                    // console.log(item)
+                    // console.log(item.innerText)
+                    // console.log(item.href.split('/').pop())
+                    // itemHref = item.href.split('/').pop();
+                    item.onclick = (event) => {
+                        // 메뉴 링크 클릭 시 이벤트 중지 후 menu 내용을 읽어와 contents 영역에 렌더링
+                        event.preventDefault();
+
+                        if (item.innerText + '.md' === 'blog.md') {
+                            if (blogList.length === 0) {
+                                // 블로그 리스트 로딩 
+                                initDataBlogList()
+                                    .then(() => {
+                                        renderBlogList()
+                                    });
+                            } else {
+                                renderBlogList()
+                            }
+                            const url = new URL(window.location.origin);
+                            url.searchParams.set('menu', item.innerText + '.md');
+                            window.history.pushState({}, '', url);
+                        } else {
+                            renderOtherContents(item.innerText + '.md')
+                        }
+                    }
+                });
+            } else {
+                mobileMenu.innerHTML = '';
+            }
+        });
+
+    </script>
 
     <!-- lender -->
     <script src="config.js"></script>

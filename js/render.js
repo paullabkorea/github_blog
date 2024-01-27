@@ -1,5 +1,5 @@
 // 메뉴 생성 및 메뉴클릭 이벤트 정의
-function renderMenu() {
+async function renderMenu() {
     blogMenu.forEach(menu => {
         // 메뉴 링크 생성
         const link = document.createElement('a');
@@ -19,7 +19,18 @@ function renderMenu() {
             event.preventDefault();
 
             if (menu.name === 'blog.md') {
-                renderBlogList()
+                if (blogList.length === 0) {
+                    // 블로그 리스트 로딩 
+                    initDataBlogList()
+                        .then(() => {
+                            renderBlogList()
+                        });
+                } else {
+                    renderBlogList()
+                }
+                const url = new URL(window.location.origin);
+                url.searchParams.set('menu', menu.name);
+                window.history.pushState({}, '', url);
             } else {
                 renderOtherContents(menu)
             }
@@ -143,7 +154,7 @@ function renderBlogList() {
                     .then(text => styleMarkdown('post', text, postInfo))
                     .then(() => {
                         // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                        const url = new URL(window.location.href);
+                        const url = new URL(window.location.origin);
                         url.searchParams.set('post', post.name);
                         window.history.pushState({}, '', url);
                     });
@@ -155,16 +166,57 @@ function renderBlogList() {
     document.getElementById('contents').style.display = 'none';
 }
 
+function renderBlogDetail(id) {
+    // 아직 활용하고 있지 않은 함수
+    // contents 영역을 보이게 처리
+    document.getElementById('contents').style.display = 'block';
+    // blog-posts 영역을 보이지 않게 처리
+    document.getElementById('blog-posts').style.display = 'none';
+
+    // const postInfo = extractFileInfo(post.name);
+    // if (postInfo) {
+    //     // console.log(postInfo)
+    //     const cardElement = createCardElement(postInfo, index);
+
+    //     cardElement.onclick = (event) => {
+    //         // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
+    //         event.preventDefault();
+    //         // contents 영역을 보이게 처리
+    //         document.getElementById('contents').style.display = 'block';
+    //         // blog-posts 영역을 보이지 않게 처리
+    //         document.getElementById('blog-posts').style.display = 'none';
+    //         fetch(post.download_url)
+    //             .then(response => response.text())
+    //             .then(text => styleMarkdown('post', text, postInfo))
+    //             .then(() => {
+    //                 // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+    //                 const url = new URL(window.location.href);
+    //                 url.searchParams.set('post', post.name);
+    //                 window.history.pushState({}, '', url);
+    //             });
+    //     };
+    //     document.getElementById('blog-posts').appendChild(cardElement);
+    // }
+}
+
 function renderOtherContents(menu) {
     // main 영역에 blog.md를 제외한 다른 파일을 렌더링
     document.getElementById('blog-posts').style.display = 'none';
     document.getElementById('contents').style.display = 'block';
+
+    // 만약 menu가 string type 이라면 download_url, name을 menu로 설정
+    if (typeof (menu) === 'string') {
+        menu = {
+            download_url: origin + '/menu/' + menu,
+            name: menu.split('/')[menu.split('/').length - 1]
+        }
+    }
     fetch(menu.download_url)
         .then(response => response.text())
-        .then(text => styleMarkdown('menu', text))
+        .then(text => styleMarkdown('menu', text, undefined))
         .then(() => {
             // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-            const url = new URL(window.location.href);
+            const url = new URL(window.location.origin);
             url.searchParams.set('menu', menu.name);
             window.history.pushState({}, '', url);
         });
@@ -175,12 +227,57 @@ function renderOtherContents(menu) {
 // blogList와 blogMenu는 initData.js에서 정의
 async function initialize() {
     // TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음
-    await initDataBlogList();
-    // console.log('blogList');
-    await initDataBlogMenu();
-    // console.log('blogMenu');
-    renderBlogList();
-    renderMenu();
+    // api 호출 1개를 아낄 수 있음
+
+    // console.log(url);
+    // console.log(origin)
+    // console.log(url.search.split('=')[0]);
+    // console.log(url.search.split('=')[1]);
+    // console.log(decodeURI(url.search.split('=')[1]))
+    if (!url.search.split('=')[1]) {
+        // 메뉴 로딩
+        await initDataBlogMenu();
+        renderMenu();
+
+        // 블로그 리스트 로딩 
+        await initDataBlogList();
+        renderBlogList();
+
+    } else {
+        // 메뉴 로딩
+        await initDataBlogMenu();
+        renderMenu();
+
+        // 블로그 상세 정보 로딩
+        if (url.search.split('=')[0] === '?menu') {
+            document.getElementById('blog-posts').style.display = 'none';
+            document.getElementById('contents').style.display = 'block';
+            fetch(origin + '/menu/' + url.search.split('=')[1])
+                .then(response => response.text())
+                .then(text => styleMarkdown('menu', text))
+                .then(() => {
+                    // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                    const url = new URL(window.location.origin);
+                    url.searchParams.set('menu', url.search.split('=')[1]);
+                    window.history.pushState({}, '', url);
+                });
+        } else if (url.search.split('=')[0] === '?post') {
+            document.getElementById('contents').style.display = 'block';
+            document.getElementById('blog-posts').style.display = 'none';
+            postNameDecode = decodeURI(url.search.split('=')[1]).replaceAll('+', ' ')
+            // console.log(postNameDecode)
+            postInfo = extractFileInfo(postNameDecode)
+            fetch(origin + '/blog/' + postNameDecode)
+                .then(response => response.text())
+                .then(text => styleMarkdown('post', text, postInfo))
+                .then(() => {
+                    // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                    const url = new URL(window.location.origin);
+                    url.searchParams.set('post', url.search.split('=')[1]);
+                    window.history.pushState({}, '', url);
+                });
+        }
+    }
 }
 
 initialize();
