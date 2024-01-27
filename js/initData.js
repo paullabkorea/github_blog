@@ -9,10 +9,10 @@ async function initDataBlogList() {
         // blogList 데이터가 이미 있을 경우
         return blogList;
     }
-
+    // console.log(isLocal)
+    // console.log(origin + '/data/local_blogList.json');
     if (isLocal) {
-        // isLocal이 true일 경우 로컬 테스트 환경
-        const response = await fetch(origin + '/blog');
+        const response = await fetch(origin + '/data/local_blogList.json');
         blogList = await response.json();
     }
     else {
@@ -20,7 +20,6 @@ async function initDataBlogList() {
         const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/blog`);
         blogList = await response.json();
     }
-
     blogList.sort(function (a, b) {
         return b.name.localeCompare(a.name);
     });
@@ -35,7 +34,7 @@ async function initDataBlogMenu() {
 
     if (isLocal) {
         // isLocal이 true일 경우 로컬 테스트 환경
-        const response = await fetch(url.href + '/menu');
+        const response = await fetch(origin + '/data/local_blogMenu.json');
         blogMenu = await response.json();
     }
     else {
@@ -43,6 +42,5 @@ async function initDataBlogMenu() {
         const response = await fetch(`https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/menu`);
         blogMenu = await response.json();
     }
-
     return blogMenu;
 }

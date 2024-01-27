@@ -32,7 +32,7 @@ if (isLocal) {
 
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
-        window.location.href = `http://127.0.0.1${url.port ? url.port : ''}`;
+        window.location.href = `http://127.0.0.1${url.port ? ':' + url.port : ''}`;
     };
 }
 else {
@@ -54,3 +54,20 @@ else {
         window.location.href = `https://${siteConfig.username}.github.io/${siteConfig.repositoryName}/`;
     };
 }
+
+
+// 브라우저의 뒤로가기/앞으로가기 버튼 처리
+window.addEventListener('popstate', (event) => {
+    // 만약에 뒤로 간 곳이 메인 페이지라면
+    if (window.location.pathname === '/') {
+        // 메뉴를 다시 렌더링
+        renderBlogList();
+    }
+    else {
+        // TODO: 뒤로가기/앞으로가기 버튼을 눌렀을 때 처리
+        // 그렇지 않고 포스트 목록이라면 포스트 렌더링
+        // renderPost();
+        // 그렇지 않고 메뉴라면 메뉴 렌더링
+        // renderMenu();
+    }
+});

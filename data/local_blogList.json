@@ -1,0 +1,18 @@
+[
+    {
+        "name": "[20240118]_[title_test]_[python]_[]_[파이썬은 놀라운 언어입니다.].md",
+        "download_url": "/blog/[20240118]_[title_test]_[python]_[]_[파이썬은 놀라운 언어입니다.].md"
+    },
+    {
+        "name": "[20240119]_[title_test2]_[django]_[test.png]_[파이썬은 정말 재미있습니다.].md",
+        "download_url": "/blog/[20240119]_[title_test2]_[django]_[test.png]_[파이썬은 정말 재미있습니다.].md"
+    },
+    {
+        "name": "[20240122]_[AI가 IT 업계와 교육에 가져온 것]_[AI]_[빌게이츠_샘알트먼.jpg]_[빌 게이츠와 샘 알트먼의 대화 중 AI에 역할에 대해].md",
+        "download_url": "/blog/[20240122]_[AI가 IT 업계와 교육에 가져온 것]_[AI]_[빌게이츠_샘알트먼.jpg]_[빌 게이츠와 샘 알트먼의 대화 중 AI에 역할에 대해].md"
+    },
+    {
+        "name": "[date]_[title]_[category]_[thumnail]_[description].md",
+        "download_url": "/blog/%5Bdate%5D_%5Btitle%5D_%5Bcategory%5D_%5Bthumnail%5D_%5Bdescription%5D.md"
+    }
+]

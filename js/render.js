@@ -6,7 +6,7 @@ function renderMenu() {
 
         // <div id="contents" class="mt-6 grid-cols-3"></div> 안에 들어가는 link들의 스타일링
         // menuListStyle는 gobalStyle.js에 정의되어 있음
-        link.classList.add(menuListStyle);
+        link.classList.add(...menuListStyle.split(" "));
         link.classList.add(`${menu.name}`);
 
         link.href = menu.download_url;
@@ -19,28 +19,15 @@ function renderMenu() {
             event.preventDefault();
 
             if (menu.name === 'blog.md') {
-                // 메뉴에서 blog.md를 클릭했을 경우
-                // 만약 블로그라면 contents 영역을 없애고 블로그 포스트 목록을 보여줌
-                document.getElementById('contents').style.display = 'none';
-                document.getElementById('blog-posts').style.display = 'grid';
-                // readPostList();
                 renderBlogList()
             } else {
-                // 메뉴에서 blog.md를 제외한 다른 파일을 클릭했을 경우
-                // 그렇지 않으면 blog-posts를 비우고 contents 영역에 파일 내용을 렌더링
-                document.getElementById('blog-posts').style.display = 'none';
-                document.getElementById('contents').style.display = 'block';
-                // fetch(menu.download_url)
-                //     .then(response => response.text())
-                //     .then(text => styleMarkdown(text));
-                renderOtherContents()
+                renderOtherContents(menu)
             }
 
         };
         document.getElementById('menu').appendChild(link);
     });
 }
-renderMenu();
 
 function extractFileInfo(filename) {
     // 파일 이름에서 정보 추출하는 함수
@@ -62,18 +49,45 @@ function extractFileInfo(filename) {
     return null;
 }
 
-function createCardElement(fileInfo) {
+function formatDate(dateString) {
+    // YYYYMMDD 형식의 문자열을 받아 YYYY/MM/DD 형식으로 변환
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(4, 6);
+    const day = dateString.substring(6, 8);
+
+    return `${year}/${month}/${day}`;
+}
+
+function createCardElement(fileInfo, index) {
     // 파일 정보를 기반으로 카드 HTML 생성
 
     const card = document.createElement('div');
-    card.classList.add('max-w-sm', 'rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
-    card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+    // console.log(index)
+    if (index === 1) {
+        card.classList.add('col-span-3');
+        // card의 높이를 1/3로 설정
+        card.style.height = 'calc(100vh / 3)';
+        card.classList.add('rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
+        card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+    }
+    else {
+        card.classList.add('max-w-sm', 'rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
+        card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+    }
 
     if (fileInfo.thumbnail) {
         const img = document.createElement('img');
         img.src = fileInfo.thumbnail;
         img.alt = fileInfo.title;
-        img.classList.add('w-full', 'h-48', 'object-cover', 'object-center');
+        if (index === 1) {
+            img.classList.add('w-full', 'object-cover', 'object-center');
+            // 이미지의 높이를 100%로 설정
+            img.style.height = '70%';
+
+        }
+        else {
+            img.classList.add('w-full', 'h-48', 'object-cover', 'object-center');
+        }
         card.appendChild(img);
     }
 
@@ -109,12 +123,13 @@ function createCardElement(fileInfo) {
 
 function renderBlogList() {
     // main 영역에 블로그 포스트 목록을 렌더링
+    document.getElementById('blog-posts').style.display = 'grid';
     document.getElementById('blog-posts').innerHTML = '';
-    blogList.forEach(post => {
+    blogList.forEach((post, index) => {
         const postInfo = extractFileInfo(post.name);
         if (postInfo) {
             // console.log(postInfo)
-            const cardElement = createCardElement(postInfo);
+            const cardElement = createCardElement(postInfo, index);
 
             cardElement.onclick = (event) => {
                 // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
@@ -125,7 +140,13 @@ function renderBlogList() {
                 document.getElementById('blog-posts').style.display = 'none';
                 fetch(post.download_url)
                     .then(response => response.text())
-                    .then(text => styleMarkdown(text));
+                    .then(text => styleMarkdown('post', text, postInfo))
+                    .then(() => {
+                        // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('post', post.name);
+                        window.history.pushState({}, '', url);
+                    });
             };
             document.getElementById('blog-posts').appendChild(cardElement);
         }
@@ -134,9 +155,32 @@ function renderBlogList() {
     document.getElementById('contents').style.display = 'none';
 }
 
-function renderOtherContents() {
+function renderOtherContents(menu) {
     // main 영역에 blog.md를 제외한 다른 파일을 렌더링
+    document.getElementById('blog-posts').style.display = 'none';
+    document.getElementById('contents').style.display = 'block';
     fetch(menu.download_url)
         .then(response => response.text())
-        .then(text => styleMarkdown(text));
+        .then(text => styleMarkdown('menu', text))
+        .then(() => {
+            // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+            const url = new URL(window.location.href);
+            url.searchParams.set('menu', menu.name);
+            window.history.pushState({}, '', url);
+        });
 }
+
+// 실행영역
+// URLparsing은 index.html에서 실행
+// blogList와 blogMenu는 initData.js에서 정의
+async function initialize() {
+    // TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음
+    await initDataBlogList();
+    // console.log('blogList');
+    await initDataBlogMenu();
+    // console.log('blogMenu');
+    renderBlogList();
+    renderMenu();
+}
+
+initialize();

@@ -1,7 +1,8 @@
 // 마크다운으로 읽어온 내용을 HTML로 변환하여 tailwind를 사용한 스타일링
-function styleMarkdown(text) {
-    const html = marked.parse(text);
+function styleMarkdown(kinds, text, title_info = null) {
+
     const tempDiv = document.createElement('div');
+    const html = marked.parse(text);
     tempDiv.innerHTML = html;
 
     tempDiv.querySelectorAll('h1').forEach(h1 => h1.classList.add('text-2xl', 'font-bold', 'mb-6', 'mt-8', 'border-b', 'border-gray-400', 'pb-2'));
@@ -24,6 +25,48 @@ function styleMarkdown(text) {
     tempDiv.querySelectorAll('th').forEach(th => th.classList.add('border', 'px-4', 'py-2', 'font-semibold', 'text-sm', 'uppercase', 'text-gray-700'));
     tempDiv.querySelectorAll('tbody').forEach(tbody => tbody.classList.add('text-center'));
     tempDiv.querySelectorAll('td').forEach(td => td.classList.add('border', 'px-4', 'py-2', 'text-sm', 'text-gray-700'));
+
+    if (kinds === 'post') {
+        const title_section = document.createElement('div');
+
+        // title
+        const title = document.createElement('h1');
+        title.classList.add('text-4xl', 'font-bold', 'mb-6', 'mt-8', 'border-b', 'border-gray-400', 'pb-2');
+        console.log(title_info)
+        title.textContent = title_info.title;
+        title_section.appendChild(title);
+
+        // image
+        const image = document.createElement('img');
+        image.src = title_info.thumbnail;
+        image.alt = title_info.title;
+        image.classList.add('w-full', 'h-48', 'object-cover', 'object-center', 'my-4', 'rounded', 'shadow-md', 'mx-auto', 'block', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200');
+        title_section.appendChild(image);
+
+        // date과 category를 담는 div
+        const date_category = document.createElement('div');
+        date_category.classList.add('flex', 'justify-end', 'mb-4');
+        title_section.appendChild(date_category);
+
+        // category
+        const category = document.createElement('div');
+        category.classList.add('text-sm', 'text-white', 'font-light', 'tracking-wide', 'text-justify');
+        category.textContent = 'category: ' + title_info.category;
+        date_category.appendChild(category);
+
+        // date
+        const date = document.createElement('div');
+        date.classList.add('text-sm', 'text-white', 'font-light', 'tracking-wide', 'text-justify', 'ml-4');
+        date.textContent = 'date: ' + formatDate(title_info.date);
+        date_category.appendChild(date);
+
+
+        // section styling
+        title_section.classList.add('w-full', 'mb-8', 'shadow-md', 'text-white', 'bg-[#22272e]', 'rounded-lg', 'p-8');
+
+        tempDiv.insertBefore(title_section, tempDiv.firstChild);
+    } else if (kinds === 'menu') {
+    }
 
     document.getElementById('contents').innerHTML = tempDiv.innerHTML;
 }

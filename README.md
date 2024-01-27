@@ -162,13 +162,13 @@ gantt
     </table>
 
 * 과업
-    * 동작하게 아키텍처 다듬기
+    * GitHub에서 동작하는지 Check
+    * URL 변경 및 URL 입력하여 접속했을 시 그 블로그 글로 바로 가게 수정
+    * 검색하는 기능 추가 
     * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
-        * createCardElement에 있는 스타일도 모두 global로 이동
+        * createCardElement 등 render에서 일어나는 styling 모두 수정
     * 각 블로그 글에 뒤로 가기 버튼 만들기
-    * 검색 기능
     * 'blog.md'파일을 어떻게 할지 의사결정 필요
-    * 메인 페이지 스타일링
     * API 호출 최소화
         * ?Postlist=1: 목록을 호출할 필요 없음
         * ?없을 때에는 목록을 호출할 필요 있음
@@ -178,8 +178,6 @@ gantt
         * default는 config
         * 다른 분들과 함께 집필할 때에는 호출하게
     * 와이어프레임
-    * 기획 문서 기획 서적 참고하여 수정
-    * url 변경
 
 * 참고
     * https://github.blog/category/engineering/ 스타일을 참고
