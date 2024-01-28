@@ -99,7 +99,7 @@
                             } else {
                                 renderBlogList()
                             }
-                            const url = new URL(window.location.origin);
+                            const url = new URL(origin);
                             url.searchParams.set('menu', item.innerText + '.md');
                             window.history.pushState({}, '', url);
                         } else {

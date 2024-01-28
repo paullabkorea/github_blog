@@ -28,7 +28,7 @@ async function renderMenu() {
                 } else {
                     renderBlogList()
                 }
-                const url = new URL(window.location.origin);
+                const url = new URL(origin);
                 url.searchParams.set('menu', menu.name);
                 window.history.pushState({}, '', url);
             } else {
@@ -154,7 +154,7 @@ function renderBlogList() {
                     .then(text => styleMarkdown('post', text, postInfo))
                     .then(() => {
                         // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                        const url = new URL(window.location.origin);
+                        const url = new URL(origin);
                         url.searchParams.set('post', post.name);
                         window.history.pushState({}, '', url);
                     });
@@ -207,7 +207,7 @@ function renderOtherContents(menu) {
     // 만약 menu가 string type 이라면 download_url, name을 menu로 설정
     if (typeof (menu) === 'string') {
         menu = {
-            download_url: origin + '/menu/' + menu,
+            download_url: origin + 'menu/' + menu,
             name: menu.split('/')[menu.split('/').length - 1]
         }
     }
@@ -216,7 +216,7 @@ function renderOtherContents(menu) {
         .then(text => styleMarkdown('menu', text, undefined))
         .then(() => {
             // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-            const url = new URL(window.location.origin);
+            const url = new URL(origin);
             url.searchParams.set('menu', menu.name);
             window.history.pushState({}, '', url);
         });
@@ -252,12 +252,12 @@ async function initialize() {
         if (url.search.split('=')[0] === '?menu') {
             document.getElementById('blog-posts').style.display = 'none';
             document.getElementById('contents').style.display = 'block';
-            fetch(origin + '/menu/' + url.search.split('=')[1])
+            fetch(origin + 'menu/' + url.search.split('=')[1])
                 .then(response => response.text())
                 .then(text => styleMarkdown('menu', text))
                 .then(() => {
                     // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                    const url = new URL(window.location.origin);
+                    const url = new URL(origin);
                     url.searchParams.set('menu', url.search.split('=')[1]);
                     window.history.pushState({}, '', url);
                 });
@@ -267,12 +267,12 @@ async function initialize() {
             postNameDecode = decodeURI(url.search.split('=')[1]).replaceAll('+', ' ')
             // console.log(postNameDecode)
             postInfo = extractFileInfo(postNameDecode)
-            fetch(origin + '/blog/' + postNameDecode)
+            fetch(origin + 'blog/' + postNameDecode)
                 .then(response => response.text())
                 .then(text => styleMarkdown('post', text, postInfo))
                 .then(() => {
                     // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                    const url = new URL(window.location.origin);
+                    const url = new URL(origin);
                     url.searchParams.set('post', url.search.split('=')[1]);
                     window.history.pushState({}, '', url);
                 });
