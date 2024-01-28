@@ -54,7 +54,7 @@ function extractFileInfo(filename) {
             title: matches[2],
             category: matches[3],
             thumbnail: matches[4] ? 'img/' + matches[4] : 'img/default.png',
-            description: matches[5]
+            description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5]
         };
     }
     return null;
@@ -75,9 +75,22 @@ function createCardElement(fileInfo, index) {
     const card = document.createElement('div');
     // console.log(index)
     if (index === 1) {
-        card.classList.add('col-span-3');
-        // card의 높이를 1/3로 설정
-        card.style.height = 'calc(100vh / 3)';
+        card.classList.add('col-span-3', 'h-auto');
+        // 모바일일 경우 card의 높이를 1/3로 설정
+        if (window.innerWidth <= 390) {
+            card.style.height = 'calc(100vh / 1.3)';
+        }
+        else if (window.innerWidth <= 430) {
+            card.style.height = 'calc(100vh / 2.0)';
+        }
+        else if (window.innerWidth <= 640) {
+            card.style.height = 'calc(100vh / 2.4)';
+        }
+        else if (window.innerWidth <= 768) {
+            card.style.height = 'calc(100vh / 2.8)';
+        } else {
+            card.style.height = 'calc(100vh / 3)';
+        }
         card.classList.add('rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
         card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
     }
