@@ -257,8 +257,7 @@ async function initialize() {
                 .then(text => styleMarkdown('menu', text))
                 .then(() => {
                     // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                    const url = new URL(origin);
-                    url.searchParams.set('menu', url.search.split('=')[1]);
+                    const url = new URL(window.location.href);
                     window.history.pushState({}, '', url);
                 });
         } else if (url.search.split('=')[0] === '?post') {
@@ -272,8 +271,7 @@ async function initialize() {
                 .then(text => styleMarkdown('post', text, postInfo))
                 .then(() => {
                     // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                    const url = new URL(origin);
-                    url.searchParams.set('post', url.search.split('=')[1]);
+                    const url = new URL(window.location.href);
                     window.history.pushState({}, '', url);
                 });
         }
