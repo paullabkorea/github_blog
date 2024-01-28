@@ -33,8 +33,10 @@ menuButton.addEventListener('click', () => {
                     const url = new URL(origin);
                     url.searchParams.set('menu', item.innerText + '.md');
                     window.history.pushState({}, '', url);
+                    mobileMenu.innerHTML = '';
                 } else {
                     renderOtherContents(item.innerText + '.md')
+                    mobileMenu.innerHTML = '';
                 }
             }
         });
