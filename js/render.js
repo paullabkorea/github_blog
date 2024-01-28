@@ -44,7 +44,7 @@ function extractFileInfo(filename) {
     // 파일 이름에서 정보 추출하는 함수
 
     // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일 정보 추출
-    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].md$/;
+    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].(md|ipynb)$/;
     const matches = filename.match(regex);
     // console.log(`extractFileInfo: ${matches}`);
 
@@ -54,7 +54,8 @@ function extractFileInfo(filename) {
             title: matches[2],
             category: matches[3],
             thumbnail: matches[4] ? 'img/' + matches[4] : 'img/default.png',
-            description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5]
+            description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5],
+            fileType: matches[6]
         };
     }
     return null;
@@ -164,7 +165,7 @@ function renderBlogList() {
                 document.getElementById('blog-posts').style.display = 'none';
                 fetch(post.download_url)
                     .then(response => response.text())
-                    .then(text => styleMarkdown('post', text, postInfo))
+                    .then(text => postInfo.fileType === 'md' ? styleMarkdown('post', text, postInfo) : styleJupyter('post', text, postInfo))
                     .then(() => {
                         // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
                         const url = new URL(origin);
@@ -281,7 +282,7 @@ async function initialize() {
             postInfo = extractFileInfo(postNameDecode)
             fetch(origin + 'blog/' + postNameDecode)
                 .then(response => response.text())
-                .then(text => styleMarkdown('post', text, postInfo))
+                .then(text => postInfo.fileType === 'md' ? styleMarkdown('post', text, postInfo) : styleJupyter('post', text, postInfo))
                 .then(() => {
                     // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
                     const url = new URL(window.location.href);
