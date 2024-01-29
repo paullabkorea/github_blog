@@ -105,9 +105,34 @@ function styleJupyter(kinds, text, title_info = null) {
 
     });
 
-    tempDiv.querySelectorAll('pre').forEach(pre => pre.classList.add('bg-gray-100', 'p-4', 'rounded', 'mb-4', 'text-sm', 'font-mono', 'overflow-auto', 'whitespace-pre-wrap', 'break-words', 'text-justify', 'shadow-md', 'max-w-full', 'h-auto', 'align-middle', 'border-none', 'border-gray-200'));
+    tempDiv.querySelectorAll('pre').forEach(pre => {
+        pre.classList.add('bg-gray-100', 'relative', 'p-4', 'rounded', 'mb-4', 'text-sm', 'font-mono', 'overflow-auto', 'whitespace-pre-wrap', 'break-words', 'text-justify', 'shadow-md', 'max-w-full', 'h-auto', 'align-middle', 'border-gray-200', 'hover:border-gray-600', 'hover:border', 'hover:z-10', 'hover:-translate-y-0.5', 'hover:-translate-x-0.5');
 
+        // 복사 버튼 생성
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Copy';
+        copyButton.classList.add('copy-button', 'absolute', 'top-2', 'right-2', 'p-2', 'text-sm', 'font-semibold', 'text-white', 'bg-gray-600', 'rounded', 'hover:bg-gray-700', 'hover:shadow-md');
 
-    document.getElementById('contents').innerHTML = tempDiv.innerHTML;
+        // 복사 버튼 클릭 이벤트
+        copyButton.addEventListener('click', async function (event) {
+            event.stopPropagation(); // 이벤트 버블링을 막습니다.
+            try {
+                await navigator.clipboard.writeText(pre.textContent);
+                alert('Copied!');
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                alert('Copy failed.');
+            }
+        });
+
+        // pre 요소 안에 버튼 삽입
+        pre.appendChild(copyButton);
+    });
+
+    const contentsDiv = document.getElementById('contents');
+    while (contentsDiv.firstChild) {
+        contentsDiv.removeChild(contentsDiv.firstChild);
+    }
+    contentsDiv.appendChild(tempDiv);
     hljs.highlightAll();
 }

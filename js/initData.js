@@ -12,7 +12,7 @@ async function initDataBlogList() {
     // console.log(isLocal)
     // console.log(origin + '/data/local_blogList.json');
     if (isLocal) {
-        const response = await fetch(origin + 'data/local_blogList.json');
+        const response = await fetch(origin.split('/')[0] + '/data/local_blogList.json');
         blogList = await response.json();
     }
     else {
@@ -34,7 +34,7 @@ async function initDataBlogMenu() {
 
     if (isLocal) {
         // isLocal이 true일 경우 로컬 테스트 환경
-        const response = await fetch(origin + 'data/local_blogMenu.json');
+        const response = await fetch(origin.split('/')[0] + '/data/local_blogMenu.json');
         blogMenu = await response.json();
     }
     else {
