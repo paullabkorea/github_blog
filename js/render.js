@@ -60,14 +60,19 @@ async function renderMenu() {
             searchInput.type = 'text';
             searchInput.placeholder = '검색어를 입력하세요';
             searchInput.onkeyup = (event) => {
-                if (event.keyCode === 13) {
+                if (event.key === 'Enter') {
                     // 엔터키 입력 시 검색 실행
                     search();
                 }
             };
 
+            // 검색 창 클릭 시 이벤트 버블링 방지
+            searchInput.onclick = (event) => {
+                event.stopPropagation();
+            };
+
             // Tailwind CSS를 사용하여 스타일 지정
-            searchInput.classList.add('absolute', 'top-20', 'right-8', 'w-[220px]', 'h-8', 'rounded-md', 'border', 'border-gray-300', 'pl-2', 'text-base', 'font-bold', 'text-gray-600', 'outline-none', 'box-border', 'transition', 'duration-300', 'ease-in-out', 'shadow-none', 'bg-white', 'bg-clip-padding');
+            searchInput.classList.add('absolute', 'top-20', 'right-8', 'w-[220px]', 'h-10', 'rounded-md', 'border', 'border-gray-300', 'pl-2', 'text-base', 'font-bold', 'text-gray-600', 'outline-none', 'box-border', 'transition', 'duration-300', 'ease-in-out', 'shadow-none', 'bg-white', 'bg-clip-padding');
 
             // 검색을 클릭하면 그 아래 생성하기 위해 검색 버튼의 아래에 생성
             document.querySelector('.search').appendChild(searchInput);
