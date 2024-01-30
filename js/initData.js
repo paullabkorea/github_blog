@@ -14,6 +14,15 @@ async function initDataBlogList() {
     if (isLocal) {
         const response = await fetch(origin.split('/')[0] + '/data/local_blogList.json');
         blogList = await response.json();
+
+        // 정규표현식에 맞지 않는 파일은 제외하여 blogList에 재할당
+        blogList = blogList.filter(post => {
+            const postInfo = extractFileInfo(post.name);
+            if (postInfo) {
+                return post;
+            }
+        });
+
     }
     else {
         // github 배포 상태
@@ -23,6 +32,15 @@ async function initDataBlogList() {
     blogList.sort(function (a, b) {
         return b.name.localeCompare(a.name);
     });
+
+    // 정규표현식에 맞지 않는 파일은 제외하여 blogList에 재할당
+    blogList = blogList.filter(post => {
+        const postInfo = extractFileInfo(post.name);
+        if (postInfo) {
+            return post;
+        }
+    });
+
     return blogList;
 }
 

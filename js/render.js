@@ -1,3 +1,22 @@
+function search() {
+    // 검색어를 읽어와 blogList에서 검색
+    const searchInput = document.getElementById('search-input');
+    const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
+    // console.log(searchKeyword);
+    // console.log(blogList);
+    const searchResult = blogList.filter(post => {
+        // console.log(post.name);
+        // console.log(post.name.includes(searchKeyword));
+        // 대소문자 가리지 않고 검색
+        if (post.name.toLowerCase().includes(searchKeyword)) {
+            return post;
+        }
+    });
+    // console.log(searchResult);
+    // 검색 결과를 렌더링
+    renderBlogList(searchResult);
+}
+
 // 메뉴 생성 및 메뉴클릭 이벤트 정의
 async function renderMenu() {
     blogMenu.forEach(menu => {
@@ -123,9 +142,11 @@ function formatDate(dateString) {
 function createCardElement(fileInfo, index) {
     // 파일 정보를 기반으로 카드 HTML 생성
 
+    // console.log(fileInfo, index)
+
     const card = document.createElement('div');
     // console.log(index)
-    if (index === 1) {
+    if (index === 0) {
         card.classList.add('col-span-3', 'h-auto');
         // 모바일일 경우 card의 높이를 1/3로 설정
         if (window.innerWidth <= 390) {
@@ -196,38 +217,75 @@ function createCardElement(fileInfo, index) {
     return card;
 }
 
-function renderBlogList() {
+function renderBlogList(searchResult) {
     // main 영역에 블로그 포스트 목록을 렌더링
-    document.getElementById('blog-posts').style.display = 'grid';
-    document.getElementById('blog-posts').innerHTML = '';
-    blogList.forEach((post, index) => {
-        const postInfo = extractFileInfo(post.name);
-        if (postInfo) {
-            // console.log(postInfo)
-            const cardElement = createCardElement(postInfo, index);
+    if (searchResult) {
+        // 검색 keyword가 있을 경우
+        console.log(searchResult)
+        document.getElementById('blog-posts').style.display = 'grid';
+        document.getElementById('blog-posts').innerHTML = '';
+        searchResult.forEach((post, index) => {
+            const postInfo = extractFileInfo(post.name);
+            if (postInfo) {
+                // console.log(postInfo)
+                const cardElement = createCardElement(postInfo, index);
 
-            cardElement.onclick = (event) => {
-                // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
-                event.preventDefault();
-                // contents 영역을 보이게 처리
-                document.getElementById('contents').style.display = 'block';
-                // blog-posts 영역을 보이지 않게 처리
-                document.getElementById('blog-posts').style.display = 'none';
-                fetch(post.download_url)
-                    .then(response => response.text())
-                    .then(text => postInfo.fileType === 'md' ? styleMarkdown('post', text, postInfo) : styleJupyter('post', text, postInfo))
-                    .then(() => {
-                        // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-                        const url = new URL(origin);
-                        url.searchParams.set('post', post.name);
-                        window.history.pushState({}, '', url);
-                    });
-            };
-            document.getElementById('blog-posts').appendChild(cardElement);
-        }
-    });
-    // contents 영역을 보이지 않게 처리
-    document.getElementById('contents').style.display = 'none';
+                cardElement.onclick = (event) => {
+                    // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
+                    event.preventDefault();
+                    // contents 영역을 보이게 처리
+                    document.getElementById('contents').style.display = 'block';
+                    // blog-posts 영역을 보이지 않게 처리
+                    document.getElementById('blog-posts').style.display = 'none';
+                    fetch(post.download_url)
+                        .then(response => response.text())
+                        .then(text => postInfo.fileType === 'md' ? styleMarkdown('post', text, postInfo) : styleJupyter('post', text, postInfo))
+                        .then(() => {
+                            // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                            const url = new URL(origin);
+                            url.searchParams.set('post', post.name);
+                            window.history.pushState({}, '', url);
+                        });
+                };
+                document.getElementById('blog-posts').appendChild(cardElement);
+            }
+        });
+        // contents 영역을 보이지 않게 처리
+        document.getElementById('contents').style.display = 'none';
+    } else {
+        // 검색 keyword가 없을 경우
+        document.getElementById('blog-posts').style.display = 'grid';
+        document.getElementById('blog-posts').innerHTML = '';
+
+        blogList.forEach((post, index) => {
+            const postInfo = extractFileInfo(post.name);
+            if (postInfo) {
+                // console.log(postInfo)
+                const cardElement = createCardElement(postInfo, index);
+
+                cardElement.onclick = (event) => {
+                    // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
+                    event.preventDefault();
+                    // contents 영역을 보이게 처리
+                    document.getElementById('contents').style.display = 'block';
+                    // blog-posts 영역을 보이지 않게 처리
+                    document.getElementById('blog-posts').style.display = 'none';
+                    fetch(post.download_url)
+                        .then(response => response.text())
+                        .then(text => postInfo.fileType === 'md' ? styleMarkdown('post', text, postInfo) : styleJupyter('post', text, postInfo))
+                        .then(() => {
+                            // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                            const url = new URL(origin);
+                            url.searchParams.set('post', post.name);
+                            window.history.pushState({}, '', url);
+                        });
+                };
+                document.getElementById('blog-posts').appendChild(cardElement);
+            }
+        });
+        // contents 영역을 보이지 않게 처리
+        document.getElementById('contents').style.display = 'none';
+    }
 }
 
 function renderOtherContents(menu) {

@@ -169,22 +169,13 @@ gantt
     </table>
 
 * 과업
-    * 주피터 노트북 HTML 처리
-    * URL 변경 및 URL 입력하여 접속했을 시 그 블로그 글로 바로 가게 수정
-    * 검색하는 기능 추가
     * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
         * createCardElement 등 render에서 일어나는 styling 모두 수정
-    * 각 블로그 글에 뒤로 가기 버튼 만들기
+        * 모든 스타일은 하나의 파일에서 수정하게 변경
     * 'blog.md'파일을 어떻게 할지 의사결정 필요
-    * API 호출 최소화
-        * ?Postlist=1: 목록을 호출할 필요 없음
-        * ?없을 때에는 목록을 호출할 필요 있음
-    * 페이지에 2개의 contents 영역이 block, none으로 표시되고 있는 것을 처리
-    * grid 스타일링
     * user 정보 입력
         * default는 config
         * 다른 분들과 함께 집필할 때에는 호출하게
-    * 와이어프레임
 
 * 애러와 애러 해결(트러블슈팅 히스토리)
     * 모바일 메뉴 설계
@@ -193,10 +184,11 @@ gantt
         * API 호출을 최소화 하여 하루 200번의 호출을 아낄 수 있도록 코드를 짜다보니 많은 부분에서 모듈화가 과하게 들어감. 구조가 다소 복잡해짐.
     * 사용자의 사용 복잡도
         * 만약 local_blogList.json을 사용자가 작성할 수 있다면 API 호출이 필요 없음. 이것을 가능하게 하는 코드는 프로젝트 흥행과 더불어 진행.
+        * 또는 사용자가 이것을 선택할 수 있는 옵션 설정
     * 로컬에서 제대로 작동하지만 배포해서는 작동하지 않는 이슈가 있음. 아직 미해결.
         * URLpasing이 잘못되었다는 것을 확인. local에서는 origin에 port 붙이고 뒤에 쿼리스트링을 붙였고 github에서는 `https://paullabkorea.github.io/github_blog/`구조인데 `https://paullabkorea.github.io/`로 파싱되어 `https://paullabkorea.github.io/?menu=about`식으로 저장되고 있었음.
         * `new URL(window.location.href)`와 `new URL('https://paullabkorea.github.io/github_blog/?menu=about')`를 테스트하여 서버에서도 동작하도록 수정
-    * `https://paullabkorea.github.io/github_blog/?post=%5B20240122%5D_%5BAI%EA%B0%80+IT+%EC%97%85%EA%B3%84%EC%99%80+%EA%B5%90%EC%9C%A1%EC%97%90+%EA%B0%80%EC%A0%B8%EC%98%A8+%EA%B2%83%5D_%5BAI%5D_%5B%EB%B9%8C%EA%B2%8C%EC%9D%B4%EC%B8%A0_%EC%83%98%EC%95%8C%ED%8A%B8%EB%A8%BC.jpg%5D_%5B%EB%B9%8C+%EA%B2%8C%EC%9D%B4%EC%B8%A0%EC%99%80+%EC%83%98+%EC%95%8C%ED%8A%B8%EB%A8%BC%EC%9D%98+%EB%8C%80%ED%99%94+%EC%A4%91+AI%EC%97%90+%EC%97%AD%ED%95%A0%EC%97%90+%EB%8C%80%ED%95%B4%5D.md` 로 접속시 `https://paullabkorea.github.io/github_blog/?post=undefined`로 URL이 변경되는 케이스가 있어 확인중
+    * `https://paullabkorea.github.io/github_blog/?post=%5B20240122%5D_%5BAI%EA%B0%80+IT+%EC%97%85%EA%B3%84%EC%99%80+%EA%B5%90%EC%9C%A1%EC%97%90+%EA%B0%80%EC%A0%B8%EC%98%A8+%EA%B2%83%5D_%5BAI%5D_%5B%EB%B9%8C%EA%B2%8C%EC%9D%B4%EC%B8%A0_%EC%83%98%EC%95%8C%ED%8A%B8%EB%A8%BC.jpg%5D_%5B%EB%B9%8C+%EA%B2%8C%EC%9D%B4%EC%B8%A0%EC%99%80+%EC%83%98+%EC%95%8C%ED%8A%B8%EB%A8%BC%EC%9D%98+%EB%8C%80%ED%99%94+%EC%A4%91+AI%EC%97%90+%EC%97%AD%ED%95%A0%EC%97%90+%EB%8C%80%ED%95%B4%5D.md` 로 접속시 `https://paullabkorea.github.io/github_blog/?post=undefined`로 URL이 변경되는 케이스 발견
         * URL 변경을 origin 기준이 아니라 href에서 host + repo 이름으로 변경
     * 주피터노트북 변환에서 ipynb 파일 안에 code가 `f'<h1>hello</h1>'`으로 되어 있으면 h1으로 해석되는 경우가 생김
         * map이나 filter 변환에도 같은 이슈가 있어서 코드블록은 엔티티 코드로 변환
@@ -209,6 +201,9 @@ gantt
                     event.stopPropagation();
                 };
             ```
+    * (해결중) 검색기능 구현 후 UI가 깨지는 문제 발생
+        * 정규표현식에 맞지 않는 post까지 blogList에 들어있어 blogList를 처음 세팅할 때 정규표현식에 맞지 않는 것들을 제외
+        * 이렇게 설정하니 UI가 깨지는 문제가 발생 => 확인 필요
 
 
 
