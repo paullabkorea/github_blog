@@ -25,17 +25,17 @@ function convertIpynvToHtml(fileContent) {
                     if (output.data) {
                         if (output.output_type === 'execute_result' || output.output_type === 'display_data' || output.output_type === 'stream') {
                             if (output.data['text/html']) {
-                                htmlContent += output.data['text/html'].join('');
+                                htmlContent += escapeHtml(output.data['text/html'].join(''));
                             } else if (output.data['text/plain']) {
-                                htmlContent += `<pre>${output.data['text/plain'].join('')}</pre>`;
+                                htmlContent += `<pre>${escapeHtml(output.data['text/plain'].join(''))}</pre>`;
                             } else if (output.data['image/png']) {
-                                htmlContent += `<img src="data:image/png;base64,${output.data['image/png'].join('')}" alt="output image" />`;
+                                htmlContent += `<img src="data:image/png;base64,${escapeHtml(output.data['image/png'].join(''))}" alt="output image" />`;
                             } else if (output.data['image/jpeg']) {
-                                htmlContent += `<img src="data:image/jpeg;base64,${output.data['image/jpeg'].join('')}" alt="output image" />`;
+                                htmlContent += `<img src="data:image/jpeg;base64,${escapeHtml(output.data['image/jpeg'].join(''))}" alt="output image" />`;
                             }
                         }
                     } else if (output.output_type === 'error') {
-                        htmlContent += `<pre class="error">${output.traceback.join('')}</pre>`;
+                        htmlContent += `<pre class="error">${escapeHtml(output.traceback.join(''))}</pre>`;
                     }
                 });
             }

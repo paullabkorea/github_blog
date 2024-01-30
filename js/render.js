@@ -38,6 +38,51 @@ async function renderMenu() {
         };
         document.getElementById('menu').appendChild(link);
     });
+
+    // 검색 버튼 생성
+    const searchButton = document.createElement('button');
+    searchButton.classList.add(...menuListStyle.split(" "));
+    searchButton.classList.add('search', 'relative');
+    searchButton.innerText = '🔍';
+
+    // 검색 창 상태를 추적하는 변수
+    let searchInputCreated = false;
+
+    searchButton.onclick = (event) => {
+        event.preventDefault();
+
+        if (!searchInputCreated) {
+            // 검색 창 생성
+            const searchInput = document.createElement('input');
+            searchInput.classList.add(...menuListStyle.split(" "));
+            searchInput.classList.add('search-input');
+            searchInput.id = 'search-input';
+            searchInput.type = 'text';
+            searchInput.placeholder = '검색어를 입력하세요';
+            searchInput.onkeyup = (event) => {
+                if (event.keyCode === 13) {
+                    // 엔터키 입력 시 검색 실행
+                    search();
+                }
+            };
+
+            // Tailwind CSS를 사용하여 스타일 지정
+            searchInput.classList.add('absolute', 'top-20', 'right-8', 'w-[220px]', 'h-8', 'rounded-md', 'border', 'border-gray-300', 'pl-2', 'text-base', 'font-bold', 'text-gray-600', 'outline-none', 'box-border', 'transition', 'duration-300', 'ease-in-out', 'shadow-none', 'bg-white', 'bg-clip-padding');
+
+            // 검색을 클릭하면 그 아래 생성하기 위해 검색 버튼의 아래에 생성
+            document.querySelector('.search').appendChild(searchInput);
+            searchInputCreated = true;
+        } else {
+            // 검색 창 제거
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                document.querySelector('.search').removeChild(searchInput);
+            }
+            searchInputCreated = false;
+        }
+    };
+
+    document.getElementById('menu').appendChild(searchButton);
 }
 
 function extractFileInfo(filename) {
@@ -178,39 +223,6 @@ function renderBlogList() {
     });
     // contents 영역을 보이지 않게 처리
     document.getElementById('contents').style.display = 'none';
-}
-
-function renderBlogDetail(id) {
-    // 아직 활용하고 있지 않은 함수
-    // contents 영역을 보이게 처리
-    document.getElementById('contents').style.display = 'block';
-    // blog-posts 영역을 보이지 않게 처리
-    document.getElementById('blog-posts').style.display = 'none';
-
-    // const postInfo = extractFileInfo(post.name);
-    // if (postInfo) {
-    //     // console.log(postInfo)
-    //     const cardElement = createCardElement(postInfo, index);
-
-    //     cardElement.onclick = (event) => {
-    //         // 블로그 게시글 링크 클릭 시 이벤트 중지 후 post 내용을 읽어와 contents 영역에 렌더링
-    //         event.preventDefault();
-    //         // contents 영역을 보이게 처리
-    //         document.getElementById('contents').style.display = 'block';
-    //         // blog-posts 영역을 보이지 않게 처리
-    //         document.getElementById('blog-posts').style.display = 'none';
-    //         fetch(post.download_url)
-    //             .then(response => response.text())
-    //             .then(text => styleMarkdown('post', text, postInfo))
-    //             .then(() => {
-    //                 // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-    //                 const url = new URL(window.location.href);
-    //                 url.searchParams.set('post', post.name);
-    //                 window.history.pushState({}, '', url);
-    //             });
-    //     };
-    //     document.getElementById('blog-posts').appendChild(cardElement);
-    // }
 }
 
 function renderOtherContents(menu) {

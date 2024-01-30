@@ -106,14 +106,14 @@ function styleJupyter(kinds, text, title_info = null) {
     });
 
     tempDiv.querySelectorAll('pre').forEach(pre => {
-        pre.classList.add('bg-gray-100', 'relative', 'p-4', 'rounded', 'mb-4', 'text-sm', 'font-mono', 'overflow-auto', 'whitespace-pre-wrap', 'break-words', 'text-justify', 'shadow-md', 'max-w-full', 'h-auto', 'align-middle', 'border-gray-200', 'hover:border-gray-600', 'hover:border', 'hover:z-10', 'hover:-translate-y-0.5', 'hover:-translate-x-0.5');
+        pre.classList.add('bg-gray-100', 'relative', 'p-4', 'rounded', 'mb-[12px]', 'text-sm', 'font-mono', 'overflow-auto', 'whitespace-pre-wrap', 'break-words', 'text-justify', 'shadow-md', 'max-w-full', 'h-auto', 'align-middle', 'border-gray-200', 'hover:border-gray-600', 'hover:border', 'hover:z-10', 'hover:-translate-y-0.5', 'hover:-translate-x-0.5', 'hover:mb-[10.5px]');
 
         // 복사 버튼 생성
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copy';
         copyButton.classList.add('copy-button', 'absolute', 'top-2', 'right-2', 'p-2', 'text-sm', 'font-semibold', 'text-white', 'bg-gray-600', 'rounded', 'hover:bg-gray-700', 'hover:shadow-md');
 
-        // 복사 버튼 클릭 이벤트
+        // 복사 버튼 클릭 이벤트, pre에 텍스트가 있는 경우에만 활성화
         copyButton.addEventListener('click', async function (event) {
             event.stopPropagation(); // 이벤트 버블링을 막습니다.
             try {
@@ -133,6 +133,21 @@ function styleJupyter(kinds, text, title_info = null) {
     while (contentsDiv.firstChild) {
         contentsDiv.removeChild(contentsDiv.firstChild);
     }
+    // 노트북 다운로드 버튼 추가
+    const downloadButton = document.createElement('button');
+    downloadButton.textContent = 'Notebook Download';
+    downloadButton.classList.add('download-button', 'p-2', 'text-sm', 'font-semibold', 'text-white', 'bg-gray-600', 'rounded', 'hover:bg-gray-700', 'hover:shadow-md');
+    downloadButton.addEventListener('click', function (event) {
+        event.stopPropagation(); // 이벤트 버블링을 막습니다.
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = title_info.title + '.ipynb';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    });
+    contentsDiv.appendChild(downloadButton);
     contentsDiv.appendChild(tempDiv);
     hljs.highlightAll();
 }
