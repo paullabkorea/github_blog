@@ -30,6 +30,7 @@ menuButton.addEventListener('click', () => {
                     } else {
                         renderBlogList()
                     }
+                    // console.log(origin)
                     const url = new URL(origin);
                     url.searchParams.set('menu', item.innerText + '.md');
                     window.history.pushState({}, '', url);

@@ -1,20 +1,36 @@
-function search() {
+function search(keyword) {
     // 검색어를 읽어와 blogList에서 검색
-    const searchInput = document.getElementById('search-input');
-    const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
-    // console.log(searchKeyword);
-    // console.log(blogList);
-    const searchResult = blogList.filter(post => {
-        // console.log(post.name);
-        // console.log(post.name.includes(searchKeyword));
-        // 대소문자 가리지 않고 검색
-        if (post.name.toLowerCase().includes(searchKeyword)) {
-            return post;
-        }
-    });
-    // console.log(searchResult);
-    // 검색 결과를 렌더링
-    renderBlogList(searchResult);
+    console.log(keyword)
+    if (!keyword) {
+        const searchInput = document.getElementById('search-input');
+        const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
+        // console.log(searchKeyword);
+        // console.log(blogList);
+        const searchResult = blogList.filter(post => {
+            // console.log(post.name);
+            // console.log(post.name.includes(searchKeyword));
+            // 대소문자 가리지 않고 검색
+            if (post.name.toLowerCase().includes(searchKeyword)) {
+                return post;
+            }
+        });
+        // console.log(searchResult);
+        // 검색 결과를 렌더링
+        renderBlogList(searchResult);
+    } else {
+        const searchKeyword = keyword.toLowerCase();
+        const searchResult = blogList.filter(post => {
+            // console.log(post.name);
+            // console.log(post.name.includes(searchKeyword));
+            // 대소문자 가리지 않고 검색
+            if (post.name.toLowerCase().includes(searchKeyword)) {
+                return post;
+            }
+        });
+        // console.log(searchResult);
+        // 검색 결과를 렌더링
+        renderBlogList(searchResult);
+    }
 }
 
 
@@ -92,7 +108,7 @@ async function renderMenu() {
             };
 
             // Tailwind CSS를 사용하여 스타일 지정
-            searchInput.classList.add('absolute', 'top-20', 'right-8', 'w-[220px]', 'h-10', 'rounded-md', 'border', 'border-gray-300', 'pl-2', 'text-base', 'font-bold', 'text-gray-600', 'outline-none', 'box-border', 'transition', 'duration-300', 'ease-in-out', 'shadow-none', 'bg-white', 'bg-clip-padding');
+            searchInput.classList.add(...searchInputStyle.split(" "));
 
             // 검색을 클릭하면 그 아래 생성하기 위해 검색 버튼의 아래에 생성
             document.querySelector('.search').appendChild(searchInput);
@@ -119,28 +135,24 @@ function createCardElement(fileInfo, index) {
     const card = document.createElement('div');
     // console.log(index)
     if (index === 0) {
-        card.classList.add('col-span-3', 'h-auto');
-        // 모바일일 경우 card의 높이를 1/3로 설정
-        if (window.innerWidth <= 390) {
-            card.style.height = 'calc(100vh / 1.3)';
-        }
-        else if (window.innerWidth <= 430) {
-            card.style.height = 'calc(100vh / 2.0)';
-        }
-        else if (window.innerWidth <= 640) {
-            card.style.height = 'calc(100vh / 2.4)';
-        }
-        else if (window.innerWidth <= 768) {
-            card.style.height = 'calc(100vh / 2.8)';
-        } else {
-            card.style.height = 'calc(100vh / 3)';
-        }
-        card.classList.add('rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
-        card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+        // if (window.innerWidth <= 390) {
+        //     card.style.height = 'calc(100vh / 1.3)';
+        // }
+        // else if (window.innerWidth <= 430) {
+        //     card.style.height = 'calc(100vh / 2.0)';
+        // }
+        // else if (window.innerWidth <= 640) {
+        //     card.style.height = 'calc(100vh / 2.4)';
+        // }
+        // else if (window.innerWidth <= 768) {
+        //     card.style.height = 'calc(100vh / 2.8)';
+        // } else {
+        //     card.style.height = 'calc(100vh / 3)';
+        // }
+        card.classList.add(...bloglistFirstCardStyle.split(" "));
     }
     else {
-        card.classList.add('max-w-sm', 'rounded', 'overflow-hidden', 'shadow-lg', 'bg-white');
-        card.classList.add('transition', 'duration-100', 'ease-in-out', 'transform', 'hover:-translate-y-1', 'hover:scale-105');
+        card.classList.add(...bloglistCardStyle.split(" "));
     }
 
     if (fileInfo.thumbnail) {
@@ -148,37 +160,34 @@ function createCardElement(fileInfo, index) {
         img.src = fileInfo.thumbnail;
         img.alt = fileInfo.title;
         if (index === 1) {
-            img.classList.add('w-full', 'object-cover', 'object-center');
-            // 이미지의 높이를 100%로 설정
-            img.style.height = '70%';
-
+            img.classList.add(...bloglistFirstCardImgStyle.split(" "));
         }
         else {
-            img.classList.add('w-full', 'h-48', 'object-cover', 'object-center');
+            img.classList.add(...bloglistCardImgStyle.split(" "));
         }
         card.appendChild(img);
     }
 
     const cardBody = document.createElement('div');
-    cardBody.classList.add('px-6', 'py-4');
+    cardBody.classList.add(...bloglistCardBodyStyle.split(" "));
 
     const title = document.createElement('h2');
-    title.classList.add('font-bold', 'text-xl', 'mb-2');
+    title.classList.add(...bloglistCardTitleStyle.split(" "));
     title.textContent = fileInfo.title;
     cardBody.appendChild(title);
 
     const category = document.createElement('span');
-    category.classList.add('inline-block', 'bg-blue-200', 'text-blue-800', 'text-xs', 'font-semibold', 'ml-2', 'px-2.5', 'py-0.5', 'rounded');
+    category.classList.add(...bloglistCardCategoryStyle.split(" "));
     category.textContent = fileInfo.category;
     title.appendChild(category);
 
     const description = document.createElement('p');
-    description.classList.add('text-gray-700', 'text-base');
+    description.classList.add(...bloglistCardDescriptionStyle.split(" "));
     description.textContent = fileInfo.description;
     cardBody.appendChild(description);
 
     const date = document.createElement('p');
-    date.classList.add('text-gray-600', 'text-xs');
+    date.classList.add(...bloglistCardDateStyle.split(" "));
     date.textContent = formatDate(fileInfo.date);
     cardBody.appendChild(date);
 
@@ -272,6 +281,7 @@ function renderOtherContents(menu) {
             name: menu.split('/')[menu.split('/').length - 1]
         }
     }
+    console.log(menu.download_url)
     fetch(menu.download_url)
         .then(response => response.text())
         .then(text => styleMarkdown('menu', text, undefined))

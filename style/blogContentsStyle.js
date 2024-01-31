@@ -63,9 +63,20 @@ function styleMarkdown(kinds, text, title_info = null) {
         title_section.appendChild(date_category);
 
         // category
-        const category = document.createElement('div');
+        // category는 클릭하면 해당 카테고리의 블로그 리스트를 렌더링
+        const category = document.createElement('a');
         category.classList.add(...postcategoryStyle.split(" "));
         category.textContent = 'category: ' + title_info.category;
+
+        category.onclick = (event) => {
+            event.preventDefault();
+            // console.log('click')
+            search(title_info.category)
+            const url = new URL(origin);
+            url.searchParams.set('search', title_info.category);
+            window.history.pushState({}, '', url);
+        }
+
         date_category.appendChild(category);
 
         // date
@@ -82,7 +93,15 @@ function styleMarkdown(kinds, text, title_info = null) {
     } else if (kinds === 'menu') {
     }
 
-    document.getElementById('contents').innerHTML = tempDiv.innerHTML;
+
+    // innerHTML을 사용하면 click이벤트가 사라지므로, appendChild를 사용하여 렌더링
+    const contentsDiv = document.getElementById('contents');
+    while (contentsDiv.firstChild) {
+        contentsDiv.removeChild(contentsDiv.firstChild);
+    }
+    contentsDiv.appendChild(tempDiv);
+
+    hljs.highlightAll();
 }
 
 function styleJupyter(kinds, text, title_info = null) {

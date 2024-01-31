@@ -1,3 +1,5 @@
+* 이 repo는 위니브 회사 repo로 이관되어 더이상 업데이트 되지 않습니다. 업데이트 하지 않도록 주의해주세요.
+
 # github_blog
 깃헙 정적 페이지 블로그 프로젝트
 
@@ -174,19 +176,16 @@ gantt
     </table>
 
 * 과업
-    * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
-        * createCardElement 등 render에서 일어나는 styling 모두 수정
-        * 모든 스타일은 하나의 파일에서 수정하게 변경
-    * util 함수는 모두 utils.js에 반영
-        * 어디서 호출될지 모르니 호출될 때 함수가 뒤에 선언되어 있는 것을 미리 방지
-    * 'blog.md'파일을 어떻게 할지 의사결정 필요
+    * 블로그 figma style 반영
+    * pandas의 dateframe은 테이블로 표시되지 않는 사이드 이펙트 해결
     * user 정보 입력
         * default는 config
         * 다른 분들과 함께 집필할 때에는 호출하게
+    * 'blog.md'파일을 어떻게 할지 의사결정 필요
     * 조회수
-    * 태그 클릭시 관련 글만 보게 할 수 있게 기능 추가
     * disqus 댓글
     * 한국어 가이드, 영어 가이드
+    * GitHub 스폰서 등록(위니브 계정으로 이관 후)
 
 * 애러와 애러 해결(트러블슈팅 히스토리)
     * 모바일 메뉴 설계
@@ -213,10 +212,9 @@ gantt
                     event.stopPropagation();
                 };
             ```
-    * (해결중) 검색기능 구현 후 UI가 깨지는 문제 발생
-        * 정규표현식에 맞지 않는 post까지 blogList에 들어있어 blogList를 처음 세팅할 때 정규표현식에 맞지 않는 것들을 제외
-        * 위와 같은 설정 적용 후 UI가 깨지는 문제가 발생 => 확인 필요
-        * card의 높이를 없애면 될 것 같음
+    * 검색기능 구현 후 UI가 깨지는 문제 발생
+        * figma style이 나왔기 때문에 기존에 tailwind style만 유지
+        * 계산했던 모든 style 제거
 
 
 

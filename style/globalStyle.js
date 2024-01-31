@@ -43,3 +43,19 @@ const postsectionStyle = `w-full mb-8 shadow-md text-white bg-[#22272e] rounded-
 const notebookpreStyle = `bg-gray-100 relative p-4 rounded mb-[12px] text-sm font-mono overflow-auto whitespace-pre-wrap break-words text-justify shadow-md max-w-full h-auto align-middle border-gray-200 hover:border-gray-600 hover:border hover:z-10 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:mb-[10.5px]`
 const notebookcopyButtonStyle = `copy-button absolute top-2 right-2 p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`
 const notebookdownloadButtonStyle = `download-button p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`
+
+// bloglist 목록 스타일
+const bloglistFirstCardStyle = `col-span-3 h-auto rounded overflow-hidden shadow-lg bg-white transition duration-100 ease-in-out transform hover:-translate-y-1 hover:scale-105`
+const bloglistFirstCardImgStyle = `w-full object-cover object-center`
+
+const bloglistCardStyle = `max-w-sm rounded overflow-hidden shadow-lg bg-white transition duration-100 ease-in-out transform hover:-translate-y-1 hover:scale-105`
+const bloglistCardImgStyle = `w-full h-48 object-cover object-center`
+
+const bloglistCardBodyStyle = `px-6 py-4`
+const bloglistCardTitleStyle = `font-bold text-xl mb-2`
+const bloglistCardCategoryStyle = `inline-block bg-blue-200 text-blue-800 text-xs font-semibold ml-2 px-2.5 py-0.5 rounded`
+const bloglistCardDescriptionStyle = `text-gray-700 text-base`
+const bloglistCardDateStyle = `text-gray-600 text-xs`
+
+// 검색창 스타일
+const searchInputStyle = `absolute top-20 right-8 w-[220px] h-10 rounded-md border border-gray-300 pl-2 text-base font-bold text-gray-600 outline-none box-border transition duration-300 ease-in-out shadow-none bg-white bg-clip-padding`
