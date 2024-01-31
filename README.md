@@ -236,3 +236,22 @@ gantt
             <td><img src="readme_img/레퍼런스2.png" width="100%"></td>
         </tr>
     </table>
+
+* 회사 프로젝트로 이관 후 figma 최종 시안
+    * https://www.figma.com/file/bSWDeccRzm173J1VjvsiUu/위니브-(깃헙)블로그?type=design&node-id=1%3A22&mode=design&t=T258gDIJwM1T3iMW-1
+    <table>
+        <tr>
+            <th>이미지 메인</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/위니브블로그1.jpg" width="100%"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>블로그</th>
+        </tr>
+        <tr>
+            <td><img src="readme_img/위니브블로그2.jpg" width="100%"></td>
+        </tr>
+    </table>
