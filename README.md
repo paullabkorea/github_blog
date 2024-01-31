@@ -1,11 +1,13 @@
-* 이 repo는 위니브 회사 repo로 이관되어 더이상 업데이트 되지 않습니다. 업데이트 하지 않도록 주의해주세요.
 
 # github_blog
 깃헙 정적 페이지 블로그 프로젝트
+    * 현재 이 프로젝트는 위니브로 이관되어 관리중입니다.
+    * 개인 repo는 위니브 회사 repo로 이관되어 더이상 업데이트 되지 않습니다.
 
 * 목표
     * github에서 fork로 바로 blog를 만들 수 있는 정적 페이지 제공 프로젝트
-    * 학생에게 프로젝트 양식 샘플 제공(https://github.com/weniv/project_sample_repo repo와 추후 연결)
+    * 학생에게 프로젝트 양식 샘플 제공(https://github.com/weniv/project_sample_repo), 개인 repo로 연결하여 양식 제공 중
+        * 추후 이 README는 프로젝트 양식이 아니라 메뉴얼 양식으로 변경할 수 있음
     * 회사 주피터 노트북 등 지적 재산을 누적하기 위한 블로그 프로젝트
 
 * 사용방법
