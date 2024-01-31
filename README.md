@@ -33,14 +33,31 @@
 * 구조
 ```mermaid
 graph LR
-    A[Client] -->|Request| B[JS/config.js]
-    B --> C[JS/URLparsing.js]
-    C --> D[JS/render.js]
-    D -->|Initial Render| E[JS/initData.js]
-    E -->|initDataBlogList| F[style/globalStyle.js]
-    E -->|initDataBlogMenu| G[style/blogContentsStyle.js]
-    F --> H[Apply Global Styles]
-    G --> I[Apply Blog Content Styles]
+    %% Local Utils
+    A[Client] -->|Load Utilities| B[JS/utils.js]
+    A -->|스타일 로드| C[style/globalStyle.js]
+
+    %% CDN
+    A -->|Load Libraries| D[CDN/marked.min.js]
+    A -->|Load Libraries| E[CDN/highlight.min.js]
+    E -->|Highlight Syntax _ 현재 파이썬만 지원| F[CDN/python.min.js]
+    A -->|Load Libraries| G[CDN/tailwind.css]
+    
+    %% Request
+    A -->|Request| H[JS/config.js]
+    H --> I[JS/URLparsing.js]
+    I -->|데이터 초기화 _ 로컬/배포 상태에 따라 호출 다름| J[JS/initData.js]
+    J --> K[JS/render.js]
+    K -->|마크다운/노트북 체크| L[style/blogContentsStyle.js]
+    L -->|노트북일 경우| M[JS/convertIpynbToHtml.js]
+
+    %% Style
+    K -.->|스타일 적용| C[style/globalStyle.js]
+    L -.->|스타일 적용| C[style/globalStyle.js]
+    M -.->|스타일 적용| C[style/globalStyle.js]
+    
+    A -->|Toggle Mobile Menu| Q[JS/mobileMenuToggle.js]
+
 ```
 
 * 중요 의사결정
