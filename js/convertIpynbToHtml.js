@@ -44,22 +44,3 @@ function convertIpynvToHtml(fileContent) {
 
     return htmlContent;
 }
-
-function convertSourceToImage(source) {
-    // Base64 이미지 데이터 식별을 위한 정규 표현식
-    const base64ImageRegex = /!\[.*?\]\(data:image\/(png|jpeg);base64,(.*?)\)/g;
-
-    // 이미지 데이터를 찾고, 각 매치에 대해 이미지 태그 생성
-    return source.replace(base64ImageRegex, (match, fileType, imageData) => {
-        return `<img src="data:image/${fileType};base64,${imageData}" alt="Embedded Image" />`;
-    });
-}
-
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}

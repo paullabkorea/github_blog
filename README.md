@@ -172,6 +172,8 @@ gantt
     * style은 모두 global이나 blogContentsStyle에서 수정하게 변경
         * createCardElement 등 render에서 일어나는 styling 모두 수정
         * 모든 스타일은 하나의 파일에서 수정하게 변경
+    * util 함수는 모두 utils.js에 반영
+        * 어디서 호출될지 모르니 호출될 때 함수가 뒤에 선언되어 있는 것을 미리 방지
     * 'blog.md'파일을 어떻게 할지 의사결정 필요
     * user 정보 입력
         * default는 config
@@ -192,6 +194,7 @@ gantt
         * URL 변경을 origin 기준이 아니라 href에서 host + repo 이름으로 변경
     * 주피터노트북 변환에서 ipynb 파일 안에 code가 `f'<h1>hello</h1>'`으로 되어 있으면 h1으로 해석되는 경우가 생김
         * map이나 filter 변환에도 같은 이슈가 있어서 코드블록은 엔티티 코드로 변환
+        * (해결중) 이렇게 해결하니 pandas의 dateframe은 테이블로 표시되지 않는 사이드 이펙트 발생
     * ipynb에서 ul과 li 아래 p태그가 생겨 개행
         * `\n`을 별도로 처리
     * 검색창 이벤트 버블링
@@ -203,7 +206,8 @@ gantt
             ```
     * (해결중) 검색기능 구현 후 UI가 깨지는 문제 발생
         * 정규표현식에 맞지 않는 post까지 blogList에 들어있어 blogList를 처음 세팅할 때 정규표현식에 맞지 않는 것들을 제외
-        * 이렇게 설정하니 UI가 깨지는 문제가 발생 => 확인 필요
+        * 위와 같은 설정 적용 후 UI가 깨지는 문제가 발생 => 확인 필요
+        * card의 높이를 없애면 될 것 같음
 
 
 

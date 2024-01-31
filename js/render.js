@@ -17,6 +17,7 @@ function search() {
     renderBlogList(searchResult);
 }
 
+
 // 메뉴 생성 및 메뉴클릭 이벤트 정의
 async function renderMenu() {
     blogMenu.forEach(menu => {
@@ -109,35 +110,6 @@ async function renderMenu() {
     document.getElementById('menu').appendChild(searchButton);
 }
 
-function extractFileInfo(filename) {
-    // 파일 이름에서 정보 추출하는 함수
-
-    // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일 정보 추출
-    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].(md|ipynb)$/;
-    const matches = filename.match(regex);
-    // console.log(`extractFileInfo: ${matches}`);
-
-    if (matches) {
-        return {
-            date: matches[1],
-            title: matches[2],
-            category: matches[3],
-            thumbnail: matches[4] ? 'img/' + matches[4] : 'img/default.png',
-            description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5],
-            fileType: matches[6]
-        };
-    }
-    return null;
-}
-
-function formatDate(dateString) {
-    // YYYYMMDD 형식의 문자열을 받아 YYYY/MM/DD 형식으로 변환
-    const year = dateString.substring(0, 4);
-    const month = dateString.substring(4, 6);
-    const day = dateString.substring(6, 8);
-
-    return `${year}/${month}/${day}`;
-}
 
 function createCardElement(fileInfo, index) {
     // 파일 정보를 기반으로 카드 HTML 생성

@@ -8,23 +8,6 @@ const pathParts = url.pathname.split('/').filter(part => part.length > 0);
 const isLocal = url.hostname === '127.0.0.1' || url.hostname === 'localhost';
 
 
-// Utils 함수
-function extractFromUrl() {
-    // URL에서 username과 repositoryName 추출
-    const url = new URL(window.location.href);
-    const pathParts = url.pathname.split('/').filter(part => part.length > 0);
-
-    // 보통 URL 형식: https://username.github.io/repositoryName/
-    if (pathParts.length >= 2) {
-        return {
-            username: pathParts[0],
-            repositoryName: pathParts[1]
-        };
-    }
-
-    return { username: '', repositoryName: '' };
-}
-
 if (isLocal) {
     // 로컬 테스트 환경
 
