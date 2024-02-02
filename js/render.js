@@ -1,47 +1,42 @@
 function search(keyword) {
-    // 검색어를 읽어와 blogList에서 검색
-    console.log(keyword)
+    /*
+    1. 메뉴에서 검색 버튼을 클릭해서 검색하였을 경우 검색 결과를 renderBlogList 함수를 통해 렌더링
+    2. 포스트에서 카테고리를 클릭하였을 때 해당 카테고리로 검색하여 renderBlogList함수를 통해 렌더링
+    */
     if (!keyword) {
         const searchInput = document.getElementById('search-input');
         const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
-        // console.log(searchKeyword);
-        // console.log(blogList);
         const searchResult = blogList.filter(post => {
-            // console.log(post.name);
-            // console.log(post.name.includes(searchKeyword));
             // 대소문자 가리지 않고 검색
             if (post.name.toLowerCase().includes(searchKeyword)) {
                 return post;
             }
         });
-        // console.log(searchResult);
-        // 검색 결과를 렌더링
         renderBlogList(searchResult);
     } else {
         const searchKeyword = keyword.toLowerCase();
         const searchResult = blogList.filter(post => {
-            // console.log(post.name);
-            // console.log(post.name.includes(searchKeyword));
             // 대소문자 가리지 않고 검색
             if (post.name.toLowerCase().includes(searchKeyword)) {
                 return post;
             }
         });
-        // console.log(searchResult);
         // 검색 결과를 렌더링
         renderBlogList(searchResult);
     }
 }
 
 
-// 메뉴 생성 및 메뉴클릭 이벤트 정의
 async function renderMenu() {
+    /* 
+    1. 메인페이지 메뉴 생성 및 메뉴클릭 이벤트 정의
+    2. 검색창과 검색 이벤트 정의(검색이 메뉴에 있으므로) - 함수가 커지면 별도 파일로 분리 필요
+    */
     blogMenu.forEach(menu => {
         // 메뉴 링크 생성
         const link = document.createElement('a');
 
-        // <div id="contents" class="mt-6 grid-cols-3"></div> 안에 들어가는 link들의 스타일링
-        // menuListStyle는 gobalStyle.js에 정의되어 있음
+        // (static) index.html: <div id="contents" class="mt-6 grid-cols-3"></div>
         link.classList.add(...menuListStyle.split(" "));
         link.classList.add(`${menu.name}`);
 
@@ -107,7 +102,6 @@ async function renderMenu() {
                 event.stopPropagation();
             };
 
-            // Tailwind CSS를 사용하여 스타일 지정
             searchInput.classList.add(...searchInputStyle.split(" "));
 
             // 검색을 클릭하면 그 아래 생성하기 위해 검색 버튼의 아래에 생성
@@ -128,27 +122,11 @@ async function renderMenu() {
 
 
 function createCardElement(fileInfo, index) {
-    // 파일 정보를 기반으로 카드 HTML 생성
-
-    // console.log(fileInfo, index)
-
+    /*
+    정규표현식으로 파싱된 파일정보 fileInfo를 기반으로 blog의 card 생성, index를 받는 이유는 첫번째 카드는 넓이를 크게 차지해야 하기 때문
+    */
     const card = document.createElement('div');
-    // console.log(index)
     if (index === 0) {
-        // if (window.innerWidth <= 390) {
-        //     card.style.height = 'calc(100vh / 1.3)';
-        // }
-        // else if (window.innerWidth <= 430) {
-        //     card.style.height = 'calc(100vh / 2.0)';
-        // }
-        // else if (window.innerWidth <= 640) {
-        //     card.style.height = 'calc(100vh / 2.4)';
-        // }
-        // else if (window.innerWidth <= 768) {
-        //     card.style.height = 'calc(100vh / 2.8)';
-        // } else {
-        //     card.style.height = 'calc(100vh / 3)';
-        // }
         card.classList.add(...bloglistFirstCardStyle.split(" "));
     }
     else {
@@ -193,13 +171,15 @@ function createCardElement(fileInfo, index) {
 
     card.appendChild(cardBody);
 
-    // 추후 내용 및 기타 필요한 요소 추가 가능
-
     return card;
 }
 
 function renderBlogList(searchResult) {
-    // main 영역에 블로그 포스트 목록을 렌더링
+    /*
+    blog의 main 영역에 블로그 포스트 목록을 렌더링
+    1. 검색 키워드 없이 대부분 renderBlogList()로 사용.
+    2. 검색을 했을 때에만 searchResult에 목록이 담겨 들어옴
+    */
     if (searchResult) {
         // 검색 keyword가 있을 경우
         console.log(searchResult)
@@ -208,7 +188,6 @@ function renderBlogList(searchResult) {
         searchResult.forEach((post, index) => {
             const postInfo = extractFileInfo(post.name);
             if (postInfo) {
-                // console.log(postInfo)
                 const cardElement = createCardElement(postInfo, index);
 
                 cardElement.onclick = (event) => {
@@ -270,6 +249,9 @@ function renderBlogList(searchResult) {
 }
 
 function renderOtherContents(menu) {
+    /*
+    menu에 다른 콘텐츠, 예를 들어 about이나 contect를 클릭했을 때 렌더링 하는 함수
+    */
     // main 영역에 blog.md를 제외한 다른 파일을 렌더링
     document.getElementById('blog-posts').style.display = 'none';
     document.getElementById('contents').style.display = 'block';
@@ -293,18 +275,12 @@ function renderOtherContents(menu) {
         });
 }
 
-// 실행영역
-// URLparsing은 index.html에서 실행
-// blogList와 blogMenu는 initData.js에서 정의
 async function initialize() {
-    // TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음
-    // api 호출 1개를 아낄 수 있음
-
-    // console.log(url);
-    // console.log(origin)
-    // console.log(url.search.split('=')[0]);
-    // console.log(url.search.split('=')[1]);
-    // console.log(decodeURI(url.search.split('=')[1]))
+    /*
+    최초 실행 함수, URLparsing은 이 영역에서 담당하지 않고 index.html에서 로드 될 때 실행, blogList와 blogMenu는 initData.js에서 정의되고 로드될 때 실행. 다만 함수의 흐름을 파악하고자 이곳으로 옮겨올 필요성이 있음
+    
+    TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음. 이를 통해 API 호출 한 번을 아낄 수 있음.
+    */
     if (!url.search.split('=')[1]) {
         // 메뉴 로딩
         await initDataBlogMenu();

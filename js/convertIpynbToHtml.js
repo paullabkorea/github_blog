@@ -1,4 +1,8 @@
 function convertIpynvToHtml(fileContent) {
+    /*
+    TODO: style 폴더로 이관을 할지 논의 필요
+    주피터 노트북을 마크업으로 변환하는 함수, style/blogContentsStyle.js 에서 사용하는 함수입니다.
+    */
     const notebook = JSON.parse(fileContent);
     const cells = notebook.cells;
     let htmlContent = '';

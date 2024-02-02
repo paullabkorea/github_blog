@@ -1,6 +1,9 @@
 // menu style
 const menuListStyle = `ml-4 text-gray-700 hover:text-gray-900 font-bold text-xl py-2 px-4 rounded`
 
+// mobile menu style
+const mobileMenuStyle = `block text-gray-700 hover:text-gray-900 font-bold text-xl py-2 px-4 rounded`
+
 // blog style과 notebook style
 const posth1Style = `text-2xl font-bold mb-6 mt-8 border-b border-gray-400 pb-2`;
 const posth2Style = `text-xl font-semibold mb-4 mt-6 border-b border-gray-400 pb-2`

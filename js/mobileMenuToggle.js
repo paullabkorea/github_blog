@@ -2,6 +2,9 @@ const menuButton = document.getElementById('menuButton');
 const menu = document.getElementById('menu');
 
 menuButton.addEventListener('click', () => {
+    /*
+    모바일 환경에서 menu, 이 menu는 이벤트 위임으로 최적화하면 불필요한 코드가 많은 함수입니다. 시간상 최적화하지 않고 넘깁니다.
+    */
     const mobileMenu = document.getElementById('mobileMenu');
 
     if (mobileMenu.innerHTML === '') {
@@ -10,12 +13,8 @@ menuButton.addEventListener('click', () => {
         // 각 메뉴 항목에 애니메이션 스타일 적용
         const menuItems = mobileMenu.querySelectorAll('a');
         menuItems.forEach((item, index) => {
-            item.classList.add('block', 'text-gray-700', 'hover:text-gray-900', 'font-bold', 'text-xl', 'py-2', 'px-4', 'rounded');
+            item.classList.add(...mobileMenuStyle.split(" "));
             item.style.animation = `slideDown forwards ${index * 0.2}s`;
-            // console.log(item)
-            // console.log(item.innerText)
-            // console.log(item.href.split('/').pop())
-            // itemHref = item.href.split('/').pop();
             item.onclick = (event) => {
                 // 메뉴 링크 클릭 시 이벤트 중지 후 menu 내용을 읽어와 contents 영역에 렌더링
                 event.preventDefault();

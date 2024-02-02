@@ -1,9 +1,8 @@
-// 마크다운으로 읽어온 내용을 HTML로 변환하여 tailwind를 사용한 스타일링
 function styleMarkdown(kinds, text, title_info = null) {
-
-    // console.log(kinds)
-    // console.log(text)
-    // console.log(title_info)
+    /* 
+    메뉴와 블로그 상세 목록을 globalStyle.js에 정의된 tailwind css로 스타일링 합니다. 
+    */
+    // console.log(kinds, text, title_info)
 
     const tempDiv = document.createElement('div');
     const html = marked.parse(text);
@@ -105,6 +104,9 @@ function styleMarkdown(kinds, text, title_info = null) {
 }
 
 function styleJupyter(kinds, text, title_info = null) {
+    /* 
+    주피터 노트북 파일 내용을 globalStyle.js에 정의된 tailwind css로 스타일링 합니다. 
+    */
     const tempDiv = document.createElement('div');
     const html = convertIpynvToHtml(text);
     // const html = marked.parse(text);
