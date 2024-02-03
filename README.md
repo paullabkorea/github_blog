@@ -108,6 +108,21 @@ gantt
 ```
 
 * 데이터베이스 스키마
+
+    * siteConfig
+        * username: GitHub 사용자 이름
+        * repositoryName: GitHub 저장소 이름
+        * mainColor: 사이트의 주 색상
+        * textColor: 기본 텍스트 색상
+        * blogTitle: 블로그 제목
+
+    * users
+        * id: 사용자 id
+        * username: 사용자 이름
+        * company: 사용자 회사
+        * grade: 사용자 직급
+        * img: 사용자 이미지
+
     * url(URLparsing)
 
         | 키       | 설명                         | 예시 값                       |
@@ -195,6 +210,7 @@ gantt
     </table>
 
 * 과업
+    * 여러 사용자의 정보가 추가되었을 시 저자가 다르게 표시
     * 블로그 figma style 반영
     * pandas의 dateframe은 테이블로 표시되지 않는 사이드 이펙트 해결
     * user 정보 입력
