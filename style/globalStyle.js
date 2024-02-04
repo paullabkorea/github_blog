@@ -40,6 +40,9 @@ const postimgtitleStyle = `w-full h-48 object-cover object-center my-4 rounded s
 const postdatecategoryDivStyle = `flex justify-end mb-4`
 const postcategoryStyle = `text-sm text-white font-light tracking-wide text-justify`
 const postdateStyle = `text-sm text-white font-light tracking-wide text-justify ml-4`
+const postauthorDivStyle = `flex justify-end mb-4`
+const postauthorImgStyle = `w-10 h-10 rounded-full mr-4`
+const postauthorStyle = `text-sm text-white font-light tracking-wide text-justify ml-4`
 const postsectionStyle = `w-full mb-8 shadow-md text-white bg-[#22272e] rounded-lg p-4 pl-8 pr-8 max-w-full h-auto align-middle border-none border-gray-200`
 
 // notebook에 code cell을 표시하는 부분
@@ -59,6 +62,10 @@ const bloglistCardTitleStyle = `font-bold text-xl mb-2`
 const bloglistCardCategoryStyle = `inline-block bg-blue-200 text-blue-800 text-xs font-semibold ml-2 px-2.5 py-0.5 rounded`
 const bloglistCardDescriptionStyle = `text-gray-700 text-base`
 const bloglistCardDateStyle = `text-gray-600 text-xs`
+const bloglistCardAuthorDivStyle = `flex items-center justify-end`
+const bloglistCardAuthorImgStyle = `w-10 h-10 rounded-full mr-4`
+const bloglistCardAuthorStyle = `text-gray-600 text-xs`
+
 
 // 검색창 스타일
 const searchInputStyle = `absolute top-20 right-8 w-[220px] h-10 rounded-md border border-gray-300 pl-2 text-base font-bold text-gray-600 outline-none box-border transition duration-300 ease-in-out shadow-none bg-white bg-clip-padding`

@@ -107,7 +107,9 @@ gantt
     출시                    :         dep2, after dep1, 1d
 ```
 
-* 데이터베이스 스키마
+* 데이터베이스 스키마 및 중요 변수
+
+    * localDataUsing: 로컬 데이터 사용 여부
 
     * siteConfig
         * username: GitHub 사용자 이름
@@ -210,6 +212,11 @@ gantt
     </table>
 
 * 과업
+    * localDataUsing에 따른 분기
+        * localDataUsing이 true일 경우
+            * local_blogList.json과 local_blogMenu.json을 사용
+        * localDataUsing이 false일 경우
+            * GitHub API를 사용
     * 여러 사용자의 정보가 추가되었을 시 저자가 다르게 표시
     * 블로그 figma style 반영
     * pandas의 dateframe은 테이블로 표시되지 않는 사이드 이펙트 해결

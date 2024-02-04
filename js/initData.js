@@ -26,6 +26,8 @@ async function initDataBlogList() {
         blogList = await response.json();
     }
 
+    // console.log(blogList)
+
     // 정규표현식에 맞지 않는 파일은 제외하여 blogList에 재할당
     blogList = blogList.filter(post => {
         const postInfo = extractFileInfo(post.name);

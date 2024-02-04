@@ -169,6 +169,21 @@ function createCardElement(fileInfo, index) {
     date.textContent = formatDate(fileInfo.date);
     cardBody.appendChild(date);
 
+    const authorDiv = document.createElement('div');
+    authorDiv.classList.add(...bloglistCardAuthorDivStyle.split(" "));
+    cardBody.appendChild(authorDiv);
+
+    const authorImg = document.createElement('img');
+    authorImg.src = users[fileInfo.author]['img'];
+    authorImg.alt = users[fileInfo.author]['username'];
+    authorImg.classList.add(...bloglistCardAuthorImgStyle.split(" "));
+    authorDiv.appendChild(authorImg);
+
+    const author = document.createElement('p');
+    author.classList.add(...bloglistCardAuthorStyle.split(" "));
+    author.textContent = users[fileInfo.author]['username'];
+    authorDiv.appendChild(author);
+
     card.appendChild(cardBody);
 
     return card;
@@ -182,7 +197,6 @@ function renderBlogList(searchResult) {
     */
     if (searchResult) {
         // 검색 keyword가 있을 경우
-        console.log(searchResult)
         document.getElementById('blog-posts').style.display = 'grid';
         document.getElementById('blog-posts').innerHTML = '';
         searchResult.forEach((post, index) => {
@@ -263,7 +277,6 @@ function renderOtherContents(menu) {
             name: menu.split('/')[menu.split('/').length - 1]
         }
     }
-    console.log(menu.download_url)
     fetch(menu.download_url)
         .then(response => response.text())
         .then(text => styleMarkdown('menu', text, undefined))

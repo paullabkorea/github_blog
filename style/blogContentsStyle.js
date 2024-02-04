@@ -84,6 +84,22 @@ function styleMarkdown(kinds, text, title_info = null) {
         date.textContent = 'date: ' + formatDate(title_info.date);
         date_category.appendChild(date);
 
+        // author
+        const authorDiv = document.createElement('div');
+        authorDiv.classList.add(...postauthorDivStyle.split(" "));
+        date_category.appendChild(authorDiv);
+
+        const authorImg = document.createElement('img');
+        authorImg.src = users[title_info.author]['img'];
+        authorImg.alt = users[title_info.author]['username'];
+        authorImg.classList.add(...postauthorImgStyle.split(" "));
+        authorDiv.appendChild(authorImg);
+
+        const author = document.createElement('div');
+        author.classList.add(...postauthorStyle.split(" "));
+        author.textContent = 'author: ' + users[title_info.author]['username'];
+        authorDiv.appendChild(author);
+
 
         // section styling
         title_section.classList.add(...postsectionStyle.split(" "));
