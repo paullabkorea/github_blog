@@ -134,7 +134,8 @@ function createCardElement(fileInfo, index) {
         const img = document.createElement("img");
         img.src = fileInfo.thumbnail;
         img.alt = fileInfo.title;
-        if (index === 1) {
+        if (index === 0) {
+            console.log("index 0", img);
             img.classList.add(...bloglistFirstCardImgStyle.split(" "));
         } else {
             img.classList.add(...bloglistCardImgStyle.split(" "));
@@ -145,25 +146,26 @@ function createCardElement(fileInfo, index) {
     const cardBody = document.createElement("div");
     cardBody.classList.add(...bloglistCardBodyStyle.split(" "));
 
+    const category = document.createElement("span");
+    category.classList.add(...bloglistCardCategoryStyle.split(" "));
+    category.textContent = fileInfo.category;
+    cardBody.appendChild(category);
+
     const title = document.createElement("h2");
     title.classList.add(...bloglistCardTitleStyle.split(" "));
     title.textContent = fileInfo.title;
     cardBody.appendChild(title);
 
-    const category = document.createElement("span");
-    category.classList.add(...bloglistCardCategoryStyle.split(" "));
-    category.textContent = fileInfo.category;
-    title.appendChild(category);
-
     const description = document.createElement("p");
-    description.classList.add(...bloglistCardDescriptionStyle.split(" "));
+    if (index == 0) {
+        description.classList.add(
+            ...bloglistFirstCardDescriptionStyle.split(" ")
+        );
+    } else {
+        description.classList.add(...bloglistCardDescriptionStyle.split(" "));
+    }
     description.textContent = fileInfo.description;
     cardBody.appendChild(description);
-
-    const date = document.createElement("p");
-    date.classList.add(...bloglistCardDateStyle.split(" "));
-    date.textContent = formatDate(fileInfo.date);
-    cardBody.appendChild(date);
 
     const authorDiv = document.createElement("div");
     authorDiv.classList.add(...bloglistCardAuthorDivStyle.split(" "));
@@ -179,6 +181,11 @@ function createCardElement(fileInfo, index) {
     author.classList.add(...bloglistCardAuthorStyle.split(" "));
     author.textContent = users[fileInfo.author]["username"];
     authorDiv.appendChild(author);
+
+    const date = document.createElement("p");
+    date.classList.add(...bloglistCardDateStyle.split(" "));
+    date.textContent = formatDate(fileInfo.date);
+    cardBody.appendChild(date);
 
     card.appendChild(cardBody);
 
