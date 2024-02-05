@@ -15,6 +15,9 @@ if (isLocal) {
     const $blogTitle = document.getElementById('blog-title')
     $blogTitle.innerText = siteConfig.blogTitle || 'GitHub Blog';
 
+    // 홈페이지 title을 제목으로 설정
+    document.title = siteConfig.blogTitle || 'GitHub Blog';
+
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
         window.location.href = `http://127.0.0.1${url.port ? ':' + url.port : ''}`;
@@ -33,6 +36,9 @@ else {
     // 블로그 제목 설정
     const $blogTitle = document.getElementById('blog-title')
     $blogTitle.innerText = siteConfig.blogTitle || 'GitHub Blog';
+
+    // 홈페이지 title을 제목으로 설정
+    document.title = siteConfig.blogTitle || 'GitHub Blog';
 
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
