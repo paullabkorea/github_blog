@@ -217,13 +217,11 @@ gantt
             * local_blogList.json과 local_blogMenu.json을 사용
         * localDataUsing이 false일 경우
             * GitHub API를 사용
-    * 여러 사용자의 정보가 추가되었을 시 저자가 다르게 표시
+    * config.js에 있는 username과 repo name이 실제로 필요하지 않음(의사결정 필요)
+        * URL 파싱하면 됨. 사용자 편의를 위해서는 이렇게 하면 좋지 않을까 생각
+        * 뒤에 index.html이 있는 경우 error가 자주 발생됨 => URL 파싱을 통해 해결 필요
     * 블로그 figma style 반영
-    * pandas의 dateframe은 테이블로 표시되지 않는 사이드 이펙트 해결
-    * user 정보 입력
-        * default는 config
-        * 다른 분들과 함께 집필할 때에는 호출하게
-    * 'blog.md'파일을 어떻게 할지 의사결정 필요
+    * 'blog.md'파일을 어떻게 할지 (의사결정 필요)
     * 조회수
     * disqus 댓글
     * 한국어 가이드, 영어 가이드
