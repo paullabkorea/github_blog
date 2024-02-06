@@ -47,7 +47,6 @@ function extractFileInfo(filename) {
     // console.log(`extractFileInfo: ${matches}`);
 
     if (matches) {
-        console.log("matches", matches);
         return {
             date: matches[1],
             title: matches[2],
