@@ -63,7 +63,7 @@
     <body class="font-sans w-full text-surface">
         <header class="relative bg-white mx-auto border-b border-gray-300">
             <nav
-                class="container max-w-[1190px] mx-auto md:p-[19px] p-4 flex items-center"
+                class="container max-w-[1190px] mx-auto md:p-[19px] p-4 flex items-center relative"
             >
                 <!-- 블로그 제목 영역 -->
                 <h1
@@ -76,7 +76,7 @@
 
                 <!-- 메뉴 영역 -->
                 <div class="md:hidden w-6 h-6">
-                    <button id="menuButton">
+                    <button id="menu-button">
                         <span class="sr-only">메뉴 열기</span>
                     </button>
                 </div>
@@ -84,11 +84,28 @@
                 <div id="menu" class="hidden md:flex items-center">
                     <!-- 메뉴 아이템들 -->
                 </div>
-                <div class="search-cont">
-                    <button id="search-menu">
-                        <span class="sr-only">검색창 열기</span>
+
+                <button id="search-button" class="ml-10">
+                    <span class="sr-only">검색창 열기</span>
+                </button>
+
+                <div
+                    class="search-cont absolute z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full hidden bg-background"
+                >
+                    <label for="search-input" class="w-full">
+                        <input
+                            type="text"
+                            id="search-input"
+                            class="search-input bg-graylv1 rounded-[10px] px-5 py-2.5 placeholder:font-normal placehoder:text-graylv3 focus:outline-0 shadow-sm"
+                            placeholder="검색어를 입력하세요"
+                    /></label>
+                    <button
+                        class="search-inp-btn absolute top-1/2 right-[26px] -translate-y-1/2"
+                    >
+                        <span class="sr-only">검색하기</span>
                     </button>
                 </div>
+
                 <!-- // 메뉴 영역 -->
             </nav>
             <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->

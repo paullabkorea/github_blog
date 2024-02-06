@@ -67,57 +67,50 @@ async function renderMenu() {
         document.getElementById("menu").appendChild(link);
     });
 
-    // 검색 버튼 생성
-    // const searchButton = document.createElement('button');
-    const searchButton = document.getElementById("search-menu");
-    // searchButton.classList.add(...menuListStyle.split(" "));
-    searchButton.classList.add("ml-10");
-    searchButton.classList.add("search", "relative");
-    searchButton.innerText = "🔍";
+    // 검색 버튼 클릭 시 검색창 출력
+    const searchButton = document.getElementById("search-button");
+    const searchCont = document.querySelector(".search-cont");
 
-    // 검색 창 상태를 추적하는 변수
-    let searchInputCreated = false;
+    let searchInputShow = false;
 
-    searchButton.onclick = (event) => {
-        event.preventDefault();
-
-        if (!searchInputCreated) {
-            // 검색 창 생성
-            const searchInput = document.createElement("input");
-            searchInput.classList.add(...menuListStyle.split(" "));
-            searchInput.classList.add("search-input");
-            searchInput.id = "search-input";
-            searchInput.type = "text";
-            searchInput.placeholder = "검색어를 입력하세요";
-            searchInput.onkeyup = (event) => {
-                if (event.key === "Enter") {
-                    // 엔터키 입력 시 검색 실행
-                    search();
-                }
-            };
-
-            // 검색 창 클릭 시 이벤트 버블링 방지
-            searchInput.onclick = (event) => {
-                event.stopPropagation();
-            };
-
-            searchInput.classList.add(...searchInputStyle.split(" "));
-
-            // 검색을 클릭하면 그 아래 생성하기 위해 검색 버튼의 아래에 생성
-            document.querySelector(".search").appendChild(searchInput);
-            searchInputCreated = true;
-        } else {
-            // 검색 창 제거
-            const searchInput = document.getElementById("search-input");
-            if (searchInput) {
-                document.querySelector(".search").removeChild(searchInput);
+    window.addEventListener("click", (event) => {
+        if (event.target == searchButton) {
+            searchInputShow = !searchInputShow;
+            if (searchInputShow) {
+                searchButton.classList.add("active");
+                searchCont.classList.remove("hidden");
+                searchCont.classList.add("block");
+            } else {
+                searchButton.classList.remove("active");
+                searchCont.classList.add("hidden");
+                searchInputShow = false;
             }
-            searchInputCreated = false;
+        } else if (event.target == searchCont) {
+        } else {
+            searchButton.classList.remove("active");
+            searchCont.classList.add("hidden");
+            searchInputShow = false;
         }
-    };
-
-    document.getElementById("menu").appendChild(searchButton);
+    });
 }
+
+const searchInput = document.getElementById("search-input");
+searchInput.onkeyup = (event) => {
+    if (event.key === "Enter") {
+        // 엔터키 입력 시 검색 실행
+        search();
+    }
+};
+
+searchInput.onclick = (event) => {
+    event.stopPropagation();
+};
+
+const searchInputButton = document.querySelector(".search-inp-btn");
+searchInputButton.onclick = (event) => {
+    event.stopPropagation();
+    search();
+};
 
 function createCardElement(fileInfo, index) {
     /*
@@ -135,7 +128,6 @@ function createCardElement(fileInfo, index) {
         img.src = fileInfo.thumbnail;
         img.alt = fileInfo.title;
         if (index === 0) {
-            console.log("index 0", img);
             img.classList.add(...bloglistFirstCardImgStyle.split(" "));
         } else {
             img.classList.add(...bloglistCardImgStyle.split(" "));
