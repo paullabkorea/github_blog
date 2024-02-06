@@ -1,0 +1,37 @@
+// scss 색상 변수
+$primary: #2e6ff2;
+$background: #fff;
+$surface: #121314;
+$graylv1: #f3f5fa;
+$graylv2: #d9dbe0;
+$graylv3: #8d9299;
+$graylv4: #47494d;
+$error: #ff3440;
+$lowError: #ffc533;
+$activation: #dee8ff;
+
+@mixin mask-image($mask-image, $color) {
+    background-color: $color;
+    -webkit-mask-image: url($mask-image);
+    -webkit-mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    mask-image: url($mask-image);
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+}
+
+#menuButton {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+
+    @include mask-image("../img/icon/icon-dropdown-menu.svg", $graylv3);
+
+    &:hover,
+    &.active {
+        background-color: $surface;
+    }
+}
