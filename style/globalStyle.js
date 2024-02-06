@@ -51,11 +51,11 @@ const notebookcopyButtonStyle = `copy-button absolute top-2 right-2 p-2 text-sm 
 const notebookdownloadButtonStyle = `download-button p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
 
 // bloglist 목록 스타일
-const bloglistFirstCardStyle = `col-span-3 h-auto rounded overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex flex-1 mb-[20px] cursor-pointer`;
-const bloglistFirstCardImgStyle = `w-full object-cover object-center rounded-2xl overflow-hidden w-[52%] shrink-0 mr-8`;
-const bloglistFirstCardDescriptionStyle = `text-gray-700 text-base font-normal leading-snug max-h-40 line-clamp-[7] mb-3`;
+const bloglistFirstCardStyle = `lg:col-span-3 md:col-span-2 col-span-1 h-auto rounded overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex md:flex-row flex-col flex-1 md:mb-[20px] cursor-pointer`;
+const bloglistFirstCardImgStyle = `w-full object-cover object-center rounded-2xl overflow-hidden md:h-auto h-[200px] md:w-[52%] shrink-0 mr-8`;
+const bloglistFirstCardDescriptionStyle = `text-gray-700 text-base font-normal leading-snug md:max-h-40 md:line-clamp-[7] line-clamp-3 mb-3`;
 
-const bloglistCardStyle = `max-w-sm overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 cursor-poitner`;
+const bloglistCardStyle = `lg:max-w-sm overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 cursor-poitner col-span-1 w-auto`;
 const bloglistCardImgStyle = `w-full h-[200px] object-cover object-center rounded-2xl overflow-hidden`;
 
 const bloglistCardBodyStyle = `py-4`;
