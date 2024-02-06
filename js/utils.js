@@ -2,17 +2,17 @@ function extractFromUrl() {
     // URLparsing.js에서 사용
     // URL에서 username과 repositoryName 추출
     const url = new URL(window.location.href);
-    const pathParts = url.pathname.split('/').filter(part => part.length > 0);
+    const pathParts = url.pathname.split("/").filter((part) => part.length > 0);
 
     // 보통 URL 형식: https://username.github.io/repositoryName/
     if (pathParts.length >= 2) {
         return {
             username: pathParts[0],
-            repositoryName: pathParts[1]
+            repositoryName: pathParts[1],
         };
     }
 
-    return { username: '', repositoryName: '' };
+    return { username: "", repositoryName: "" };
 }
 
 function convertSourceToImage(source) {
@@ -29,11 +29,11 @@ function convertSourceToImage(source) {
 function escapeHtml(text) {
     // convertIpynbToHtml.js에서 사용
     return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function extractFileInfo(filename) {
@@ -41,19 +41,22 @@ function extractFileInfo(filename) {
     // 파일 이름에서 정보 추출하는 함수
 
     // 정규 표현식을 사용하여 날짜, 제목, 카테고리, 썸네일, 저자 정보 추출
-    const regex = /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].(md|ipynb)$/;
+    const regex =
+        /^\[(\d{8})\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\]_\[(.*?)\].(md|ipynb)$/;
     const matches = filename.match(regex);
     // console.log(`extractFileInfo: ${matches}`);
 
     if (matches) {
+        console.log("matches", matches);
         return {
             date: matches[1],
             title: matches[2],
             category: matches[3],
-            thumbnail: matches[4] ? 'img/' + matches[4] : 'img/default.png',
-            description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5],
+            thumbnail: matches[4] ? "img/" + matches[4] : "img/default.png",
+            // description: matches[5].length > 25 ? matches[5].substring(0, 25) + '...' : matches[5],
+            description: matches[5],
             author: matches[6] ? parseInt(matches[6]) : 0,
-            fileType: matches[7]
+            fileType: matches[7],
         };
     }
     return null;

@@ -1,95 +1,146 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Blog</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Weniv Blog</title>
 
-    <!-- marked cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- // marked cdn -->
+        <!-- marked cdn -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <!-- // marked cdn -->
 
-    <!-- hightlight.js cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-    <!-- // hightlight.js cdn -->
+        <!-- hightlight.js cdn -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        />
+        <!-- // hightlight.js cdn -->
 
-    <!-- tailwind cdn -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- // tailwind cdn -->
+        <!-- tailwind cdn -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#2e6ff2",
+                            background: "#fff",
+                            surface: "#121314",
+                            graylv1: "#f3f5fa",
+                            graylv2: "#d9dbe0",
+                            graylv3: "#8d9299",
+                            graylv4: "#47494d",
+                            error: "#ff3440",
+                            lowError: "#ffc533",
+                            activation: "#dee8ff",
+                        },
+                    },
+                },
+            };
+        </script>
+        <!-- // tailwind cdn -->
 
-    <style>
-    @keyframes slideDown {
-        from { 
-            transition: all 1s;
-            height: 0px;
-            opacity: 0;
+        <style>
+            @keyframes slideDown {
+                from {
+                    transition: all 1s;
+                    height: 0px;
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                    height: 60px;
+                }
             }
-        to { 
-            opacity: 1;
-            height: 60px;
-        }
-    }
-    </style>
+        </style>
+    </head>
+    <body class="font-sans w-full text-surface">
+        <header class="bg-white mx-auto border-b border-gray-300">
+            <nav
+                class="container max-w-[1190px] mx-auto md:p-[19px] p-4 flex items-center"
+            >
+                <!-- 블로그 제목 영역 -->
+                <h1
+                    id="blog-title"
+                    class="md:text-2xl text-lg leading-6 mr-auto font-semibold text-gray-900"
+                >
+                    위니브 블로그
+                </h1>
+                <!-- // 블로그 제목 영역 -->
 
-</head>
-<body class="bg-gray-100 font-sans w-full">
-    <header class="bg-white shadow">
-        <nav class="container mx-auto p-6 flex justify-between items-center">
-            <!-- 블로그 제목 영역 -->
-            <h1 id="blog-title" class="text-3xl font-bold text-gray-900">GitHub Blog</h1>
-            <!-- // 블로그 제목 영역 -->
+                <!-- 메뉴 영역 -->
+                <div class="md:hidden w-6 h-6">
+                    <button id="menuButton">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+                            />
+                        </svg>
+                    </button>
+                </div>
 
-            <!-- 메뉴 영역 -->
-            <div class="md:hidden">
-                <button class="pt-3" id="menuButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-                    </svg>
-                </button>
-            </div>
+                <div id="menu" class="hidden md:flex items-center">
+                    <!-- 메뉴 아이템들 -->
+                </div>
+                <div class="search-cont">
+                    <button id="search-menu">
+                        <span class="sr-only">검색창 열기</span>
+                    </button>
+                </div>
+                <!-- // 메뉴 영역 -->
+            </nav>
+            <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
+            <div id="mobileMenu" class="md:hidden"></div>
+            <!-- // 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
+        </header>
 
-            <div id="menu" class="hidden md:flex items-center">
-                <!-- 메뉴 아이템들 -->
-            </div>
-            <!-- // 메뉴 영역 -->
-        </nav>
-        <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
-        <div id="mobileMenu" class="md:hidden"></div>
-        <!-- // 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
-    </header>
+        <main
+            class="container p-8 pb-4 w-full mx-auto max-w-[1190px] md:pt-[60px]"
+        >
+            <!-- 블로그 포스트 리스트 영역 -->
+            <div
+                id="blog-posts"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[25px] lg:gap-y-10 gap-y-4"
+            ></div>
+            <!-- // 블로그 포스트 리스트 영역-->
 
+            <!-- contents 영역 -->
+            <div id="contents" class="mt-6 grid-cols-3"></div>
+            <!-- // contents 영역-->
+        </main>
 
-    <main class="container mx-auto p-4 md:p-[3rem] md:pl-[12rem] md:pr-[12rem]">
+        <!-- utils -->
+        <script src="js/utils.js"></script>
 
-        <!-- 블로그 포스트 리스트 영역 -->
-        <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        <!-- // 블로그 포스트 리스트 영역-->
+        <!-- style -->
+        <script src="style/globalStyle.js"></script>
+        <script src="style/blogContentsStyle.js"></script>
 
-        <!-- contents 영역 -->
-        <div id="contents" class="mt-6 grid-cols-3"></div>
-        <!-- // contents 영역-->
-    </main>
+        <!-- mobile menu toggle -->
+        <script src="js/mobileMenuToggle.js"></script>
 
-    <!-- utils -->
-    <script src="js/utils.js"></script>
+        <!-- convert ipynb to html -->
+        <script src="js/convertIpynbToHtml.js"></script>
 
-    <!-- style -->
-    <script src="style/globalStyle.js"></script>
-    <script src="style/blogContentsStyle.js"></script>
-
-    <!-- mobile menu toggle -->
-    <script src="js/mobileMenuToggle.js"></script>
-
-    <!-- convert ipynb to html -->
-    <script src="js/convertIpynbToHtml.js"></script>
-
-    <!-- lender -->
-    <script src="config.js"></script>
-    <script src="js/URLparsing.js"></script>
-    <script src="js/initData.js"></script>
-    <script src="js/render.js"></script>
-</body>
+        <!-- lender -->
+        <script src="config.js"></script>
+        <script src="js/URLparsing.js"></script>
+        <script src="js/initData.js"></script>
+        <script src="js/render.js"></script>
+    </body>
 </html>

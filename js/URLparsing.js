@@ -1,44 +1,46 @@
+const defaultTitle = "위니브 블로그";
 // 현재 url 가져와서 parsing (url 스키마는 readme.md 참고)
 const url = new URL(window.location.href);
 const origin = url.origin + url.pathname;
-const pathParts = url.pathname.split('/').filter(part => part.length > 0);
+const pathParts = url.pathname.split("/").filter((part) => part.length > 0);
 // console.log(url)
 
 // 로켈 테스트 환경(127.0.0.1)인지 github 배포 상태인지 확인
-const isLocal = url.hostname === '127.0.0.1' || url.hostname === 'localhost';
-
+const isLocal = url.hostname === "127.0.0.1" || url.hostname === "localhost";
 
 if (isLocal) {
     // 로컬 테스트 환경
 
     // 블로그 제목 설정
-    const $blogTitle = document.getElementById('blog-title')
-    $blogTitle.innerText = siteConfig.blogTitle || 'GitHub Blog';
+    const $blogTitle = document.getElementById("blog-title");
+    $blogTitle.innerText = siteConfig.blogTitle || defaultTitle;
 
     // 홈페이지 title을 제목으로 설정
-    document.title = siteConfig.blogTitle || 'GitHub Blog';
+    document.title = siteConfig.blogTitle || defaultTitle;
 
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
-        window.location.href = `http://127.0.0.1${url.port ? ':' + url.port : ''}`;
+        window.location.href = `http://127.0.0.1${
+            url.port ? ":" + url.port : ""
+        }`;
     };
-}
-else {
+} else {
     // github 배포 상태
 
     // config에서 값이 없을 경우 URL에서 추출
     if (!siteConfig.username || !siteConfig.repositoryName) {
         const urlConfig = extractFromUrl();
         siteConfig.username = siteConfig.username || urlConfig.username;
-        siteConfig.repositoryName = siteConfig.repositoryName || urlConfig.repositoryName;
+        siteConfig.repositoryName =
+            siteConfig.repositoryName || urlConfig.repositoryName;
     }
 
     // 블로그 제목 설정
-    const $blogTitle = document.getElementById('blog-title')
-    $blogTitle.innerText = siteConfig.blogTitle || 'GitHub Blog';
+    const $blogTitle = document.getElementById("blog-title");
+    $blogTitle.innerText = siteConfig.blogTitle || defaultTitle;
 
     // 홈페이지 title을 제목으로 설정
-    document.title = siteConfig.blogTitle || 'GitHub Blog';
+    document.title = siteConfig.blogTitle || defaultTitle;
 
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
@@ -46,15 +48,13 @@ else {
     };
 }
 
-
 // 브라우저의 뒤로가기/앞으로가기 버튼 처리
-window.addEventListener('popstate', (event) => {
+window.addEventListener("popstate", (event) => {
     // 만약에 뒤로 간 곳이 메인 페이지라면
-    if (window.location.pathname === '/') {
+    if (window.location.pathname === "/") {
         // 메뉴를 다시 렌더링
         renderBlogList();
-    }
-    else {
+    } else {
         // TODO: 뒤로가기/앞으로가기 버튼을 눌렀을 때 처리
         // 그렇지 않고 포스트 목록이라면 포스트 렌더링
         // renderPost();
