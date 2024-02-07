@@ -213,7 +213,6 @@ gantt
 
 * 과업
     * 프로필 이미지로 캐릭터 5개 세팅(ASAP)
-    * URL에 index.html이 마지막으로 붙어있으면 제거하는 코드 작성
     * localDataUsing에 따른 분기
         * localDataUsing이 true일 경우
             * local_blogList.json과 local_blogMenu.json을 사용
