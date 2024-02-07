@@ -231,6 +231,7 @@ function renderBlogList(searchResult) {
         document.getElementById("blog-posts").style.display = "grid";
         document.getElementById("blog-posts").innerHTML = "";
 
+        console.log("blogList", blogList);
         blogList.forEach((post, index) => {
             const postInfo = extractFileInfo(post.name);
             if (postInfo) {
@@ -331,7 +332,7 @@ async function initialize() {
                 "+",
                 " "
             );
-            // console.log(postNameDecode)
+            console.log(postNameDecode);
             postInfo = extractFileInfo(postNameDecode);
             fetch(origin + "blog/" + postNameDecode)
                 .then((response) => response.text())
