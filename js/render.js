@@ -332,7 +332,7 @@ async function initialize() {
                 "+",
                 " "
             );
-            // console.log(postNameDecode)
+            console.log(postNameDecode);
             postInfo = extractFileInfo(postNameDecode);
             fetch(origin + "blog/" + postNameDecode)
                 .then((response) => response.text())

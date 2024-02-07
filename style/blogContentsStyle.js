@@ -62,6 +62,18 @@ function styleMarkdown(kinds, text, title_info = null) {
     tempDiv
         .querySelectorAll("table")
         .forEach((table) => table.classList.add(...posttableStyle.split(" ")));
+    tempDiv.querySelectorAll("table").forEach((table) => {
+        const tableWrapper = document.createElement("div");
+        tableWrapper.classList.add(
+            "w-auto",
+            "max-w-[990px]",
+            "overflow-auto",
+            "overflow-y-visible"
+        );
+        table.parentNode.insertBefore(tableWrapper, table);
+        tableWrapper.appendChild(table);
+    });
+
     tempDiv
         .querySelectorAll("thead")
         .forEach((thead) => thead.classList.add(...posttheadStyle.split(" ")));
