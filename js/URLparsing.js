@@ -4,9 +4,21 @@ const url = new URL(window.location.href);
 const origin = url.origin + url.pathname;
 const pathParts = url.pathname.split("/").filter((part) => part.length > 0);
 // console.log(url)
+// console.log(pathParts)
 
 // 로켈 테스트 환경(127.0.0.1)인지 github 배포 상태인지 확인
 const isLocal = url.hostname === "127.0.0.1" || url.hostname === "localhost";
+
+// 현재 URL에서 "index.html"을 제거하고자 할 때
+if (window.location.pathname.endsWith("/index.html")) {
+    // 새 경로를 생성합니다. "index.html"을 제거합니다.
+    // 이 때 pathParts에서 마지막 요소를 제거하지 않으면 다른 블로그를 클릭할 때 index.html이 붙어 이동합니다.
+    pathParts.pop();
+    let newPath = window.location.pathname.replace(/index\.html$/, "");
+
+    // history.replaceState()를 사용하여 URL을 변경합니다. 페이지는 리로드되지 않습니다.
+    history.replaceState(null, "", newPath);
+}
 
 if (isLocal) {
     // 로컬 테스트 환경
