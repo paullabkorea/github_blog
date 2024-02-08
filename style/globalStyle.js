@@ -22,7 +22,7 @@ const postliStyle = `pl-4 mb-2 leading-relaxed tracking-wide text-justify`;
 
 const postblockquoteStyle = `border-l-4 border-primary pl-4`;
 const postpreStyle = `bg-graylv1 p-4 rounded-[10px] mb-6 text-base font-medium overflow-auto whitespace-pre-wrap break-words text-justify max-w-full h-auto align-middle`;
-const postcodeStyle = `font-mono text-base bg-transparent`;
+const postcodeStyle = `bg-gray-100 font-mono text-base bg-transparent`;
 
 const posttableStyle = `table-auto w-auto border-collapse mb-6 h-auto align-middle border-graylv2 text-left`;
 const posttheadStyle = `text-left`;
@@ -48,7 +48,8 @@ const postsectionStyle = `w-full mb-10 md:mb-[60px] max-w-full h-auto align-midd
 
 // notebook에 code cell을 표시하는 부분
 const notebookpreStyle = `bg-gray-100 relative p-4 rounded mb-[12px] text-sm font-mono overflow-auto whitespace-pre-wrap break-words text-justify shadow-md max-w-full h-auto align-middle border-gray-200 hover:border-gray-600 hover:border hover:z-10 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:mb-[10.5px]`;
-const notebookcopyButtonStyle = `copy-button absolute top-2 right-2 p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
+const notebookcodeStyle = `bg-gray-100`;
+const notebookcopyButtonStyle = `copy-button opacity-70 absolute top-2 right-2 p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
 const notebookdownloadButtonStyle = `download-button p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
 
 // bloglist 목록 스타일

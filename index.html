@@ -15,10 +15,9 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        <link 
+            rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/a11y-light.min.css"
         />
         <!-- // hightlight.js cdn -->
         <link rel="stylesheet" href=" style/style.css" />
@@ -57,6 +56,9 @@
                     opacity: 1;
                     height: 60px;
                 }
+            }
+            .markdown-cell > ul > li > p {
+                display:inline-block;
             }
         </style>
     </head>
@@ -136,6 +138,8 @@
 
         <!-- utils -->
         <script src="js/utils.js"></script>
+        <!-- convert ipynb to html -->
+        <script src="style/convertIpynbToHtml.js"></script>
 
         <!-- style -->
         <script src="style/globalStyle.js"></script>
@@ -143,9 +147,6 @@
 
         <!-- mobile menu toggle -->
         <script src="js/mobileMenuToggle.js"></script>
-
-        <!-- convert ipynb to html -->
-        <script src="js/convertIpynbToHtml.js"></script>
 
         <!-- lender -->
         <script src="config.js"></script>

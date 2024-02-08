@@ -273,6 +273,9 @@ function styleJupyter(kinds, text, title_info = null) {
             );
     });
 
+    tempDiv.querySelectorAll("code").forEach((code) => {
+        code.classList.add(...notebookcodeStyle.split(" "));
+    });
     tempDiv.querySelectorAll("pre").forEach((pre) => {
         pre.classList.add(...notebookpreStyle.split(" "));
 

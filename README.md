@@ -212,10 +212,11 @@ gantt
     </table>
 
 * 과업
+    * 위니브를 알릴 수 있는 몇 가지 장치를 해둘 것
+        * 위니브 캐릭터 프로필 이미지 5 ~ 6개 (남3, 여3)
+    * 업데이트 히스토리 볼 수 있도록 할 것인지 논의 필요
     * 사용자가 잘못 입력했을 때에도 작동되게 해야 함(의사 결정 필요)
-    * 현재 Python만 지원됨. C와 JAVA 정도는 지원해야 하지 않을지 논의 필요.
     * 무한 스크롤 구현
-    * 프로필 이미지로 캐릭터 5개 세팅(ASAP)
     * localDataUsing에 따른 분기
         * localDataUsing이 true일 경우
             * local_blogList.json과 local_blogMenu.json을 사용
@@ -230,6 +231,7 @@ gantt
     * disqus 댓글
     * 한국어 가이드, 영어 가이드
     * GitHub 스폰서 등록(위니브 계정으로 이관 후)
+    * CDN은 모두 로컬에서 추가 하도록 변경
 
 * 애러와 애러 해결(트러블슈팅 히스토리)
     * 모바일 메뉴 설계
@@ -259,8 +261,34 @@ gantt
     * 검색기능 구현 후 UI가 깨지는 문제 발생
         * figma style이 나왔기 때문에 기존에 tailwind style만 유지
         * 계산했던 모든 style 제거
-
-
+    * code 블록 style 변경 건
+        * 아래와 같은 코드를 테스트한 결과 a11y 테마가 가장 적합하다고 판단
+        ```html
+        <!-- 테마 변경 Test -->
+        <!-- 테마 1: 기본 테마 -->
+        <!-- <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        /> -->
+        <!-- 테마 2: 깃헙 테마 -->
+        <!-- <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+        /> -->
+        <!-- 테마 3: monokai 테마 -->
+        <!-- <link 
+            rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css"
+        /> -->
+        ```
+    * GitHub에서 마크다운 블록에스 ul > li가 2개 이상 들어가 있는 경우 개행이 되는 이슈 발견, 애스터리스크 뒤에 텍스트가 나오지 않고 한칸 개행되어 p태그로 텍스트가 들어오게 됨.
+        * 일단 아래 코드로 임시 해결
+        ```css
+        .markdown-cell > ul > li > p {
+            display:inline-block;
+        }
+        ```
+        * p 태그가 생성되는 이유를 찾아 해결하는 것이 근본적인 해결책이 될 것으로 보임
 
 * 참고
     * https://github.blog/category/engineering/ 스타일을 참고
