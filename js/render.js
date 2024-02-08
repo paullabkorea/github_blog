@@ -231,7 +231,7 @@ function renderBlogList(searchResult) {
         document.getElementById("blog-posts").style.display = "grid";
         document.getElementById("blog-posts").innerHTML = "";
 
-        console.log("blogList", blogList);
+        // console.log("blogList", blogList);
         blogList.forEach((post, index) => {
             const postInfo = extractFileInfo(post.name);
             if (postInfo) {

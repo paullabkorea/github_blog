@@ -212,6 +212,7 @@ gantt
     </table>
 
 * 과업
+    * 무한 스크롤 구현
     * 프로필 이미지로 캐릭터 5개 세팅(ASAP)
     * localDataUsing에 따른 분기
         * localDataUsing이 true일 경우
