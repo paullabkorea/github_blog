@@ -35,7 +35,7 @@ const postemStyle = `text-lg font-medium italic pr-0.5`;
 const poststrongStyle = `text-lg font-bold`;
 
 // blog에 최상단 제목과 이미지 날짜 카테고리를 표시하는 부분
-const postcategoryStyle = `bg-activation text-primary text-sm font-medium px-3 py-1.5 rounded-lg tracking-wide`;
+const postcategoryStyle = `bg-activation text-primary text-sm font-medium px-3 py-1.5 rounded-lg tracking-wide transition duration-200 ease-in-out hover:bg-blue-400 hover:text-white`;
 const posttitleStyle = `md:text-[40px] md:leading-[56px] text-[32px] leading-[40px] font-bold my-3`;
 
 const postauthordateDivStyle = `md:mb-8 mb-6 h-fit`;

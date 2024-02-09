@@ -1,28 +1,36 @@
 function search(keyword) {
     /*
+    트러블슈팅: 실제 데이터가 없을 경우 API 호출을 한 번 실행.
     1. 메뉴에서 검색 버튼을 클릭해서 검색하였을 경우 검색 결과를 renderBlogList 함수를 통해 렌더링
     2. 포스트에서 카테고리를 클릭하였을 때 해당 카테고리로 검색하여 renderBlogList함수를 통해 렌더링
     */
-    if (!keyword) {
-        const searchInput = document.getElementById("search-input");
-        const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
-        const searchResult = blogList.filter((post) => {
-            // 대소문자 가리지 않고 검색
-            if (post.name.toLowerCase().includes(searchKeyword)) {
-                return post;
-            }
+    if (blogList.length === 0) {
+        initDataBlogList().then(() => {
+            search(keyword);
         });
-        renderBlogList(searchResult);
+        return
     } else {
-        const searchKeyword = keyword.toLowerCase();
-        const searchResult = blogList.filter((post) => {
-            // 대소문자 가리지 않고 검색
-            if (post.name.toLowerCase().includes(searchKeyword)) {
-                return post;
-            }
-        });
-        // 검색 결과를 렌더링
-        renderBlogList(searchResult);
+        if (!keyword) {
+            const searchInput = document.getElementById("search-input");
+            const searchKeyword = searchInput.value.toLowerCase(); // 검색어를 소문자로 변환
+            const searchResult = blogList.filter((post) => {
+                // 대소문자 가리지 않고 검색
+                if (post.name.toLowerCase().includes(searchKeyword)) {
+                    return post;
+                }
+            });
+            renderBlogList(searchResult);
+        } else {
+            const searchKeyword = keyword.toLowerCase();
+            const searchResult = blogList.filter((post) => {
+                // 대소문자 가리지 않고 검색
+                if (post.name.toLowerCase().includes(searchKeyword)) {
+                    return post;
+                }
+            });
+            // 검색 결과를 렌더링
+            renderBlogList(searchResult);
+        }
     }
 }
 
@@ -332,7 +340,7 @@ async function initialize() {
                 "+",
                 " "
             );
-            console.log(postNameDecode);
+            // console.log(postNameDecode);
             postInfo = extractFileInfo(postNameDecode);
             fetch(origin + "blog/" + postNameDecode)
                 .then((response) => response.text())
