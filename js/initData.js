@@ -3,6 +3,7 @@
 // https://api.github.com/repos/paullabkorea/github_blog/contents/blog
 let blogList = [];
 let blogMenu = [];
+let isInitData = false;
 
 async function initDataBlogList() {
     /*
@@ -14,6 +15,9 @@ async function initDataBlogList() {
         // blogList 데이터가 이미 있을 경우 다시 로딩하지 않기 위함(API 호출 최소화)
         return blogList;
     }
+
+    // 데이터 초기화를 한 번 했다는 것을 알리기 위한 변수
+    isInitData = true;
 
     if (isLocal) {
         // 로컬 환경

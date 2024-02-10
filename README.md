@@ -110,6 +110,7 @@ gantt
 * 데이터베이스 스키마 및 중요 변수
 
     * localDataUsing: 로컬 데이터 사용 여부
+    * isInitData: 데이터 초기화 여부, 데이터가 없을 경우 무한루프 방지를 위해 사용
 
     * siteConfig
         * username: GitHub 사용자 이름

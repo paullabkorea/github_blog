@@ -5,10 +5,13 @@ function search(keyword) {
     2. 포스트에서 카테고리를 클릭하였을 때 해당 카테고리로 검색하여 renderBlogList함수를 통해 렌더링
     */
     if (blogList.length === 0) {
-        initDataBlogList().then(() => {
-            search(keyword);
-        });
-        return
+        if (isInitData === false) {
+            // 데이터 초기화가 되지 않은 경우에만 검색 허용. 이 작업을 하지 않으면 데이터가 없을 때 무한 루프에 빠지게 됨.
+            initDataBlogList().then(() => {
+                search(keyword);
+            });
+            return
+        }
     } else {
         if (!keyword) {
             const searchInput = document.getElementById("search-input");
