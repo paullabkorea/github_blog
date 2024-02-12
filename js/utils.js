@@ -2,17 +2,21 @@ function extractFromUrl() {
     // URLparsing.js에서 사용
     // URL에서 username과 repositoryName 추출
     const url = new URL(window.location.href);
-    const pathParts = url.pathname.split("/").filter((part) => part.length > 0);
 
-    // 보통 URL 형식: https://username.github.io/repositoryName/
-    if (pathParts.length >= 2) {
-        return {
-            username: pathParts[0],
-            repositoryName: pathParts[1],
-        };
-    }
+    // 호스트 이름에서 username 추출
+    // 예: "weniv.github.io"에서 "weniv" 추출
+    const hostnameParts = url.hostname.split('.');
+    const username = hostnameParts.length > 2 ? hostnameParts[0] : "";
 
-    return { username: "", repositoryName: "" };
+    // pathname을 사용하여 repositoryName 추출
+    // 예: "/reponame"에서 "reponame" 추출
+    const pathParts = url.pathname.split("/").filter(part => part.length > 0);
+    const repositoryName = pathParts.length > 0 ? pathParts[0] : "";
+
+    return {
+        username: username,
+        repositoryName: repositoryName
+    };
 }
 
 function convertSourceToImage(source) {
