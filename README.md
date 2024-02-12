@@ -16,8 +16,8 @@
     3. 추가 메뉴를 만들고 싶으면 `menu` 폴더에 `사용하고싶은 메뉴 이름.html` 형식으로 저장하면 메뉴로 생성됩니다.
 
 * 서비스 URL 정보
-    * 실행 URL: https://paullabkorea.github.io/github_blog/
-    * blog github repo: https://github.com/paullabkorea/github_blog
+    * 실행 URL: https://weniv.github.io/weniv_blog/
+    * blog github repo: https://github.com/weniv/github_blog
     
 
 * 기존 GitHub 블로그와 비교
