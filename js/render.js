@@ -377,7 +377,7 @@ function renderBlogCategory() {
             categoryCount.classList.add(...categoryItemCountStyle.split(" "));
             categoryCount.textContent = `(${blogList.length})`;
         }
-        
+
         categoryItem.appendChild(categoryCount);
         categoryContainer.appendChild(categoryItem);
     });
