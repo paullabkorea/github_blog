@@ -62,7 +62,7 @@ const bloglistCardImgStyle = `w-full h-[200px] object-cover object-center rounde
 
 const bloglistCardBodyStyle = `py-4`;
 const bloglistCardTitleStyle = `font-bold text-2xl mb-3`;
-const bloglistCardCategoryStyle = `inline-block bg-activation text-primary md:text-sm font-medium mb-3 px-3 py-1.5 rounded-lg`;
+const bloglistCardCategoryStyle = `inline-block bg-activation text-primary md:text-sm font-medium mb-3 px-3 py-1.5 rounded-lg transition duration-200 ease-in-out hover:bg-blue-400 hover:text-white`;
 const bloglistCardDescriptionStyle = `text-graylv4 text-base font-normal leading-snug h-16 line-clamp-3 mb-3`;
 const bloglistCardAuthorDivStyle = `inline-block`;
 const bloglistCardAuthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-activation overflow-hidden`;
@@ -71,3 +71,8 @@ const bloglistCardDateStyle = `text-graylv3 text-sm inline-block font-normal`;
 
 // 검색창 스타일
 const searchInputStyle = `absolute top-20 right-8 w-[220px] h-10 rounded-md border border-gray-300 pl-2 text-base font-bold text-gray-600 outline-none box-border transition duration-300 ease-in-out shadow-none bg-white bg-clip-padding`;
+
+// category 스타일
+const categoryContainerStyle = `hidden md:flex flex-col md:w-[220px] fixed top-24 right-8 overflow-y-auto border p-4 rounded-md bg-white shadow-sm z-10`;
+const categoryItemStyle = `text-base font-bold text-gray-600 mb-2 cursor-pointer`;
+const categoryItemCountStyle = `text-sm font-normal text-gray-400 ml-2`;

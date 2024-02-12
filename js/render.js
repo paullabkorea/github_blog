@@ -1,9 +1,11 @@
-function search(keyword) {
+function search(keyword, kinds) {
     /*
     트러블슈팅: 실제 데이터가 없을 경우 API 호출을 한 번 실행.
     1. 메뉴에서 검색 버튼을 클릭해서 검색하였을 경우 검색 결과를 renderBlogList 함수를 통해 렌더링
     2. 포스트에서 카테고리를 클릭하였을 때 해당 카테고리로 검색하여 renderBlogList함수를 통해 렌더링
     */
+    keyword = keyword ? keyword.toLowerCase().trim() : "";
+
     if (blogList.length === 0) {
         if (isInitData === false) {
             // 데이터 초기화가 되지 않은 경우에만 검색 허용. 이 작업을 하지 않으면 데이터가 없을 때 무한 루프에 빠지게 됨.
@@ -24,15 +26,29 @@ function search(keyword) {
             });
             renderBlogList(searchResult);
         } else {
-            const searchKeyword = keyword.toLowerCase();
-            const searchResult = blogList.filter((post) => {
-                // 대소문자 가리지 않고 검색
-                if (post.name.toLowerCase().includes(searchKeyword)) {
-                    return post;
-                }
-            });
-            // 검색 결과를 렌더링
-            renderBlogList(searchResult);
+            // 만약 kinds가 있을 경우 해당 종류대로 검색(카테고리면 카테고리, 이름이면 이름)
+            if (kinds) {
+                const searchResult = blogList.filter((post) => {
+                    if (kinds === "category") {
+                        // post를 parsing하여 카테고리 내 검색
+                        const postInfo = extractFileInfo(post.name);
+                        if (postInfo.category.toLowerCase() === keyword) {
+                            return post;
+                        }
+                    }
+                });
+                renderBlogList(searchResult);
+            } else {
+                const searchKeyword = keyword.toLowerCase();
+                const searchResult = blogList.filter((post) => {
+                    // 대소문자 가리지 않고 검색
+                    if (post.name.toLowerCase().includes(searchKeyword)) {
+                        return post;
+                    }
+                });
+                // 검색 결과를 렌더링
+                renderBlogList(searchResult);
+            }
         }
     }
 }
@@ -153,6 +169,13 @@ function createCardElement(fileInfo, index) {
     category.classList.add(...bloglistCardCategoryStyle.split(" "));
     category.textContent = fileInfo.category;
     cardBody.appendChild(category);
+
+    // category 이벤트 생성으로 카테고리 클릭 시 해당 카테고리로 검색
+    category.onclick = (event) => {
+        // 클릭했을 때 카드가 클릭되는 것이 아니라 카테고리가 클릭되게 해야함
+        event.stopPropagation();
+        search(fileInfo.category, "category");
+    };
 
     const title = document.createElement("h2");
     title.classList.add(...bloglistCardTitleStyle.split(" "));
@@ -305,6 +328,61 @@ function renderOtherContents(menu) {
         });
 }
 
+function renderBlogCategory() {
+    /*
+    blogList에서 카테고리를 소문자로 추출하여 카테고리 목록을 aside 항목으로 렌더링
+    */
+    const categoryList = {};
+    blogList.forEach((post) => {
+        const postInfo = extractFileInfo(post.name);
+        if (postInfo) {
+            if (categoryList[postInfo.category.toLowerCase()]) {
+                categoryList[postInfo.category.toLowerCase()] += 1;
+            } else {
+                categoryList[postInfo.category.toLowerCase()] = 1;
+            }
+        }
+    });
+    const categoryArray = Object.keys(categoryList);
+    categoryArray.sort();
+
+    const categoryContainer = document.querySelector('aside');
+    categoryContainer.classList.add(...categoryContainerStyle.split(" "));
+
+    categoryArray.unshift('All')
+
+    categoryArray.forEach((category) => {
+        // category div
+        const categoryItem = document.createElement("div");
+
+        // category count span
+        const categoryCount = document.createElement("span");
+
+        if (categoryList[category]) {
+            categoryItem.classList.add(...categoryItemStyle.split(" "));
+            categoryItem.textContent = category;
+            categoryItem.onclick = (event) => {
+                search(category, "category");
+            };
+
+            categoryCount.classList.add(...categoryItemCountStyle.split(" "));
+            categoryCount.textContent = `(${categoryList[category]})`;
+        } else {
+            categoryItem.classList.add(...categoryItemStyle.split(" "));
+            categoryItem.textContent = category;
+            categoryItem.onclick = (event) => {
+                search();
+            };
+
+            categoryCount.classList.add(...categoryItemCountStyle.split(" "));
+            categoryCount.textContent = `(${blogList.length})`;
+        }
+        
+        categoryItem.appendChild(categoryCount);
+        categoryContainer.appendChild(categoryItem);
+    });
+}
+
 async function initialize() {
     /*
     최초 실행 함수, URLparsing은 이 영역에서 담당하지 않고 index.html에서 로드 될 때 실행, blogList와 blogMenu는 initData.js에서 정의되고 로드될 때 실행. 다만 함수의 흐름을 파악하고자 이곳으로 옮겨올 필요성이 있음
@@ -319,6 +397,9 @@ async function initialize() {
         // 블로그 리스트 로딩
         await initDataBlogList();
         renderBlogList();
+
+        // 블로그 카테고리 로딩
+        renderBlogCategory();
     } else {
         // 메뉴 로딩
         await initDataBlogMenu();
