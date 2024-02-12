@@ -27,7 +27,6 @@ async function initDataBlogList() {
         blogList = await response.json();
     } else {
         // GitHub 배포 상태
-        // siteConfig.username과 siteConfig.repositoryName이 없을 경우 현재 URL에서 parsing
         const response = await fetch(
             `https://api.github.com/repos/${siteConfig.username}/${siteConfig.repositoryName}/contents/blog`
         );
