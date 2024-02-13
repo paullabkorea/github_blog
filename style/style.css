@@ -75,4 +75,46 @@
   mask-size: 100%;
   mask-repeat: no-repeat;
   mask-position: center center;
+}
+
+#aside-button {
+  margin-left: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#aside-button::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  margin: 13px;
+  border: 1px solid red;
+  background-color: #47494d;
+  -webkit-mask-image: url("../img/icon/icon-chapter.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-chapter.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+
+.active #aside-button::before {
+  content: "Content";
+}
+.active #aside-button::after {
+  background-color: #8d9299;
+  -webkit-mask-image: url("../img/icon/icon-side-close-right.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-side-close-right.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
 }/*# sourceMappingURL=style.css.map */

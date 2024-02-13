@@ -78,3 +78,30 @@ $activation: #dee8ff;
     @include mask-image("../img/icon/icon-copy.svg", $graylv3);
   }
 }
+
+#aside-button {
+  margin-left: auto;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    margin: 13px;
+    border: 1px solid red;
+    @include mask-image("../img/icon/icon-chapter.svg", $graylv4);
+  }
+}
+
+.active #aside-button {
+  &::before {
+    content: "Content";
+  }
+  &::after {
+    @include mask-image("../img/icon/icon-side-close-right.svg", $graylv3);
+  }
+}

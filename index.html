@@ -1,161 +1,160 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Weniv Blog</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weniv Blog</title>
 
-        <!-- marked -->
-        <script src="./library/marked.min.js"></script>
-        <!-- // marked cdn -->
+    <!-- marked -->
+    <script src="./library/marked.min.js"></script>
+    <!-- // marked cdn -->
 
-        <!-- hightlight.js -->
-        <link
-            rel="stylesheet"
-            href="./library/highlight_default.min.css"
-        />
-        <script src="./library/highlight_highlight.min.js"></script>
-        <link 
-            rel="stylesheet" 
-            href="./library/highlight_ally-light.min.css"
-        />
-        <!-- // hightlight.js cdn -->
-        <link rel="stylesheet" href=" style/style.css" />
-        <!-- tailwind cdn -->
-        <script src="./library/tailwind-3.4.1.js"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            primary: "#2e6ff2",
-                            background: "#fff",
-                            surface: "#121314",
-                            graylv1: "#f3f5fa",
-                            graylv2: "#d9dbe0",
-                            graylv3: "#8d9299",
-                            graylv4: "#47494d",
-                            error: "#ff3440",
-                            lowError: "#ffc533",
-                            activation: "#dee8ff",
-                        },
-                    },
-                },
-            };
-        </script>
-        <!-- // tailwind cdn -->
+    <!-- hightlight.js -->
+    <link rel="stylesheet" href="./library/highlight_default.min.css" />
+    <script src="./library/highlight_highlight.min.js"></script>
+    <link rel="stylesheet" href="./library/highlight_ally-light.min.css" />
+    <!-- // hightlight.js cdn -->
+    <link rel="stylesheet" href=" style/style.css" />
+    <!-- tailwind cdn -->
+    <script src="./library/tailwind-3.4.1.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2e6ff2",
+              background: "#fff",
+              surface: "#121314",
+              graylv1: "#f3f5fa",
+              graylv2: "#d9dbe0",
+              graylv3: "#8d9299",
+              graylv4: "#47494d",
+              error: "#ff3440",
+              lowError: "#ffc533",
+              activation: "#dee8ff",
+            },
+          },
+        },
+      };
+    </script>
+    <!-- // tailwind cdn -->
 
-        <style>
-            @keyframes slideDown {
-                from {
-                    transition: all 1s;
-                    height: 0px;
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                    height: 60px;
-                }
-            }
-            .markdown-cell > ul > li > p {
-                display:inline-block;
-            }
-        </style>
-    </head>
-    <body class="font-sans w-full text-surface">
-        <header class="relative bg-white mx-auto border-b border-gray-300">
-            <nav
-                class="container max-w-[1190px] mx-auto md:p-[19px] p-4 flex items-center relative"
-            >
-                <!-- 블로그 제목 영역 -->
-                <h1
-                    id="blog-title"
-                    class="md:text-2xl text-lg leading-6 mr-auto font-semibold text-gray-900"
-                >
-                    위니브 블로그
-                </h1>
-                <!-- // 블로그 제목 영역 -->
-
-                <!-- 메뉴 영역 -->
-                <div class="md:hidden w-6 h-6">
-                    <button id="menu-button">
-                        <span class="sr-only">메뉴 열기</span>
-                    </button>
-                </div>
-
-                <div id="menu" class="hidden md:flex items-center">
-                    <!-- 메뉴 아이템들 -->
-                </div>
-
-                <button id="search-button" class="ml-10">
-                    <span class="sr-only">검색창 열기</span>
-                </button>
-
-                <div
-                    class="search-cont absolute z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full hidden bg-background"
-                >
-                    <label for="search-input" class="w-full">
-                        <input
-                            type="text"
-                            id="search-input"
-                            class="search-input bg-graylv1 rounded-[10px] px-5 py-2.5 placeholder:font-normal placehoder:text-graylv3 focus:outline-0 shadow-sm"
-                            placeholder="검색어를 입력하세요"
-                    /></label>
-                    <button
-                        class="search-inp-btn absolute top-1/2 right-[26px] -translate-y-1/2"
-                    >
-                        <span class="sr-only">검색하기</span>
-                    </button>
-                </div>
-
-                <!-- // 메뉴 영역 -->
-            </nav>
-            <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
-            <div
-                id="mobileMenu"
-                class="absolute bg-background w-full max-w-[1190px] border-b border-graylv2 z-10 md:hidden"
-            ></div>
-            <!-- // 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
-        </header>
-
-        <main
-            class="container p-8 pb-4 w-full mx-auto max-w-[1190px] md:pt-[60px]"
+    <style>
+      @keyframes slideDown {
+        from {
+          transition: all 1s;
+          height: 0px;
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+          height: 60px;
+        }
+      }
+      .markdown-cell > ul > li > p {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body class="font-sans w-full text-surface">
+    <header class="relative bg-white mx-auto border-b border-gray-300">
+      <nav
+        class="container max-w-[1190px] mx-auto md:p-[19px] p-4 flex items-center relative"
+      >
+        <!-- 블로그 제목 영역 -->
+        <h1
+          id="blog-title"
+          class="md:text-2xl text-lg leading-6 mr-auto font-semibold text-gray-900"
         >
-            <!-- 블로그 포스트 리스트 영역 -->
-            <div
-                id="blog-posts"
-                class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[25px] lg:gap-y-10 gap-y-4"
-            ></div>
-            <!-- // 블로그 포스트 리스트 영역-->
+          위니브 블로그
+        </h1>
+        <!-- // 블로그 제목 영역 -->
 
-            <!-- contents 영역 -->
-            <div
-                id="contents"
-                class="mt-6 grid-cols-3 max-w-[990px] mx-auto"
-            ></div>
-            <!-- // contents 영역-->
-        </main>
+        <!-- 메뉴 영역 -->
+        <div class="md:hidden w-6 h-6">
+          <button id="menu-button">
+            <span class="sr-only">메뉴 열기</span>
+          </button>
+        </div>
 
-        <!-- category 검색 영역 -->
-        <aside></aside>
-        <!-- // category 검색 영역 -->
+        <div id="menu" class="hidden md:flex items-center">
+          <!-- 메뉴 아이템들 -->
+        </div>
 
-        <!-- utils -->
-        <script src="js/utils.js"></script>
-        <!-- convert ipynb to html -->
-        <script src="style/convertIpynbToHtml.js"></script>
+        <button id="search-button" class="ml-10">
+          <span class="sr-only">검색창 열기</span>
+        </button>
 
-        <!-- style -->
-        <script src="style/globalStyle.js"></script>
-        <script src="style/blogContentsStyle.js"></script>
+        <div
+          class="search-cont absolute z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full hidden bg-background"
+        >
+          <label for="search-input" class="w-full">
+            <input
+              type="text"
+              id="search-input"
+              class="search-input bg-graylv1 rounded-[10px] px-5 py-2.5 placeholder:font-normal placehoder:text-graylv3 focus:outline-0 shadow-sm"
+              placeholder="검색어를 입력하세요"
+          /></label>
+          <button
+            class="search-inp-btn absolute top-1/2 right-[26px] -translate-y-1/2"
+          >
+            <span class="sr-only">검색하기</span>
+          </button>
+        </div>
 
-        <!-- mobile menu toggle -->
-        <script src="js/mobileMenuToggle.js"></script>
+        <!-- // 메뉴 영역 -->
+      </nav>
+      <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
+      <div
+        id="mobileMenu"
+        class="absolute bg-background w-full max-w-[1190px] border-b border-graylv2 z-10 md:hidden"
+      ></div>
+      <!-- // 모바일에서 메뉴 영역이 보이도록 하는 영역 -->
+    </header>
 
-        <!-- lender -->
-        <script src="config.js"></script>
-        <script src="js/URLparsing.js"></script>
-        <script src="js/initData.js"></script>
-        <script src="js/render.js"></script>
-    </body>
+    <main class="container p-8 pb-4 w-full mx-auto max-w-[1190px] md:pt-[60px]">
+      <!-- 블로그 포스트 리스트 영역 -->
+      <div
+        id="blog-posts"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-[25px] lg:gap-y-10 gap-y-4"
+      ></div>
+      <!-- // 블로그 포스트 리스트 영역-->
+
+      <!-- contents 영역 -->
+      <div id="contents" class="mt-6 grid-cols-3 max-w-[990px] mx-auto"></div>
+      <!-- // contents 영역-->
+    </main>
+
+    <!-- category 검색 영역 -->
+    <section
+      class="category-aside hidden md:flex flex-col border border-graylv2 bg-white rounded-[10px] fixed top-24 right-8 overflow-y-auto w-fit h-fit"
+    >
+      <header class="flex">
+        <h2 class="aside-tit sr-only">content</h2>
+        <button id="aside-button">
+          <span class="sr-only">카테고리 열기</span>
+        </button>
+      </header>
+      <aside></aside>
+    </section>
+    <!-- // category 검색 영역 -->
+
+    <!-- utils -->
+    <script src="js/utils.js"></script>
+    <!-- convert ipynb to html -->
+    <script src="style/convertIpynbToHtml.js"></script>
+
+    <!-- style -->
+    <script src="style/globalStyle.js"></script>
+    <script src="style/blogContentsStyle.js"></script>
+
+    <!-- mobile menu toggle -->
+    <script src="js/mobileMenuToggle.js"></script>
+
+    <!-- lender -->
+    <script src="config.js"></script>
+    <script src="js/URLparsing.js"></script>
+    <script src="js/initData.js"></script>
+    <script src="js/render.js"></script>
+  </body>
 </html>
