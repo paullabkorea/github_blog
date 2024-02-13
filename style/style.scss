@@ -11,49 +11,70 @@ $lowError: #ffc533;
 $activation: #dee8ff;
 
 @mixin mask-image($mask-image, $color) {
-    background-color: $color;
-    -webkit-mask-image: url($mask-image);
-    -webkit-mask-size: 100%;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center center;
-    mask-image: url($mask-image);
-    mask-size: 100%;
-    mask-repeat: no-repeat;
-    mask-position: center center;
+  background-color: $color;
+  -webkit-mask-image: url($mask-image);
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url($mask-image);
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
 }
 
 #menu-button {
-    width: 1.75rem;
-    height: 1.75rem;
-    display: flex;
-    align-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
 
-    @include mask-image("../img/icon/icon-dropdown-menu.svg", $graylv3);
+  @include mask-image("../img/icon/icon-dropdown-menu.svg", $graylv3);
 
-    &:hover,
-    &.active {
-        background-color: $surface;
-    }
+  &:hover,
+  &.active {
+    background-color: $surface;
+  }
 }
 
 #search-button {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
 
-    @include mask-image("../img/icon/icon-search.svg", $graylv3);
-    &:hover,
-    &.active {
-        background-color: $surface;
-    }
+  @include mask-image("../img/icon/icon-search.svg", $graylv3);
+  &:hover,
+  &.active {
+    background-color: $surface;
+  }
 }
 
 .search-inp-btn {
-    width: 1.3125rem;
-    height: 1.3125rem;
-    display: flex;
-    align-items: center;
+  width: 1.3125rem;
+  height: 1.3125rem;
+  display: flex;
+  align-items: center;
 
-    @include mask-image("../img/icon/icon-search.svg", $graylv2);
+  @include mask-image("../img/icon/icon-search.svg", $graylv2);
+}
+
+#copy-button {
+  width: 2.625rem;
+  height: 2.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &.active {
+    &::after {
+      background-color: $surface;
+    }
+  }
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    @include mask-image("../img/icon/icon-copy.svg", $graylv3);
+  }
 }

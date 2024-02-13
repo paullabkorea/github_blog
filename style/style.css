@@ -50,4 +50,29 @@
   mask-size: 100%;
   mask-repeat: no-repeat;
   mask-position: center center;
+}
+
+#copy-button {
+  width: 2.625rem;
+  height: 2.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#copy-button:hover::after, #copy-button.active::after {
+  background-color: #121314;
+}
+#copy-button::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #8d9299;
+  -webkit-mask-image: url("../img/icon/icon-copy.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-copy.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
 }/*# sourceMappingURL=style.css.map */

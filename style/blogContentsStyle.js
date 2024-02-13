@@ -282,8 +282,9 @@ function styleJupyter(kinds, text, title_info = null) {
 
         // 복사 버튼 생성
         const copyButton = document.createElement("button");
-        copyButton.textContent = "Copy";
+        copyButton.innerHTML = '<span class="sr-only">코드 복사하기</span>';
         copyButton.classList.add(...notebookcopyButtonStyle.split(" "));
+        copyButton.setAttribute('id','copy-button')
 
         // 복사 버튼 클릭 이벤트, pre에 텍스트가 있는 경우에만 활성화
         copyButton.addEventListener("click", async function (event) {
