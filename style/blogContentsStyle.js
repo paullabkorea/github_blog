@@ -2,7 +2,7 @@ function styleMarkdown(kinds, text, title_info = null) {
     /* 
     메뉴와 블로그 상세 목록을 globalStyle.js에 정의된 tailwind css로 스타일링 합니다. 
     */
-    // console.log(kinds, text, title_info)
+    console.log(kinds, text, title_info)
 
     const tempDiv = document.createElement("div");
     const html = marked.parse(text);
@@ -162,6 +162,7 @@ function styleMarkdown(kinds, text, title_info = null) {
 
         // section styling
         title_section.classList.add(...postsectionStyle.split(" "));
+        title_section.setAttribute("id", "title_section");
 
         tempDiv.insertBefore(title_section, tempDiv.firstChild);
     } else if (kinds === "menu") {
@@ -300,10 +301,81 @@ function styleJupyter(kinds, text, title_info = null) {
         pre.appendChild(copyButton);
     });
 
+
     const contentsDiv = document.getElementById("contents");
     while (contentsDiv.firstChild) {
         contentsDiv.removeChild(contentsDiv.firstChild);
     }
+
+    if (kinds === "post") {
+        // 일반 마크다운 블로그 포스트
+        const title_section = document.createElement("div");
+
+        // category
+        // category는 클릭하면 해당 카테고리의 블로그 리스트를 렌더링
+        const category = document.createElement("a");
+        category.classList.add(...postcategoryStyle.split(" "));
+        category.textContent = title_info.category;
+
+        category.onclick = (event) => {
+            event.preventDefault();
+            // console.log('click')
+            search(title_info.category);
+            const url = new URL(origin);
+            url.searchParams.set("search", title_info.category);
+            window.history.pushState({}, "", url);
+        };
+        title_section.appendChild(category);
+
+        // title
+        const title = document.createElement("h1");
+        title.classList.add(...posttitleStyle.split(" "));
+        // console.log(title_info)
+        title.textContent = title_info.title;
+        title_section.appendChild(title);
+
+        // author와 date를 담는 div
+        const author_date = document.createElement("div");
+        author_date.classList.add(...postauthordateDivStyle.split(" "));
+        title_section.appendChild(author_date);
+
+        // author
+        const authorDiv = document.createElement("div");
+        authorDiv.classList.add(...postauthorDivStyle.split(" "));
+        author_date.appendChild(authorDiv);
+
+        const authorImg = document.createElement("img");
+        authorImg.src = users[title_info.author]["img"];
+        authorImg.alt = users[title_info.author]["username"];
+        authorImg.classList.add(...postauthorImgStyle.split(" "));
+        authorDiv.appendChild(authorImg);
+
+        const author = document.createElement("div");
+        author.classList.add(...postauthorStyle.split(" "));
+        author.textContent = users[title_info.author]["username"];
+        authorDiv.appendChild(author);
+
+        // date
+        const date = document.createElement("div");
+        date.classList.add(...postdateStyle.split(" "));
+        date.textContent = formatDate(title_info.date);
+        author_date.appendChild(date);
+
+        // image
+        const image = document.createElement("img");
+        image.src = title_info.thumbnail;
+        image.alt = title_info.title;
+        image.classList.add(...postimgtitleStyle.split(" "));
+        title_section.appendChild(image);
+
+        // section styling
+        title_section.classList.add(...postsectionStyle.split(" "));
+        title_section.setAttribute("id", "title_section");
+
+        contentsDiv.insertBefore(title_section, contentsDiv.firstChild);
+
+    }
+
     // 노트북 다운로드 버튼 추가
     const downloadButton = document.createElement("button");
     downloadButton.textContent = "Notebook Download";
