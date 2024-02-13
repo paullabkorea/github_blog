@@ -352,12 +352,13 @@ function renderBlogCategory() {
     // categoryButton을 눌렀을 때
     if (evt.target === categoryButton) {
       categoryWrapper.classList.toggle("active");
+      categoryTitle.classList.toggle("sr-only")
       categoryContainer.classList.toggle("md:flex");
     } else if (
-      evt.target !== categoryWrapper &&
-      categoryWrapper.classList.contains("active")
+      categoryWrapper.classList.contains("active") && !categoryWrapper.contains(evt.target)
     ) {
       categoryWrapper.classList.remove("active");
+      categoryTitle.classList.add("sr-only")
       categoryContainer.classList.remove("md:flex");
     }
   });

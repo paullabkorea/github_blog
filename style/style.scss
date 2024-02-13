@@ -98,9 +98,6 @@ $activation: #dee8ff;
 }
 
 .active #aside-button {
-  &::before {
-    content: "Content";
-  }
   &::after {
     @include mask-image("../img/icon/icon-side-close-right.svg", $graylv3);
   }
