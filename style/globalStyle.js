@@ -40,7 +40,7 @@ const posttitleStyle = `md:text-[40px] md:leading-[56px] text-[32px] leading-[40
 
 const postauthordateDivStyle = `md:mb-8 mb-6 h-fit`;
 const postauthorDivStyle = `inline-block`;
-const postauthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-activation overflow-hidden`;
+const postauthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-graylv2 overflow-hidden`;
 const postauthorStyle = `inline text-sm font-semibold text-black mr-2`;
 const postdateStyle = `inline-block text-graylv3 text-sm font-normal`;
 const postimgtitleStyle = `w-full max-h-[520px] object-cover object-center my-4 rounded-2xl mx-auto block max-w-full align-middle`;
@@ -65,7 +65,7 @@ const bloglistCardTitleStyle = `font-bold text-2xl mb-3`;
 const bloglistCardCategoryStyle = `inline-block bg-activation text-primary md:text-sm font-medium mb-3 px-3 py-1.5 rounded-lg transition duration-200 ease-in-out hover:bg-blue-400 hover:text-white`;
 const bloglistCardDescriptionStyle = `text-graylv4 text-base font-normal leading-snug h-16 line-clamp-3 mb-3`;
 const bloglistCardAuthorDivStyle = `inline-block`;
-const bloglistCardAuthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-activation overflow-hidden`;
+const bloglistCardAuthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-graylv2 overflow-hidden`;
 const bloglistCardAuthorStyle = `inline text-sm font-semibold text-black mr-2`;
 const bloglistCardDateStyle = `text-graylv3 text-sm inline-block font-normal`;
 
