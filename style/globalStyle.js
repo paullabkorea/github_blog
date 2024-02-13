@@ -21,8 +21,8 @@ const postolStyle = `list-decimal list-inside text-lg font-normal tracking-wide 
 const postliStyle = `pl-4 mb-2 leading-relaxed tracking-wide text-justify`;
 
 const postblockquoteStyle = `border-l-4 border-primary pl-4`;
-const postpreStyle = `bg-graylv1 p-4 rounded-[10px] mb-6 text-base font-medium overflow-auto whitespace-pre-wrap break-words text-justify max-w-full h-auto align-middle`;
-const postcodeStyle = `bg-gray-100 font-mono text-base bg-transparent`;
+const postpreStyle = `relative bg-graylv1 p-4 rounded-[10px] mb-6 text-base font-medium overflow-auto whitespace-pre-wrap break-words text-justify max-w-full h-auto align-middle`;
+const postcodeStyle = `font-mono text-base bg-transparent`;
 
 const posttableStyle = `table-auto w-auto border-collapse mb-6 h-auto align-middle border-graylv2 text-left`;
 const posttheadStyle = `text-left`;
@@ -40,17 +40,17 @@ const posttitleStyle = `md:text-[40px] md:leading-[56px] text-[32px] leading-[40
 
 const postauthordateDivStyle = `md:mb-8 mb-6 h-fit`;
 const postauthorDivStyle = `inline-block`;
-const postauthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-activation overflow-hidden`;
+const postauthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-graylv2 overflow-hidden`;
 const postauthorStyle = `inline text-sm font-semibold text-black mr-2`;
 const postdateStyle = `inline-block text-graylv3 text-sm font-normal`;
 const postimgtitleStyle = `w-full max-h-[520px] object-cover object-center my-4 rounded-2xl mx-auto block max-w-full align-middle`;
 const postsectionStyle = `w-full mb-10 md:mb-[60px] max-w-full h-auto align-middle`;
 
 // notebook에 code cell을 표시하는 부분
-const notebookpreStyle = `bg-gray-100 relative p-4 rounded mb-[12px] text-sm font-mono overflow-auto whitespace-pre-wrap break-words text-justify shadow-md max-w-full h-auto align-middle border-gray-200 hover:border-gray-600 hover:border hover:z-10 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:mb-[10.5px]`;
-const notebookcodeStyle = `bg-gray-100`;
-const notebookcopyButtonStyle = `copy-button opacity-70 absolute top-2 right-2 p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
-const notebookdownloadButtonStyle = `download-button p-2 text-sm font-semibold text-white bg-gray-600 rounded hover:bg-gray-700 hover:shadow-md`;
+const notebookpreStyle = `relative bg-graylv1 p-8 rounded-[10px] mb-6 text-base font-medium overflow-auto whitespace-pre-wrap break-words text-justify max-w-full h-auto align-middle`;
+const notebookcodeStyle = `font-mono text-base bg-graylv1`;
+const notebookcopyButtonStyle = `border border-lv2 copy-button bg-white rounded-[10px] opacity-70 absolute top-5 right-5 p-2 shadow-md`;
+const notebookdownloadButtonStyle = `download-button px-5 py-[11px] mb-4 text-sm font-medium text-white bg-primary rounded-[10px] hover:bg-primary`;
 
 // bloglist 목록 스타일
 const bloglistFirstCardStyle = `lg:col-span-3 md:col-span-2 col-span-1 h-auto rounded overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex md:flex-row flex-col flex-1 md:mb-[20px] cursor-pointer`;
@@ -65,7 +65,7 @@ const bloglistCardTitleStyle = `font-bold text-2xl mb-3`;
 const bloglistCardCategoryStyle = `inline-block bg-activation text-primary md:text-sm font-medium mb-3 px-3 py-1.5 rounded-lg transition duration-200 ease-in-out hover:bg-blue-400 hover:text-white`;
 const bloglistCardDescriptionStyle = `text-graylv4 text-base font-normal leading-snug h-16 line-clamp-3 mb-3`;
 const bloglistCardAuthorDivStyle = `inline-block`;
-const bloglistCardAuthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-activation overflow-hidden`;
+const bloglistCardAuthorImgStyle = `inline w-8 h-8 rounded-full object-cover object-center mr-2 border-2 border-graylv2 overflow-hidden`;
 const bloglistCardAuthorStyle = `inline text-sm font-semibold text-black mr-2`;
 const bloglistCardDateStyle = `text-graylv3 text-sm inline-block font-normal`;
 
@@ -73,6 +73,6 @@ const bloglistCardDateStyle = `text-graylv3 text-sm inline-block font-normal`;
 const searchInputStyle = `absolute top-20 right-8 w-[220px] h-10 rounded-md border border-gray-300 pl-2 text-base font-bold text-gray-600 outline-none box-border transition duration-300 ease-in-out shadow-none bg-white bg-clip-padding`;
 
 // category 스타일
-const categoryContainerStyle = `hidden md:flex flex-col md:w-[220px] fixed top-24 right-8 overflow-y-auto border p-4 rounded-md bg-white shadow-sm z-10`;
-const categoryItemStyle = `text-base font-bold text-gray-600 mb-2 cursor-pointer`;
-const categoryItemCountStyle = `text-sm font-normal text-gray-400 ml-2`;
+const categoryContainerStyle = `hidden flex-col md:w-[220px] overflow-y-auto rounded-md bg-white shadow-sm z-10`;
+const categoryItemStyle = `text-base font-normal px-5 py-[9px] cursor-pointer hover:bg-graylv1 transition duration-200 ease-in-out`;
+const categoryItemCountStyle = `text-base font-normal text-graylv3 ml-1`;
