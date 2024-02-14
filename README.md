@@ -256,6 +256,15 @@ gantt
   - disqus 댓글
   - 한국어 가이드, 영어 가이드
   - GitHub 스폰서 등록(위니브 계정으로 이관 후)
+  - **배포 전 확인 사항**
+    - 이미지 최적화 되어있는지 확인(용량)
+    - 이미지 갯수를 더 늘릴지 논의
+    - local_blogList.json과 local_blogMenu.json를 내용을 비워두어도 배포상에서 작동 되는지 확인
+    - config.js에 있는 localDataUsing 변수를 true로 했을 때 local_blogList.json과 local_blogMenu.json에서만 데이터 읽어오는지 확인
+    - 실제 필요하지 않은 변수 정리
+    - 코드와 변수 정리
+    - 메뉴얼 정리
+    - logo 폰트 확인
 
 - 애러와 애러 해결(트러블슈팅 히스토리)
 
