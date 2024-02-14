@@ -32,9 +32,8 @@ if (isLocal) {
 
     // 클릭했을 때 메인페이지로 이동
     $blogTitle.onclick = () => {
-        window.location.href = `http://127.0.0.1${
-            url.port ? ":" + url.port : ""
-        }`;
+        window.location.href = `http://127.0.0.1${url.port ? ":" + url.port : ""
+            }`;
     };
 } else {
     // github 배포 상태
@@ -62,15 +61,54 @@ if (isLocal) {
 
 // 브라우저의 뒤로가기/앞으로가기 버튼 처리
 window.addEventListener("popstate", (event) => {
-    // 만약에 뒤로 간 곳이 메인 페이지라면
-    if (window.location.pathname === "/") {
-        // 메뉴를 다시 렌더링
+    // 뒤로 가는 것은 3가지 케이스가 있을 수 있음
+    // 1. 뒤로 갔을 때 메인 페이지(/), 뒤로 갔을 때 블로그 리스트 페이지(/?menu=blog.md) (실제로는 동일)
+    // 2. 뒤로 갔을 때 menu 페이지(/?menu=about.md)
+    // 3. 뒤로 갔을 때 post 페이지(/?post=20210601_[제목]_[카테고리]_[썸네일]_[저자].md)
+
+    // 렌더링이 이미 된 것은 category, init, blogList, blogMenu
+
+    // 뒤로간 url을 가져옴
+    let url = new URL(window.location.href);
+
+    if ((!url.search.split("=")[1]) || (url.search.split("=")[1] === "blog.md")) {
+        // 블로그 리스트 로딩
         renderBlogList();
+    } else if (url.search.split("=")[0] === "?menu") {
+        // 메뉴 상세 정보 로딩
+        // console.log('menu', url.search.split("=")[1])
+        document.getElementById("blog-posts").style.display = "none";
+        document.getElementById("contents").style.display = "block";
+        // console.log(origin + "menu/" + url.search.split("=")[1])
+        fetch(origin + "menu/" + url.search.split("=")[1])
+            .then((response) => response.text())
+            .then((text) => {
+                // console.log(text)
+                styleMarkdown("menu", text)
+            })
+    } else if (url.search.split("=")[0] === "?post") {
+        // 블로그 상세 정보 로딩
+        if (url.search.split("=")[0] === "?menu") {
+            document.getElementById("blog-posts").style.display = "none";
+            document.getElementById("contents").style.display = "block";
+            fetch(origin + "menu/" + url.search.split("=")[1])
+                .then((response) => response.text())
+                .then((text) => styleMarkdown("menu", text))
+        } else if (url.search.split("=")[0] === "?post") {
+            document.getElementById("contents").style.display = "block";
+            document.getElementById("blog-posts").style.display = "none";
+            postNameDecode = decodeURI(url.search.split("=")[1]).replaceAll("+", " ");
+            // console.log(postNameDecode);
+            postInfo = extractFileInfo(postNameDecode);
+            fetch(origin + "blog/" + postNameDecode)
+                .then((response) => response.text())
+                .then((text) =>
+                    postInfo.fileType === "md"
+                        ? styleMarkdown("post", text, postInfo)
+                        : styleJupyter("post", text, postInfo)
+                )
+        }
     } else {
-        // TODO: 뒤로가기/앞으로가기 버튼을 눌렀을 때 처리
-        // 그렇지 않고 포스트 목록이라면 포스트 렌더링
-        // renderPost();
-        // 그렇지 않고 메뉴라면 메뉴 렌더링
-        // renderMenu();
+        alert("잘못된 URL입니다.");
     }
 });

@@ -403,7 +403,7 @@ async function initialize() {
     
     TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음. 이를 통해 API 호출 한 번을 아낄 수 있음.
     */
-  if (!url.search.split("=")[1]) {
+  if ((!url.search.split("=")[1]) || (url.search.split("=")[1] === "blog.md")) {
     // 메뉴 로딩
     await initDataBlogMenu();
     renderMenu();
