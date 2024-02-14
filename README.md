@@ -268,7 +268,6 @@ gantt
         initDataBlogList();
       }
       ```
-      - (해결중) 직접 URL로 접속 후 카테고리를 클릭하고 뒤로가기를 누르면 콘텐츠가 보이지 않음
   - 모바일 메뉴 설계
     - 모바일 메뉴와 데스스탑 메뉴를 2개 만드는 일을 이벤트 위임을 통해 해결해야 했으나 중복코드가 발생하더라도 시간을 절약하는 차원에서 모듈화 하지 않음.
   - API 호출 최소화
@@ -297,7 +296,9 @@ gantt
     - figma style이 나왔기 때문에 기존에 tailwind style만 유지
     - 계산했던 모든 style 제거
   - code 블록 style 변경 건
+
     - 아래와 같은 코드를 테스트한 결과 a11y 테마가 가장 적합하다고 판단
+
     ```html
     <!-- 테마 변경 Test -->
     <!-- 테마 1: 기본 테마 -->
@@ -316,14 +317,82 @@ gantt
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css"
     /> -->
     ```
+
   - GitHub에서 마크다운 블록에스 ul > li가 2개 이상 들어가 있는 경우 개행이 되는 이슈 발견, 애스터리스크 뒤에 텍스트가 나오지 않고 한칸 개행되어 p태그로 텍스트가 들어오게 됨.
-    - 일단 아래 코드로 임시 해결
+
+    - 아래 코드로 임시 해결
+
     ```css
     .markdown-cell > ul > li > p {
       display: inline-block;
     }
     ```
+
     - p 태그가 생성되는 이유를 찾아 해결하는 것이 근본적인 해결책이 될 것으로 보임
+
+  - 뒤로가기 기능 구현
+
+    - 뒤로 갔을 때 블로그 리스트가 아니라 `blog.md` 파일을 읽어서 렌더링하는 이슈 발생
+    - 해당 문제를 해결하기 위해 URLparsing.js에 아래 함수를 구현하여 해결
+    - 모든 코드를 다 옮겨놓은 이유는 3가지 케이스 외에 더 있을 수 있기 때문, 추후 문제가 더 발생할 여지가 있으므로 트러블 슈팅에 기록.
+
+    ```javascript
+    window.addEventListener("popstate", (event) => {
+      // 뒤로 가는 것은 3가지 케이스가 있을 수 있음
+      // 1. 뒤로 갔을 때 메인 페이지(/), 뒤로 갔을 때 블로그 리스트 페이지(/?menu=blog.md) (실제로는 동일)
+      // 2. 뒤로 갔을 때 menu 페이지(/?menu=about.md)
+      // 3. 뒤로 갔을 때 post 페이지(/?post=20210601_[제목]_[카테고리]_[썸네일]_[저자].md)
+
+      // 렌더링이 이미 된 것은 category, init, blogList, blogMenu
+
+      // 뒤로간 url을 가져옴
+      let url = new URL(window.location.href);
+
+      if (!url.search.split("=")[1] || url.search.split("=")[1] === "blog.md") {
+        // 블로그 리스트 로딩
+        renderBlogList();
+      } else if (url.search.split("=")[0] === "?menu") {
+        // 메뉴 상세 정보 로딩
+        // console.log('menu', url.search.split("=")[1])
+        document.getElementById("blog-posts").style.display = "none";
+        document.getElementById("contents").style.display = "block";
+        // console.log(origin + "menu/" + url.search.split("=")[1])
+        fetch(origin + "menu/" + url.search.split("=")[1])
+          .then((response) => response.text())
+          .then((text) => {
+            // console.log(text)
+            styleMarkdown("menu", text);
+          });
+      } else if (url.search.split("=")[0] === "?post") {
+        // 블로그 상세 정보 로딩
+        if (url.search.split("=")[0] === "?menu") {
+          document.getElementById("blog-posts").style.display = "none";
+          document.getElementById("contents").style.display = "block";
+          fetch(origin + "menu/" + url.search.split("=")[1])
+            .then((response) => response.text())
+            .then((text) => styleMarkdown("menu", text));
+        } else if (url.search.split("=")[0] === "?post") {
+          document.getElementById("contents").style.display = "block";
+          document.getElementById("blog-posts").style.display = "none";
+          postNameDecode = decodeURI(url.search.split("=")[1]).replaceAll(
+            "+",
+            " "
+          );
+          // console.log(postNameDecode);
+          postInfo = extractFileInfo(postNameDecode);
+          fetch(origin + "blog/" + postNameDecode)
+            .then((response) => response.text())
+            .then((text) =>
+              postInfo.fileType === "md"
+                ? styleMarkdown("post", text, postInfo)
+                : styleJupyter("post", text, postInfo)
+            );
+        }
+      } else {
+        alert("잘못된 URL입니다.");
+      }
+    });
+    ```
 
 - 참고
 
