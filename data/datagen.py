@@ -37,7 +37,7 @@ category = [
     "AWS",
 ]
 lorem = "테스트용 로렘입숨입니다. 글자수가 많은 것부터 글자수가 적은 것까지 테스트하고 있습니다. 위니브 블로그는 베타이며 정식 런칭은 3월 즈음에 할 수 있을 것으로 보입니다."
-test_img = ["","thumb1.jpg", "thumb2.jpg", "thumb3.jpg", "default.png"]
+test_img = ["","thumb1.webp", "thumb2.webp", "thumb3.webp", "default.png"]
 date_list = []
 input_month = int(input("몇 월을 생성하시겠습니까? "))
 
