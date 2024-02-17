@@ -278,10 +278,13 @@ function renderBlogList(searchResult) {
           document.getElementById("blog-posts").style.display = "none";
           // console.log(post)
           // console.log(post.download_url)
+          let postDownloadUrl;
           if (!isLocal && localDataUsing) {
-            post.download_url = `${url.origin}/${siteConfig.repositoryName}${post.download_url}`;
+            postDownloadUrl = `${url.origin}/${siteConfig.repositoryName}${post.download_url}`;
+          } else {
+            postDownloadUrl = post.download_url;
           }
-          fetch(post.download_url)
+          fetch(postDownloadUrl)
             .then((response) => response.text())
             .then((text) =>
               postInfo.fileType === "md"
@@ -320,10 +323,13 @@ function renderOtherContents(menu) {
   }
   // console.log(menu)
   // console.log(menu.download_url)
+  let menuDownloadUrl;
   if (!isLocal && localDataUsing) {
-    menu.download_url = `${url.origin}/${siteConfig.repositoryName}${menu.download_url}`;
+    menuDownloadUrl = menu.download_url = `${url.origin}/${siteConfig.repositoryName}${menu.download_url}`;
+  } else {
+    menuDownloadUrl = menu.download_url;
   }
-  fetch(menu.download_url)
+  fetch(menuDownloadUrl)
     .then((response) => response.text())
     .then((text) => styleMarkdown("menu", text, undefined))
     .then(() => {
