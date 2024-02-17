@@ -284,19 +284,23 @@ function renderBlogList(searchResult) {
           } else {
             postDownloadUrl = post.download_url;
           }
-          fetch(postDownloadUrl)
-            .then((response) => response.text())
-            .then((text) =>
-              postInfo.fileType === "md"
-                ? styleMarkdown("post", text, postInfo)
-                : styleJupyter("post", text, postInfo)
-            )
-            .then(() => {
-              // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-              const url = new URL(origin);
-              url.searchParams.set("post", post.name);
-              window.history.pushState({}, "", url);
-            });
+          try {
+            fetch(postDownloadUrl)
+              .then((response) => response.text())
+              .then((text) =>
+                postInfo.fileType === "md"
+                  ? styleMarkdown("post", text, postInfo)
+                  : styleJupyter("post", text, postInfo)
+              )
+              .then(() => {
+                // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+                const url = new URL(origin);
+                url.searchParams.set("post", post.name);
+                window.history.pushState({}, "", url);
+              });
+          } catch (error) {
+            styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.")
+          }
         };
         document.getElementById("blog-posts").appendChild(cardElement);
       }
@@ -329,15 +333,19 @@ function renderOtherContents(menu) {
   } else {
     menuDownloadUrl = menu.download_url;
   }
-  fetch(menuDownloadUrl)
-    .then((response) => response.text())
-    .then((text) => styleMarkdown("menu", text, undefined))
-    .then(() => {
-      // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-      const url = new URL(origin);
-      url.searchParams.set("menu", menu.name);
-      window.history.pushState({}, "", url);
-    });
+  try {
+    fetch(menuDownloadUrl)
+      .then((response) => response.text())
+      .then((text) => styleMarkdown("menu", text, undefined))
+      .then(() => {
+        // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+        const url = new URL(origin);
+        url.searchParams.set("menu", menu.name);
+        window.history.pushState({}, "", url);
+      });
+  } catch (error) {
+    styleMarkdown("menu", '# Error입니다. 파일명을 확인해주세요.', undefined)
+  }
 }
 
 function renderBlogCategory() {
@@ -439,32 +447,40 @@ async function initialize() {
     if (url.search.split("=")[0] === "?menu") {
       document.getElementById("blog-posts").style.display = "none";
       document.getElementById("contents").style.display = "block";
-      fetch(origin + "menu/" + url.search.split("=")[1])
-        .then((response) => response.text())
-        .then((text) => styleMarkdown("menu", text))
-        .then(() => {
-          // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-          const url = new URL(window.location.href);
-          window.history.pushState({}, "", url);
-        });
+      try {
+        fetch(origin + "menu/" + url.search.split("=")[1])
+          .then((response) => response.text())
+          .then((text) => styleMarkdown("menu", text))
+          .then(() => {
+            // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+            const url = new URL(window.location.href);
+            window.history.pushState({}, "", url);
+          });
+      } catch (error) {
+        styleMarkdown("menu", "# Error입니다. 파일명을 확인해주세요.")
+      }
     } else if (url.search.split("=")[0] === "?post") {
       document.getElementById("contents").style.display = "block";
       document.getElementById("blog-posts").style.display = "none";
       postNameDecode = decodeURI(url.search.split("=")[1]).replaceAll("+", " ");
       // console.log(postNameDecode);
       postInfo = extractFileInfo(postNameDecode);
-      fetch(origin + "blog/" + postNameDecode)
-        .then((response) => response.text())
-        .then((text) =>
-          postInfo.fileType === "md"
-            ? styleMarkdown("post", text, postInfo)
-            : styleJupyter("post", text, postInfo)
-        )
-        .then(() => {
-          // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
-          const url = new URL(window.location.href);
-          window.history.pushState({}, "", url);
-        });
+      try {
+        fetch(origin + "blog/" + postNameDecode)
+          .then((response) => response.text())
+          .then((text) =>
+            postInfo.fileType === "md"
+              ? styleMarkdown("post", text, postInfo)
+              : styleJupyter("post", text, postInfo)
+          )
+          .then(() => {
+            // 렌더링 후에는 URL 변경(query string으로 블로그 포스트 이름 추가)
+            const url = new URL(window.location.href);
+            window.history.pushState({}, "", url);
+          });
+      } catch (error) {
+        styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.")
+      }
     }
   }
 }
