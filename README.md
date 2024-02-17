@@ -223,7 +223,7 @@ gantt
 
 - 과업
 
-  - 메인 클릭했을 때 a로 이동하는 것이 아닌 blog.md 페이지로 이동하게 함으로 히스토리 유지 필요
+  - ~~메인 클릭했을 때 a로 이동하는 것이 아닌 blog.md 페이지로 이동하게 함으로 히스토리 유지 필요~~
   - 이미지
     - favicon
     - ~~default 이미지~~
@@ -239,11 +239,11 @@ gantt
     - 잔디를 볼 수 있도록 할 것인지 논의 필요
     - 주요 스택들이나 코드를 짠 횟수 등을 보게 할 것인지 논의 필요
   - 사용자가 config.js 잘못 입력했을 때 작동되게 할지 의사 결정 필요 => 사용자에게 디버깅 능력이 없으므로
-  - page navigation을 어떻게 할 것인지 논의 필요(무한 스크롤은 Drop)
+  - ~~page navigation을 어떻게 할 것인지 논의 필요(무한 스크롤은 Drop)~~
     - 2000개 정도의 블로그 글은 지연없이 로딩
       - 이미지가 고화질이면 로딩 시간이 길어질 수 있음
       - 이미지가 고화질일 경우 대책 필요
-  - localDataUsing에 따른 분기
+  - ~~localDataUsing에 따른 분기~~
     - localDataUsing이 true일 경우
       - local_bloghumbList.json과 local_blogMenu.json을 사용
     - localDataUsing이 false일 경우
@@ -251,8 +251,8 @@ gantt
   - config.js에 있는 username과 repo name이 실제로 필요하지 않음(의사결정 필요)
     - URL 파싱하면 됨. 사용자 편의를 위해서는 이렇게 하면 좋지 않을까 생각
     - 뒤에 index.html이 있는 경우 error가 자주 발생됨 => URL 파싱을 통해 해결 필요
-  - 블로그 figma style 반영
-  - 'blog.md'파일을 어떻게 할지 (의사결정 필요)
+  - ~~블로그 figma style 반영~~
+  - ~~'blog.md'파일을 어떻게 할지 (의사결정 필요)~~
   - 조회수
   - disqus 댓글
   - 한국어 가이드, 영어 가이드
