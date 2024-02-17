@@ -20,7 +20,7 @@ const users = [
   },
 ];
 
-const localDataUsing = false; // 로컬 데이터 사용 여부
+const localDataUsing = true; // 로컬 데이터 사용 여부
 /*
 localDataUsing는 아직 사용하는 데이터가 아닙니다.
 1. false일 경우에도 로컬에서 live server(127.0.0.1)를 사용하면 local 데이터를 사용합니다.
