@@ -276,8 +276,11 @@ function renderBlogList(searchResult) {
           document.getElementById("contents").style.display = "block";
           // blog-posts 영역을 보이지 않게 처리
           document.getElementById("blog-posts").style.display = "none";
-          console.log(post)
-          console.log(post.download_url)
+          // console.log(post)
+          // console.log(post.download_url)
+          if (!isLocal && localDataUsing) {
+            post.download_url = `${url.origin}/${siteConfig.repositoryName}${post.download_url}`;
+          }
           fetch(post.download_url)
             .then((response) => response.text())
             .then((text) =>
@@ -315,8 +318,11 @@ function renderOtherContents(menu) {
       name: menu.split("/")[menu.split("/").length - 1],
     };
   }
-  console.log(menu)
-  console.log(menu.download_url)
+  // console.log(menu)
+  // console.log(menu.download_url)
+  if (!isLocal && localDataUsing) {
+    menu.download_url = `${url.origin}/${siteConfig.repositoryName}${menu.download_url}`;
+  }
   fetch(menu.download_url)
     .then((response) => response.text())
     .then((text) => styleMarkdown("menu", text, undefined))
