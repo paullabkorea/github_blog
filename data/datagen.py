@@ -41,16 +41,17 @@ test_img = ["","thumb1.webp", "thumb2.webp", "thumb3.webp", "default.png"]
 date_list = []
 input_month = int(input("몇 월을 생성하시겠습니까? "))
 
-while start_date <= end_date:
-    date_list.append(start_date)
-    start_date += delta
+if input_month < 1 or input_month > 12:
+    while start_date <= end_date:
+        date_list.append(start_date)
+        start_date += delta
 
-# 파일 생성
-for date in date_list:
-    if date.month == input_month:
-        # f-string 사용
-        file_name = f'[{date.strftime("%Y%m%d")}]_[title{date.strftime("%m%d")}]_[{random.choice(category)}]_[{random.choice(test_img)}]_[{lorem[0:random.randint(5, 40)]}]_[].md'
-        file_text = f"""
+    # 파일 생성
+    for date in date_list:
+        if date.month == input_month:
+            # f-string 사용
+            file_name = f'[{date.strftime("%Y%m%d")}]_[title{date.strftime("%m%d")}]_[{random.choice(category)}]_[{random.choice(test_img)}]_[{lorem[0:random.randint(5, 40)]}]_[].md'
+            file_text = f"""
 # 테스트용입니다.
 
 * `{date.strftime("%Y%m%d")}_{file_name}` 파일입니다.
@@ -66,9 +67,9 @@ function hello() {{
 }}
 ```
 """
-        # 경로를 ../blog로 설정하여 파일 생성
-        with open(f"../blog/{file_name}", "w", encoding="utf-8") as f:
-            f.write(file_text)
+            # 경로를 ../blog로 설정하여 파일 생성
+            with open(f"../blog/{file_name}", "w", encoding="utf-8") as f:
+                f.write(file_text)
 
 # 파일 목록 읽기
 blog_list = os.listdir("../blog")
