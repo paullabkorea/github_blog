@@ -56,6 +56,9 @@ $activation: #dee8ff;
 
   @include mask-image("../img/icon/icon-search.svg", $graylv2);
 
+  @media screen and (min-width: 768px) {
+    background-color: $graylv4;
+  }
   &:hover,
   &.active {
     background-color: $graylv4;

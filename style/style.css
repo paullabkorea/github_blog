@@ -50,6 +50,11 @@
   mask-repeat: no-repeat;
   mask-position: center center;
 }
+@media screen and (min-width: 768px) {
+  .search-inp-btn {
+    background-color: #47494d;
+  }
+}
 .search-inp-btn:hover, .search-inp-btn.active {
   background-color: #47494d;
 }
