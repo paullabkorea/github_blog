@@ -62,6 +62,20 @@ $activation: #dee8ff;
   }
 }
 
+.reset-inp-btn {
+  width: 1.3125rem;
+  height: 1.3125rem;
+  display: flex;
+  align-items: center;
+
+  @include mask-image("../img/icon/icon-X.svg", $graylv2);
+
+  &:hover,
+  &.active {
+    background-color: $graylv4;
+  }
+}
+
 #copy-button {
   width: 2.625rem;
   height: 2.625rem;

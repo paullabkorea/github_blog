@@ -151,6 +151,20 @@ async function renderMenu() {
     event.stopPropagation();
     search();
   };
+
+  const resetInputButton = document.querySelector(".reset-inp-btn");
+  searchInput.addEventListener("input", () => {
+    // 초기화 버튼 보이기
+    if (searchInput.value) {
+      resetInputButton.classList.remove("hidden");
+    } else {
+      resetInputButton.classList.add("hidden");
+    }
+  });
+  resetInputButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    searchInput.value = "";
+  });
 }
 
 function createCardElement(fileInfo, index) {
