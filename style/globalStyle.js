@@ -76,3 +76,6 @@ const searchInputStyle = `absolute top-20 right-8 w-[220px] h-10 rounded-md bord
 const categoryContainerStyle = `hidden flex-col md:w-[220px] overflow-y-auto rounded-md bg-white shadow-sm z-10`;
 const categoryItemStyle = `text-base font-normal px-5 py-[9px] cursor-pointer hover:bg-graylv1 transition duration-200 ease-in-out`;
 const categoryItemCountStyle = `text-base font-normal text-graylv3 ml-1`;
+
+// paginationStyle
+const paginationStyle = `flex justify-center items-center `;

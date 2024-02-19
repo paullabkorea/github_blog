@@ -20,7 +20,6 @@
 #search-button {
   width: 1.5rem;
   height: 1.5rem;
-  display: flex;
   align-items: center;
   background-color: #8d9299;
   -webkit-mask-image: url("../img/icon/icon-search.svg");
@@ -50,6 +49,9 @@
   mask-size: 100%;
   mask-repeat: no-repeat;
   mask-position: center center;
+}
+.search-inp-btn:hover, .search-inp-btn.active {
+  background-color: #47494d;
 }
 
 #copy-button {

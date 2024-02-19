@@ -82,18 +82,18 @@
           <!-- 메뉴 아이템들 -->
         </div>
 
-        <button id="search-button" class="ml-10">
+        <button id="search-button" class="ml-10 md:hidden">
           <span class="sr-only">검색창 열기</span>
         </button>
 
         <div
-          class="search-cont absolute z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full hidden bg-background"
+          class="search-cont absolute md:relative flex md:hidden z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full bg-background w-96 max-w-full box-border"
         >
           <label for="search-input" class="w-full">
             <input
               type="text"
               id="search-input"
-              class="search-input bg-graylv1 rounded-[10px] px-5 py-2.5 placeholder:font-normal placehoder:text-graylv3 focus:outline-0 shadow-sm"
+              class="search-input bg-graylv1 rounded-[10px] px-5 py-2.5 placeholder:font-normal placehoder:text-graylv3 focus:outline-0 shadow-sm w-full"
               placeholder="검색어를 입력하세요"
           /></label>
           <button
@@ -124,6 +124,9 @@
       <!-- contents 영역 -->
       <div id="contents" class="mt-6 grid-cols-3 max-w-[990px] mx-auto"></div>
       <!-- // contents 영역-->
+
+      <!-- pagination -->
+      <div id="pagination" class="flex justify-center mt-10"></div>
     </main>
 
     <!-- category 검색 영역 -->

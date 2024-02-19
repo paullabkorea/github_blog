@@ -39,7 +39,6 @@ $activation: #dee8ff;
 #search-button {
   width: 1.5rem;
   height: 1.5rem;
-  display: flex;
   align-items: center;
 
   @include mask-image("../img/icon/icon-search.svg", $graylv3);
@@ -56,6 +55,11 @@ $activation: #dee8ff;
   align-items: center;
 
   @include mask-image("../img/icon/icon-search.svg", $graylv2);
+
+  &:hover,
+  &.active {
+    background-color: $graylv4;
+  }
 }
 
 #copy-button {
