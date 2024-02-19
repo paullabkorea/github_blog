@@ -125,7 +125,6 @@ async function renderMenu() {
 
   window.addEventListener("resize", (event) => {
     if (window.innerWidth > 768) {
-      console.log("window resize");
       searchButton.classList.add("active");
       searchCont.classList.remove("hidden");
       searchInputShow = true;
