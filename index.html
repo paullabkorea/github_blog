@@ -82,14 +82,14 @@
           <!-- 메뉴 아이템들 -->
         </div>
 
-        <button id="search-button" class="ml-10 md:hidden">
+        <button id="search-button" class="ml-10 md:hidden flex">
           <span class="sr-only">검색창 열기</span>
         </button>
 
         <div
-          class="search-cont absolute md:relative flex md:hidden z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full bg-background w-96 max-w-full box-border"
+          class="search-cont w-80 md:relative absolute z-10 rounded-2xl p-4 border border-graylv2 bottom-[-12px] right-2 xl:right-0 translate-y-full bg-background w-96 max-w-full box-border md:p-0 md:top-0 md:right-0 md:border-0 md:translate-y-0 md:w-80 md:ml-10"
         >
-          <label for="search-input" class="w-full">
+          <label for="search-input">
             <input
               type="text"
               id="search-input"
@@ -102,7 +102,6 @@
             <span class="sr-only">검색하기</span>
           </button>
         </div>
-
         <!-- // 메뉴 영역 -->
       </nav>
       <!-- 모바일에서 메뉴 영역이 보이도록 하는 영역 -->

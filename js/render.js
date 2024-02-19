@@ -101,43 +101,58 @@ async function renderMenu() {
   let searchInputShow = false;
 
   window.addEventListener("click", (event) => {
-    if (event.target == searchButton) {
-      searchInputShow = !searchInputShow;
-      if (searchInputShow) {
-        searchButton.classList.add("active");
-        searchCont.classList.remove("hidden");
-        searchCont.classList.add("block");
+    // 화면의 크기가 md 보다 작을 때만 동작
+    if (window.innerWidth <= 768) {
+      if (event.target == searchButton) {
+        searchInputShow = !searchInputShow;
+        if (searchInputShow) {
+          searchButton.classList.add("active");
+          searchCont.classList.remove("hidden");
+          searchCont.classList.add("block");
+        } else {
+          searchButton.classList.remove("active");
+          searchCont.classList.add("hidden");
+          searchInputShow = false;
+        }
+      } else if (event.target == searchCont) {
       } else {
         searchButton.classList.remove("active");
         searchCont.classList.add("hidden");
         searchInputShow = false;
       }
-    } else if (event.target == searchCont) {
+    }
+  });
+
+  window.addEventListener("resize", (event) => {
+    if (window.innerWidth > 768) {
+      console.log("window resize");
+      searchButton.classList.add("active");
+      searchCont.classList.remove("hidden");
+      searchInputShow = true;
     } else {
       searchButton.classList.remove("active");
       searchCont.classList.add("hidden");
-      searchInputShow = false;
     }
   });
-}
 
-const searchInput = document.getElementById("search-input");
-searchInput.onkeyup = (event) => {
-  if (event.key === "Enter") {
-    // 엔터키 입력 시 검색 실행
+  const searchInput = document.getElementById("search-input");
+  searchInput.onkeyup = (event) => {
+    if (event.key === "Enter") {
+      // 엔터키 입력 시 검색 실행
+      search();
+    }
+  };
+
+  searchInput.onclick = (event) => {
+    event.stopPropagation();
+  };
+
+  const searchInputButton = document.querySelector(".search-inp-btn");
+  searchInputButton.onclick = (event) => {
+    event.stopPropagation();
     search();
-  }
-};
-
-searchInput.onclick = (event) => {
-  event.stopPropagation();
-};
-
-const searchInputButton = document.querySelector(".search-inp-btn");
-searchInputButton.onclick = (event) => {
-  event.stopPropagation();
-  search();
-};
+  };
+}
 
 function createCardElement(fileInfo, index) {
   /*
@@ -299,7 +314,7 @@ function renderBlogList(searchResult) {
                 window.history.pushState({}, "", url);
               });
           } catch (error) {
-            styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.")
+            styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.");
           }
         };
         document.getElementById("blog-posts").appendChild(cardElement);
@@ -329,7 +344,8 @@ function renderOtherContents(menu) {
   // console.log(menu.download_url)
   let menuDownloadUrl;
   if (!isLocal && localDataUsing) {
-    menuDownloadUrl = menu.download_url = `${url.origin}/${siteConfig.repositoryName}${menu.download_url}`;
+    menuDownloadUrl =
+      menu.download_url = `${url.origin}/${siteConfig.repositoryName}${menu.download_url}`;
   } else {
     menuDownloadUrl = menu.download_url;
   }
@@ -344,7 +360,7 @@ function renderOtherContents(menu) {
         window.history.pushState({}, "", url);
       });
   } catch (error) {
-    styleMarkdown("menu", '# Error입니다. 파일명을 확인해주세요.', undefined)
+    styleMarkdown("menu", "# Error입니다. 파일명을 확인해주세요.", undefined);
   }
 }
 
@@ -376,13 +392,14 @@ function renderBlogCategory() {
     // categoryButton을 눌렀을 때
     if (evt.target === categoryButton) {
       categoryWrapper.classList.toggle("active");
-      categoryTitle.classList.toggle("sr-only")
+      categoryTitle.classList.toggle("sr-only");
       categoryContainer.classList.toggle("md:flex");
     } else if (
-      categoryWrapper.classList.contains("active") && !categoryWrapper.contains(evt.target)
+      categoryWrapper.classList.contains("active") &&
+      !categoryWrapper.contains(evt.target)
     ) {
       categoryWrapper.classList.remove("active");
-      categoryTitle.classList.add("sr-only")
+      categoryTitle.classList.add("sr-only");
       categoryContainer.classList.remove("md:flex");
     }
   });
@@ -427,7 +444,7 @@ async function initialize() {
     
     TODO: URL 파싱 결과 상세 블로그나 메뉴상태이면 검색 버튼을 누르기 전까지는 initDataBlogList()를 실행시킬 필요 없음. 이를 통해 API 호출 한 번을 아낄 수 있음.
     */
-  if ((!url.search.split("=")[1]) || (url.search.split("=")[1] === "blog.md")) {
+  if (!url.search.split("=")[1] || url.search.split("=")[1] === "blog.md") {
     // 메뉴 로딩
     await initDataBlogMenu();
     renderMenu();
@@ -457,7 +474,7 @@ async function initialize() {
             window.history.pushState({}, "", url);
           });
       } catch (error) {
-        styleMarkdown("menu", "# Error입니다. 파일명을 확인해주세요.")
+        styleMarkdown("menu", "# Error입니다. 파일명을 확인해주세요.");
       }
     } else if (url.search.split("=")[0] === "?post") {
       document.getElementById("contents").style.display = "block";
@@ -479,7 +496,7 @@ async function initialize() {
             window.history.pushState({}, "", url);
           });
       } catch (error) {
-        styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.")
+        styleMarkdown("post", "# Error입니다. 파일명을 확인해주세요.");
       }
     }
   }
