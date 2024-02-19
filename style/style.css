@@ -120,6 +120,9 @@
   align-items: center;
   justify-content: center;
 }
+#aside-button:active, #aside-button:focus {
+  outline: none;
+}
 #aside-button::after {
   content: "";
   width: 24px;

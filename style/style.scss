@@ -114,6 +114,11 @@ $activation: #dee8ff;
   align-items: center;
   justify-content: center;
 
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
   &::after {
     content: "";
     width: 24px;
