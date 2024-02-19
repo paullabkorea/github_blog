@@ -164,6 +164,7 @@ async function renderMenu() {
   resetInputButton.addEventListener("click", (event) => {
     event.stopPropagation();
     searchInput.value = "";
+    resetInputButton.classList.add("hidden");
   });
 }
 
