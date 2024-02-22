@@ -78,4 +78,8 @@ const categoryItemStyle = `text-base font-normal px-5 py-[9px] cursor-pointer ho
 const categoryItemCountStyle = `text-base font-normal text-graylv3 ml-1`;
 
 // paginationStyle
-const paginationStyle = `flex justify-center items-center `;
+const paginationStyle = `mt-20 mb-[132px] flex justify-center items-center gap-8`;
+const pageMoveButtonStyle = `relative flex inline-flex items-center rounded-[10px] p-[11px] text-graylv2 hover:text-graylv4 bg-graylv1 mr-8`;
+const pageNumberListStyle = `flex items-center justify-center gap-1`;
+const pageNumberStyle = `relative inline-flex items-center px-4 py-2 text-md font-normal text-graylv3`;
+const pageNumberActiveStyle = `relative inline-flex items-center px-4 py-2 text-md font-normal text-primary`;

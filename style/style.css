@@ -150,4 +150,84 @@
   mask-size: 100%;
   mask-repeat: no-repeat;
   mask-position: center center;
+}
+
+#page-prev {
+  display: flex;
+}
+#page-prev::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #8d9299;
+  -webkit-mask-image: url("../img/icon/icon-prev.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-prev.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+#page-prev:hover::after {
+  background-color: #47494d;
+  -webkit-mask-image: url("../img/icon/icon-prev.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-prev.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+#page-prev:disabled::after {
+  background-color: #d9dbe0;
+  -webkit-mask-image: url("../img/icon/icon-prev.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-prev.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+
+#page-next {
+  display: flex;
+}
+#page-next::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #8d9299;
+  -webkit-mask-image: url("../img/icon/icon-next.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-next.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+#page-next:hover::after {
+  background-color: #47494d;
+  -webkit-mask-image: url("../img/icon/icon-next.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-next.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+}
+#page-next:disabled::after {
+  background-color: #d9dbe0;
+  -webkit-mask-image: url("../img/icon/icon-next.svg");
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  mask-image: url("../img/icon/icon-next.svg");
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center center;
 }/*# sourceMappingURL=style.css.map */

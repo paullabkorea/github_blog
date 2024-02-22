@@ -452,6 +452,37 @@ function renderBlogCategory() {
   });
 }
 
+function renderPagination() {
+  let pageLength = 10;
+  // 페이지네이션이 있는 경우에 실행할 함수
+  const $pagination = document.getElementById("pagination");
+  $pagination.classList.add(...paginationStyle.split(" "));
+
+  const prevButton = document.createElement("button");
+  prevButton.setAttribute("id", "page-prev");
+  prevButton.classList.add(...pageMoveButtonStyle.split(" "));
+
+  const nextButton = document.createElement("button");
+  nextButton.setAttribute("id", "page-next");
+  nextButton.classList.add(...pageMoveButtonStyle.split(" "));
+
+  const pageNav = document.createElement("nav");
+  pageNav.setAttribute("id", "pagination-list");
+  pageNav.classList.add(...pageNumberListStyle.split(" "));
+
+  // pageLength만큼 자식요소 만들기
+  for (let i = 0; i < pageLength; i++) {
+    const page = document.createElement("button");
+    page.classList.add(...pageNumberStyle.split(" "));
+    page.textContent = i + 1;
+    pageNav.appendChild(page);
+  }
+  $pagination.appendChild(prevButton);
+  $pagination.appendChild(pageNav);
+  $pagination.appendChild(nextButton);
+}
+renderPagination();
+
 async function initialize() {
   /*
     최초 실행 함수, URLparsing은 이 영역에서 담당하지 않고 index.html에서 로드 될 때 실행, blogList와 blogMenu는 initData.js에서 정의되고 로드될 때 실행. 다만 함수의 흐름을 파악하고자 이곳으로 옮겨올 필요성이 있음

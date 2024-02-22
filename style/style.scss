@@ -134,3 +134,34 @@ $activation: #dee8ff;
     @include mask-image("../img/icon/icon-side-close-right.svg", $graylv3);
   }
 }
+
+#page-prev {
+  display: flex;
+  &::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    @include mask-image("../img/icon/icon-prev.svg", $graylv3);
+  }
+  &:hover::after {
+    @include mask-image("../img/icon/icon-prev.svg", $graylv4);
+  }
+  &:disabled::after {
+    @include mask-image("../img/icon/icon-prev.svg", $graylv2);
+  }
+}
+#page-next {
+  display: flex;
+  &::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    @include mask-image("../img/icon/icon-next.svg", $graylv3);
+  }
+  &:hover::after {
+    @include mask-image("../img/icon/icon-next.svg", $graylv4);
+  }
+  &:disabled::after {
+    @include mask-image("../img/icon/icon-next.svg", $graylv2);
+  }
+}
