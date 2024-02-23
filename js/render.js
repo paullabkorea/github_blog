@@ -452,36 +452,66 @@ function renderBlogCategory() {
   });
 }
 
-function renderPagination() {
-  let pageLength = 10;
-  // 페이지네이션이 있는 경우에 실행할 함수
+const pageLength = 5;
+let currentPage = 1;
+function initPagenation() {
   const $pagination = document.getElementById("pagination");
   $pagination.classList.add(...paginationStyle.split(" "));
 
   const prevButton = document.createElement("button");
   prevButton.setAttribute("id", "page-prev");
   prevButton.classList.add(...pageMoveButtonStyle.split(" "));
+  prevButton.addEventListener("click", () => setPage(currentPage - 1));
 
   const nextButton = document.createElement("button");
   nextButton.setAttribute("id", "page-next");
   nextButton.classList.add(...pageMoveButtonStyle.split(" "));
+  nextButton.addEventListener("click", () => setPage(currentPage + 1));
 
   const pageNav = document.createElement("nav");
   pageNav.setAttribute("id", "pagination-list");
   pageNav.classList.add(...pageNumberListStyle.split(" "));
 
   // pageLength만큼 자식요소 만들기
-  for (let i = 0; i < pageLength; i++) {
-    const page = document.createElement("button");
-    page.classList.add(...pageNumberStyle.split(" "));
-    page.textContent = i + 1;
-    pageNav.appendChild(page);
+  if (pageLength < 7) {
+    for (let i = 0; i < pageLength; i++) {
+      const page = document.createElement("button");
+      page.classList.add(...pageNumberStyle.split(" "));
+      page.textContent = i + 1;
+      pageNav.appendChild(page);
+
+      page.addEventListener("click", (event) => {
+        setPage(i + 1);
+      });
+    }
+    $pagination.appendChild(prevButton);
+    $pagination.appendChild(pageNav);
+    $pagination.appendChild(nextButton);
   }
-  $pagination.appendChild(prevButton);
-  $pagination.appendChild(pageNav);
-  $pagination.appendChild(nextButton);
+  setPage(1);
 }
-renderPagination();
+initPagenation();
+
+function setPage(pageIndex) {
+  currentPage = pageIndex;
+  console.log("currentPage", pageIndex);
+
+  if (pageIndex === 1) {
+    document.getElementById("page-prev").setAttribute("disabled", true);
+  } else if (pageIndex === pageLength) {
+    document.getElementById("page-next").setAttribute("disabled", true);
+  } else {
+    document.getElementById("page-prev").removeAttribute("disabled");
+    document.getElementById("page-next").removeAttribute("disabled");
+  }
+
+  const pageList = document.getElementById("pagination-list").childNodes;
+  pageList.forEach((page) => {
+    page.classList.remove(...pageNumberActiveStyle.split(" "));
+  });
+  pageList[pageIndex - 1].classList.add(...pageNumberActiveStyle.split(" "));
+  pageList[pageIndex - 1].classList.remove("font-normal");
+}
 
 async function initialize() {
   /*
