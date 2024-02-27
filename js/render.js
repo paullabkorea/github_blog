@@ -337,13 +337,6 @@ function renderBlogList(searchResult) {
     // contents 영역을 보이지 않게 처리
     document.getElementById("contents").style.display = "none";
   }
-  console.log(blogList);
-  // if (blogList.length > 10) {
-  if (blogList.length > 1) {
-    const totalPage = 12;
-    initPagination(totalPage);
-    renderPagination(totalPage, 2);
-  }
 }
 
 function renderOtherContents(menu) {
@@ -494,8 +487,10 @@ function renderPagination(totalPage, currentPage) {
   const nextButton = document.getElementById("page-next");
   if (currentPage === 1) {
     prevButton.setAttribute("disabled", true);
+    nextButton.removeAttribute("disabled");
   } else if (currentPage === totalPage) {
     nextButton.setAttribute("disabled", true);
+    prevButton.removeAttribute("disabled");
   } else {
     prevButton.removeAttribute("disabled");
     nextButton.removeAttribute("disabled");
@@ -580,6 +575,7 @@ function renderPagination(totalPage, currentPage) {
 
 function changeCurrentPage(totalPage, index) {
   console.log("currentPage", index);
+  //BlogRendering
   renderPagination(totalPage, index);
 }
 
@@ -598,6 +594,12 @@ async function initialize() {
     await initDataBlogList();
     renderBlogList();
 
+    // if (blogList.length > 10) {
+    const totalPage = Math.ceil(blogList.length / 2);
+    if (totalPage > 1) {
+      initPagination(totalPage);
+      renderPagination(totalPage, 1);
+    }
     // 블로그 카테고리 로딩
     renderBlogCategory();
   } else {
