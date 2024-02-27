@@ -337,6 +337,13 @@ function renderBlogList(searchResult) {
     // contents 영역을 보이지 않게 처리
     document.getElementById("contents").style.display = "none";
   }
+  console.log(blogList);
+  // if (blogList.length > 10) {
+  if (blogList.length > 1) {
+    const totalPage = 12;
+    initPagination(totalPage);
+    renderPagination(totalPage, 2);
+  }
 }
 
 function renderOtherContents(menu) {
@@ -451,66 +458,129 @@ function renderBlogCategory() {
     categoryContainer.appendChild(categoryItem);
   });
 }
-
-const pageLength = 5;
-let currentPage = 1;
-function initPagenation() {
-  const $pagination = document.getElementById("pagination");
-  $pagination.classList.add(...paginationStyle.split(" "));
+function initPagination(totalPage) {
+  const pagination = document.getElementById("pagination");
+  pagination.classList.add(...paginationStyle.split(" "));
 
   const prevButton = document.createElement("button");
   prevButton.setAttribute("id", "page-prev");
   prevButton.classList.add(...pageMoveButtonStyle.split(" "));
-  prevButton.addEventListener("click", () => setPage(currentPage - 1));
+
+  const pageNav =
+    pagination.querySelector("nav") || document.createElement("nav");
+  pageNav.setAttribute("id", "pagination-list");
+  pageNav.classList.add(...pageNumberListStyle.split(" "));
+  const docFrag = document.createDocumentFragment();
+  for (let i = 0; i < totalPage; i++) {
+    if (i === 7) {
+      break;
+    }
+
+    const page = document.createElement("button");
+    page.classList.add(...pageNumberStyle.split(" "));
+    docFrag.appendChild(page);
+  }
+  pageNav.appendChild(docFrag);
 
   const nextButton = document.createElement("button");
   nextButton.setAttribute("id", "page-next");
   nextButton.classList.add(...pageMoveButtonStyle.split(" "));
-  nextButton.addEventListener("click", () => setPage(currentPage + 1));
 
-  const pageNav = document.createElement("nav");
-  pageNav.setAttribute("id", "pagination-list");
-  pageNav.classList.add(...pageNumberListStyle.split(" "));
-
-  // pageLength만큼 자식요소 만들기
-  if (pageLength < 7) {
-    for (let i = 0; i < pageLength; i++) {
-      const page = document.createElement("button");
-      page.classList.add(...pageNumberStyle.split(" "));
-      page.textContent = i + 1;
-      pageNav.appendChild(page);
-
-      page.addEventListener("click", (event) => {
-        setPage(i + 1);
-      });
-    }
-    $pagination.appendChild(prevButton);
-    $pagination.appendChild(pageNav);
-    $pagination.appendChild(nextButton);
-  }
-  setPage(1);
+  pagination.append(prevButton, pageNav, nextButton);
 }
-initPagenation();
 
-function setPage(pageIndex) {
-  currentPage = pageIndex;
-  console.log("currentPage", pageIndex);
-
-  if (pageIndex === 1) {
-    document.getElementById("page-prev").setAttribute("disabled", true);
-  } else if (pageIndex === pageLength) {
-    document.getElementById("page-next").setAttribute("disabled", true);
+function renderPagination(totalPage, currentPage) {
+  const prevButton = document.getElementById("page-prev");
+  const nextButton = document.getElementById("page-next");
+  if (currentPage === 1) {
+    prevButton.setAttribute("disabled", true);
+  } else if (currentPage === totalPage) {
+    nextButton.setAttribute("disabled", true);
   } else {
-    document.getElementById("page-prev").removeAttribute("disabled");
-    document.getElementById("page-next").removeAttribute("disabled");
+    prevButton.removeAttribute("disabled");
+    nextButton.removeAttribute("disabled");
+  }
+  prevButton.onclick = (event) => {
+    event.preventDefault();
+    changeCurrentPage(totalPage, currentPage - 1);
+  };
+  nextButton.onclick = (event) => {
+    event.preventDefault();
+    changeCurrentPage(totalPage, currentPage + 1);
+  };
+
+  const pageNav = document.querySelector("#pagination nav");
+  const pageList = pageNav.querySelectorAll("button");
+
+  if (totalPage <= 7) {
+    pageList.forEach((page, index) => {
+      page.textContent = index + 1;
+      if (index + 1 === currentPage) {
+        page.classList.remove("font-normal");
+        page.classList.add(...pageNumberActiveStyle.split(" "));
+      } else {
+        page.classList.remove(...pageNumberActiveStyle.split(" "));
+        page.classList.add("font-normal");
+      }
+      page.onclick = (event) => {
+        changeCurrentPage(totalPage, index + 1);
+      };
+    });
+  } else {
+    if (currentPage <= 4) {
+      ellipsisPagination(pageList, [1, 2, 3, 4, 5, "...", totalPage]);
+    } else if (currentPage > totalPage - 4) {
+      ellipsisPagination(pageList, [
+        1,
+        "...",
+        totalPage - 4,
+        totalPage - 3,
+        totalPage - 2,
+        totalPage - 1,
+        totalPage,
+      ]);
+    } else {
+      ellipsisPagination(pageList, [
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPage,
+      ]);
+    }
   }
 
-  const pageList = document.getElementById("pagination-list").childNodes;
-  pageList.forEach((page) => {
-    page.classList.remove(...pageNumberActiveStyle.split(" "));
-  });
-  pageList[pageIndex - 1].classList.add(...pageNumberActiveStyle.split(" "));
-  pageList[pageIndex - 1].classList.remove("font-normal");
+  function ellipsisPagination(pageList, indexList) {
+    pageList.forEach((page, index) => {
+      page.textContent = indexList[index];
+      if (indexList[index] === currentPage) {
+        page.classList.remove("font-normal");
+        page.classList.add(...pageNumberActiveStyle.split(" "));
+      } else {
+        page.classList.remove(...pageNumberActiveStyle.split(" "));
+        page.classList.add("font-normal");
+      }
+      if (indexList[index] === "...") {
+        page.style.pointerEvents = "none";
+        page.onclick = (event) => {
+          event.preventDefault();
+        };
+      } else {
+        page.style.pointerEvents = "all";
+
+        page.onclick = (event) => {
+          changeCurrentPage(totalPage, indexList[index]);
+        };
+      }
+    });
+  }
+}
+
+function changeCurrentPage(totalPage, index) {
+  console.log("currentPage", index);
+  renderPagination(totalPage, index);
 }
 
 async function initialize() {
