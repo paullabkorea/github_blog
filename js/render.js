@@ -251,17 +251,19 @@ function renderBlogList(searchResult = null, currentPage = 1) {
     1. 검색 키워드 없이 대부분 renderBlogList()로 사용.
     2. 검색을 했을 때에만 searchResult에 목록이 담겨 들어옴
     */
-  const pageUnit = 2;
+  const pageUnit = 10;
 
   if (searchResult) {
     // 검색 keyword가 있을 경우
     document.getElementById("blog-posts").style.display = "grid";
     document.getElementById("blog-posts").innerHTML = "";
 
-    const startIndex = (currentPage || 1 - 1) * pageUnit;
-    const endIndex = (currentPage || 1) * pageUnit;
-    console.log("index", startIndex, endIndex);
+    const totalPage = Math.ceil(searchResult.length / pageUnit);
+    initPagination(totalPage);
+    renderPagination(totalPage, 1, searchResult);
 
+    const startIndex = (currentPage - 1) * pageUnit;
+    const endIndex = currentPage * pageUnit;
     searchResult.slice(startIndex, endIndex).forEach((post, index) => {
       const postInfo = extractFileInfo(post.name);
       if (postInfo) {
@@ -301,10 +303,9 @@ function renderBlogList(searchResult = null, currentPage = 1) {
     document.getElementById("blog-posts").innerHTML = "";
 
     const totalPage = Math.ceil(blogList.length / pageUnit);
-    if (totalPage > 1) {
-      initPagination(totalPage);
-      renderPagination(totalPage, 1);
-    }
+    initPagination(totalPage);
+    renderPagination(totalPage, 1);
+
     const startIndex = (currentPage - 1) * pageUnit;
     const endIndex = currentPage * pageUnit;
 
@@ -474,15 +475,18 @@ function renderBlogCategory() {
 
 function initPagination(totalPage) {
   const pagination = document.getElementById("pagination");
-  if (pagination.innerHTML) return;
+
+  pagination.style.display = "flex";
+
   pagination.classList.add(...paginationStyle.split(" "));
 
   const prevButton = document.createElement("button");
   prevButton.setAttribute("id", "page-prev");
   prevButton.classList.add(...pageMoveButtonStyle.split(" "));
-
   const pageNav =
     pagination.querySelector("nav") || document.createElement("nav");
+  pageNav.innerHTML = "";
+
   pageNav.setAttribute("id", "pagination-list");
   pageNav.classList.add(...pageNumberListStyle.split(" "));
   const docFrag = document.createDocumentFragment();
@@ -501,10 +505,16 @@ function initPagination(totalPage) {
   nextButton.setAttribute("id", "page-next");
   nextButton.classList.add(...pageMoveButtonStyle.split(" "));
 
-  pagination.append(prevButton, pageNav, nextButton);
+  if (!pagination.innerHTML) {
+    pagination.append(prevButton, pageNav, nextButton);
+  }
+  if (totalPage <= 1) {
+    pagination.style.display = "none";
+    return;
+  }
 }
 
-function renderPagination(totalPage, currentPage) {
+function renderPagination(totalPage, currentPage, targetList = null) {
   const prevButton = document.getElementById("page-prev");
   const nextButton = document.getElementById("page-next");
   if (currentPage === 1) {
@@ -519,13 +529,13 @@ function renderPagination(totalPage, currentPage) {
   }
   prevButton.onclick = (event) => {
     event.preventDefault();
-    renderBlogList(null, currentPage - 1);
-    renderPagination(totalPage, currentPage - 1);
+    renderBlogList(targetList, currentPage - 1);
+    renderPagination(totalPage, currentPage - 1, targetList);
   };
   nextButton.onclick = (event) => {
     event.preventDefault();
-    renderBlogList(null, currentPage + 1);
-    renderPagination(totalPage, currentPage + 1);
+    renderBlogList(targetList, currentPage + 1);
+    renderPagination(totalPage, currentPage + 1, targetList);
   };
 
   const pageNav = document.querySelector("#pagination nav");
@@ -542,37 +552,49 @@ function renderPagination(totalPage, currentPage) {
         page.classList.add("font-normal");
       }
       page.onclick = (event) => {
-        renderBlogList(null, index + 1);
-        renderPagination(totalPage, index + 1);
+        renderBlogList(targetList, index + 1);
+        renderPagination(totalPage, index + 1, targetList);
       };
     });
   } else {
     if (currentPage <= 4) {
-      ellipsisPagination(pageList, [1, 2, 3, 4, 5, "...", totalPage]);
+      ellipsisPagination(
+        pageList,
+        [1, 2, 3, 4, 5, "...", totalPage],
+        targetList
+      );
     } else if (currentPage > totalPage - 4) {
-      ellipsisPagination(pageList, [
-        1,
-        "...",
-        totalPage - 4,
-        totalPage - 3,
-        totalPage - 2,
-        totalPage - 1,
-        totalPage,
-      ]);
+      ellipsisPagination(
+        pageList,
+        [
+          1,
+          "...",
+          totalPage - 4,
+          totalPage - 3,
+          totalPage - 2,
+          totalPage - 1,
+          totalPage,
+        ],
+        targetList
+      );
     } else {
-      ellipsisPagination(pageList, [
-        1,
-        "...",
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        "...",
-        totalPage,
-      ]);
+      ellipsisPagination(
+        pageList,
+        [
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPage,
+        ],
+        targetList
+      );
     }
   }
 
-  function ellipsisPagination(pageList, indexList) {
+  function ellipsisPagination(pageList, indexList, targetList = null) {
     pageList.forEach((page, index) => {
       page.textContent = indexList[index];
       if (indexList[index] === currentPage) {
@@ -591,7 +613,7 @@ function renderPagination(totalPage, currentPage) {
         page.style.pointerEvents = "all";
 
         page.onclick = (event) => {
-          renderPagination(totalPage, indexList[index]);
+          renderPagination(totalPage, indexList[index], targetList);
         };
       }
     });
