@@ -245,7 +245,7 @@ function createCardElement(fileInfo, index) {
   return card;
 }
 
-function renderBlogList(searchResult) {
+function renderBlogList(searchResult = null, currentPage = 1) {
   /*
     blog의 main 영역에 블로그 포스트 목록을 렌더링
     1. 검색 키워드 없이 대부분 renderBlogList()로 사용.
@@ -257,7 +257,12 @@ function renderBlogList(searchResult) {
     // 검색 keyword가 있을 경우
     document.getElementById("blog-posts").style.display = "grid";
     document.getElementById("blog-posts").innerHTML = "";
-    searchResult.forEach((post, index) => {
+
+    const startIndex = (currentPage || 1 - 1) * pageUnit;
+    const endIndex = (currentPage || 1) * pageUnit;
+    console.log("index", startIndex, endIndex);
+
+    searchResult.slice(startIndex, endIndex).forEach((post, index) => {
       const postInfo = extractFileInfo(post.name);
       if (postInfo) {
         const cardElement = createCardElement(postInfo, index);
@@ -295,8 +300,16 @@ function renderBlogList(searchResult) {
     document.getElementById("pagination").style.display = "flex";
     document.getElementById("blog-posts").innerHTML = "";
 
+    const totalPage = Math.ceil(blogList.length / pageUnit);
+    if (totalPage > 1) {
+      initPagination(totalPage);
+      renderPagination(totalPage, 1);
+    }
+    const startIndex = (currentPage - 1) * pageUnit;
+    const endIndex = currentPage * pageUnit;
+
     // console.log("blogList", blogList);
-    blogList.forEach((post, index) => {
+    blogList.slice(startIndex, endIndex).forEach((post, index) => {
       const postInfo = extractFileInfo(post.name);
       if (postInfo) {
         // console.log(postInfo)
@@ -340,11 +353,6 @@ function renderBlogList(searchResult) {
         document.getElementById("blog-posts").appendChild(cardElement);
       }
     });
-    const totalPage = Math.ceil(blogList.length / pageUnit);
-    if (totalPage > 1) {
-      initPagination(totalPage);
-      renderPagination(totalPage, 1);
-    }
 
     // contents 영역을 보이지 않게 처리
     document.getElementById("contents").style.display = "none";
@@ -511,10 +519,12 @@ function renderPagination(totalPage, currentPage) {
   }
   prevButton.onclick = (event) => {
     event.preventDefault();
+    renderBlogList(null, currentPage - 1);
     renderPagination(totalPage, currentPage - 1);
   };
   nextButton.onclick = (event) => {
     event.preventDefault();
+    renderBlogList(null, currentPage + 1);
     renderPagination(totalPage, currentPage + 1);
   };
 
@@ -532,6 +542,7 @@ function renderPagination(totalPage, currentPage) {
         page.classList.add("font-normal");
       }
       page.onclick = (event) => {
+        renderBlogList(null, index + 1);
         renderPagination(totalPage, index + 1);
       };
     });
